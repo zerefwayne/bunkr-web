@@ -18,6 +18,11 @@ Vue.use(VueAxios, axios);
 
 axios.defaults.baseURL = "http://localhost:5000/api";
 
+axios.defaults.headers = {
+  'Content-Type': 'application/json;charset=UTF-8',
+  "Access-Control-Allow-Origin": "*",
+}
+
 new Vue({
   router,
   store,
