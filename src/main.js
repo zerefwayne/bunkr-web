@@ -19,8 +19,13 @@ Vue.use(VueAxios, axios);
 axios.defaults.baseURL = "http://localhost:5000/api";
 
 axios.defaults.headers = {
-  'Content-Type': 'application/json;charset=UTF-8',
-  "Access-Control-Allow-Origin": "*",
+  "Content-Type": "application/json;charset=UTF-8",
+};
+
+const accessToken = localStorage.getItem("access_token");
+
+if (accessToken) {
+  Vue.prototype.$http.defaults.headers.common["Authorization"] = accessToken;
 }
 
 new Vue({
