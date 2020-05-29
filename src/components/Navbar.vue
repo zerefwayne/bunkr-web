@@ -1,7 +1,20 @@
 <template>
   <div class="app-navbar">
     <div class="brand">CollegePortal</div>
-    <div class="content">Content</div>
+    <div class="content">
+      <div class="courses">
+        <div class="section-header">My Courses</div>
+        <ul class="list-group">
+          <router-link
+            tag="li"
+            class="list-group-item"
+            v-for="course in courses"
+            :key="course.code"
+            :to="`/course/${course.slug}`"
+          >{{ course.name }}</router-link>
+        </ul>
+      </div>
+    </div>
     <template v-if="loggedIn">
       <div class="profile">
         <div class="details">{{ user ? '@'+user.username : ''}}</div>
@@ -15,7 +28,13 @@
 
 <script>
 import { mapState, mapMutations } from "vuex";
+import { mockCourses } from "@/mock-data";
 export default {
+  data() {
+    return {
+      courses: mockCourses
+    };
+  },
   computed: {
     ...mapState(["user", "loggedIn"])
   },
@@ -52,6 +71,25 @@ export default {
 
   .content {
     flex: 1;
+    display: flex;
+    flex-direction: column;
+
+    .section-header {
+      padding: 1rem;
+      font-size: 1.2rem;
+    }
+
+    .courses {
+      .list-group-item {
+        background: none;
+
+        cursor: pointer;
+
+        &:hover {
+          background-color: lighten($color: $darkblue, $amount: 2%);
+        }
+      }
+    }
   }
 
   .profile {

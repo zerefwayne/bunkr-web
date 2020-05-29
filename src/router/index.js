@@ -5,6 +5,9 @@ import Login from "@/views/Login.vue";
 import Signup from "@/views/Signup.vue";
 import Dashboard from "@/views/Dashboard.vue";
 import Profile from "@/views/Profile.vue";
+import Course from "@/views/Course.vue";
+import Resources from "@/views/Resources.vue";
+import Discuss from "@/views/Discuss.vue";
 
 import store from "../store";
 
@@ -44,6 +47,32 @@ const routes = [
     meta: {
       authorized: true,
     },
+  },
+  {
+    name: "course",
+    path: "/course/:slug",
+    component: Course,
+    meta: {
+      authorized: true,
+    },
+    children: [
+      {
+        path: "",
+        redirect: "resources",
+      },
+      {
+        path: "resources",
+        component: Resources,
+      },
+      {
+        path: "discuss",
+        component: Discuss,
+      },
+      {
+        path: "**",
+        redirect: "resources",
+      },
+    ],
   },
 ];
 
