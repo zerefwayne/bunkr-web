@@ -7,6 +7,8 @@ import store from "./store";
 import axios from "axios";
 import VueAxios from "vue-axios";
 
+import { getItem } from "./utils";
+
 import "bootstrap";
 
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -22,10 +24,13 @@ axios.defaults.headers = {
   "Content-Type": "application/json;charset=UTF-8",
 };
 
-const accessToken = localStorage.getItem("access_token");
+let accessToken = getItem("AUTH_TOKEN");
 
 if (accessToken) {
-  Vue.prototype.$http.defaults.headers.common["Authorization"] = accessToken;
+  console.log("Logged in!");
+  axios.defaults.headers["Authorization"] = accessToken;
+
+  store.commit("SET_LOGGED_IN");
 }
 
 new Vue({
