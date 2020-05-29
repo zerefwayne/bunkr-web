@@ -4,6 +4,7 @@ import VueRouter from "vue-router";
 import Login from "@/views/Login.vue";
 import Signup from "@/views/Signup.vue";
 import Dashboard from "@/views/Dashboard.vue";
+import Profile from "@/views/Profile.vue";
 
 import store from "../store";
 
@@ -32,6 +33,14 @@ const routes = [
     name: "dashboard",
     path: "/",
     component: Dashboard,
+    meta: {
+      authorized: true,
+    },
+  },
+  {
+    name: "profile",
+    path: "/profile",
+    component: Profile,
     meta: {
       authorized: true,
     },

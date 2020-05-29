@@ -1,37 +1,15 @@
 <template>
   <div class="app-navbar">
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-      <a class="navbar-brand" href="#">CollegePortal</a>
-      <button
-        class="navbar-toggler"
-        type="button"
-        data-toggle="collapse"
-        data-target="#navbarSupportedContent"
-        aria-controls="navbarSupportedContent"
-        aria-expanded="false"
-        aria-label="Toggle navigation"
-      >
-        <span class="navbar-toggler-icon"></span>
-      </button>
-
-      <div class="collapse navbar-collapse navbar-style" id="navbarSupportedContent">
-        <ul class="navbar-nav left-nav">
-          <li class="nav-item active">
-            <a class="nav-link" href="#">
-              Home
-              <span class="sr-only">(current)</span>
-            </a>
-          </li>
-        </ul>
-        <ul class="navbar-nav right-nav">
-          <li class="nav-item mr-2">{{user ? user.name : ''}}</li>
-          <li class="nav-item mr-2">{{user ? user.username : ''}}</li>
-          <li class="nav-item">
-            <button class="nav-link btn btn-outline-danger" @click="handleLogout">Logout</button>
-          </li>
-        </ul>
+    <div class="brand">CollegePortal</div>
+    <div class="content">Content</div>
+    <template v-if="loggedIn">
+      <div class="profile">
+        <div class="details">{{ user ? '@'+user.username : ''}}</div>
+        <div class="icons">
+          <button class="btn btn-sm btn-light" @click="handleManageProfile">Manage</button>
+        </div>
       </div>
-    </nav>
+    </template>
   </div>
 </template>
 
@@ -43,12 +21,58 @@ export default {
   },
   mounted() {},
   methods: {
-    ...mapMutations({ handleLogout: "AUTH_LOGOUT" })
+    ...mapMutations({ handleLogout: "AUTH_LOGOUT" }),
+    handleLogin() {
+      this.$router.push("/login");
+    },
+    handleManageProfile() {
+      this.$router.push("/profile");
+    }
   }
 };
 </script>
 
 <style lang="scss">
+@import "../styles/colors";
+
+.app-navbar {
+  height: 100%;
+  background-color: $darkblue;
+  display: flex;
+  flex-direction: column;
+  color: white;
+
+  .brand {
+    padding: 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-bottom: 1px solid white;
+  }
+
+  .content {
+    flex: 1;
+  }
+
+  .profile {
+    border-top: 1px solid white;
+    padding: 1rem 2rem;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .details {
+      font-weight: bold;
+      font-size: 1.1rem;
+    }
+
+    .icons {
+      display: flex;
+    }
+  }
+}
+
 .navbar-style {
   color: white;
   display: flex;
@@ -63,5 +87,6 @@ export default {
 .right-nav {
   display: flex;
   align-items: center;
+  justify-content: flex-start;
 }
 </style>
