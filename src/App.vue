@@ -3,18 +3,23 @@
     <div class="view">
       <router-view></router-view>
     </div>
-    <div class="side-nav">
-      <Navbar />
-    </div>
-    
+    <template v-if="loggedIn">
+      <div class="side-nav">
+        <Navbar />
+      </div>
+    </template>
   </div>
 </template>
 
 <script>
 import Navbar from "@/components/Navbar.vue";
+import { mapState } from "vuex";
 export default {
   components: {
     Navbar
+  },
+  computed: {
+    ...mapState(["loggedIn"])
   }
 };
 </script>
@@ -35,8 +40,7 @@ export default {
   }
 
   .view {
-    flex: 0 0 78%;
+    flex: 1;
   }
-
 }
 </style>

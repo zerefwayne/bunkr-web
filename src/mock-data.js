@@ -9,4 +9,9 @@ export const mockCourses = [
         code: 'IIVP632C',
         name: 'Image and Video Processing'
     },
+    {
+        slug: 'compiler-design',
+        code: 'ICOD632C',
+        name: 'Compiler Design'
+    },
 ]

@@ -8,6 +8,7 @@ import Profile from "@/views/Profile.vue";
 import Course from "@/views/Course.vue";
 import Resources from "@/views/Resources.vue";
 import Discuss from "@/views/Discuss.vue";
+import About from "@/views/About.vue";
 
 import store from "../store";
 
@@ -67,6 +68,10 @@ const routes = [
       {
         path: "discuss",
         component: Discuss,
+      },
+      {
+        path: "about",
+        component: About,
       },
       {
         path: "**",

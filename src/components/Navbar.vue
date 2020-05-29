@@ -15,14 +15,12 @@
         </ul>
       </div>
     </div>
-    <template v-if="loggedIn">
       <div class="profile">
         <div class="details">{{ user ? '@'+user.username : ''}}</div>
         <div class="icons">
           <button class="btn btn-sm btn-light" @click="handleManageProfile">Manage</button>
         </div>
       </div>
-    </template>
   </div>
 </template>
 

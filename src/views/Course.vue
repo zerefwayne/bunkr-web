@@ -20,10 +20,19 @@
             :to="`/course/${courseSlug}/discuss`"
           >Discussion</router-link>
         </li>
+        <li class="nav-item">
+          <router-link
+            class="nav-link"
+            active-class="active"
+            :to="`/course/${courseSlug}/about`"
+          >About</router-link>
+        </li>
       </ul>
     </div>
     <div class="content">
-      <router-view></router-view>
+      <keep-alive>
+        <router-view></router-view>
+      </keep-alive>
     </div>
   </div>
 </template>
