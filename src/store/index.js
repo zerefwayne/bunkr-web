@@ -24,21 +24,20 @@ export default new Vuex.Store({
       removeItem("AUTH_TOKEN");
       axios.defaults.headers["Authorization"] = null;
       console.log("successfully logged out!");
-      router.push("/login");
-    },
-    SET_LOGGED_IN(state) {
-      state.loggedIn = true;
+      if (router.currentRoute.name != "login") {
+        router.push("/login");
+      }
     },
     INIT_APP(state, payload) {
       state.loggedIn = true;
       state.user = payload.user;
 
-      if(router.currentRoute.name == "login") {
+      if (router.currentRoute.name == "login") {
         router.push("/");
       }
 
       console.log("app initalised");
-    }
+    },
   },
   actions: {
     AUTH_LOGIN({ dispatch }, payload) {
@@ -70,17 +69,18 @@ export default new Vuex.Store({
           console.log(err.response);
         });
     },
-    INIT_APP: async({commit}) => {
+    INIT_APP: async ({ commit }) => {
       axios
         .get("ui/init")
         .then(({ data }) => {
           console.log("init data", data);
           commit("INIT_APP", data);
         })
-        .catch((err) => {
-          console.log(err.response);
+        .catch(() => {
+          console.error("session expired. please login again.");
+          commit("AUTH_LOGOUT");
         });
-    }
+    },
   },
   modules: {},
 });
