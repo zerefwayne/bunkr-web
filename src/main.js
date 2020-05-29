@@ -27,10 +27,8 @@ axios.defaults.headers = {
 let accessToken = getItem("AUTH_TOKEN");
 
 if (accessToken) {
-  console.log("Logged in!");
   axios.defaults.headers["Authorization"] = accessToken;
-
-  store.commit("SET_LOGGED_IN");
+  store.dispatch("INIT_APP");
 }
 
 new Vue({

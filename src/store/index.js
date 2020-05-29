@@ -20,23 +20,28 @@ export default new Vuex.Store({
   mutations: {
     AUTH_LOGOUT(state) {
       state.loggedIn = false;
+      state.user = null;
       removeItem("AUTH_TOKEN");
+      axios.defaults.headers["Authorization"] = null;
       console.log("successfully logged out!");
       router.push("/login");
     },
-    AUTH_LOGIN(state, payload) {
-      state.loggedIn = true;
-      state.user = payload;
-      console.log("successfully logged in", state.user);
-      router.push("/");
-    },
     SET_LOGGED_IN(state) {
-      console.log("Theek hai");
       state.loggedIn = true;
+    },
+    INIT_APP(state, payload) {
+      state.loggedIn = true;
+      state.user = payload.user;
+
+      if(router.currentRoute.name == "login") {
+        router.push("/");
+      }
+
+      console.log("app initalised");
     }
   },
   actions: {
-    AUTH_LOGIN({ commit }, payload) {
+    AUTH_LOGIN({ dispatch }, payload) {
       let json = JSON.stringify(payload);
 
       axios
@@ -44,13 +49,15 @@ export default new Vuex.Store({
         .then(({ data }) => {
           console.log(data);
           setItem("AUTH_TOKEN", data.token);
-          commit("AUTH_LOGIN", data.user);
+          axios.defaults.headers["Authorization"] = data.token;
+          console.log("Set item token, now dispatching init app");
+          dispatch("INIT_APP");
         })
         .catch((err) => {
           console.log(err.response);
         });
     },
-    AUTH_SIGNUP(_, payload) {
+    AUTH_SIGNUP: async (_, payload) => {
       let json = JSON.stringify(payload);
 
       axios
@@ -63,6 +70,17 @@ export default new Vuex.Store({
           console.log(err.response);
         });
     },
+    INIT_APP: async({commit}) => {
+      axios
+        .get("ui/init")
+        .then(({ data }) => {
+          console.log("init data", data);
+          commit("INIT_APP", data);
+        })
+        .catch((err) => {
+          console.log(err.response);
+        });
+    }
   },
   modules: {},
 });
