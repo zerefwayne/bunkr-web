@@ -7,6 +7,7 @@ import Dashboard from "@/views/Dashboard.vue";
 import Profile from "@/views/Profile.vue";
 import Course from "@/views/Course.vue";
 import Resources from "@/views/Resources.vue";
+import AddResource from "@/views/AddResource.vue";
 import Discuss from "@/views/Discuss.vue";
 import About from "@/views/About.vue";
 
@@ -42,6 +43,14 @@ const routes = [
     },
   },
   {
+    name: "resource-new",
+    path: "/resource/new",
+    component: AddResource,
+    meta: {
+      authorized: true,
+    },
+  },
+  {
     name: "profile",
     path: "/profile",
     component: Profile,
@@ -50,7 +59,6 @@ const routes = [
     },
   },
   {
-    name: "course",
     path: "/course/:slug",
     component: Course,
     meta: {
@@ -59,6 +67,7 @@ const routes = [
     children: [
       {
         path: "",
+        name: "course",
         redirect: "resources",
       },
       {

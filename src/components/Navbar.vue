@@ -14,13 +14,20 @@
           >{{ course.name }}</router-link>
         </ul>
       </div>
-    </div>
-      <div class="profile">
-        <div class="details">{{ user ? '@'+user.username : ''}}</div>
-        <div class="icons">
-          <button class="btn btn-sm btn-light" @click="handleManageProfile">Manage</button>
-        </div>
+      <div>
+        <router-link
+          :to="{name: 'resource-new'}"
+          tag="button"
+          class="btn btn-outline-secondary mt-3"
+        >Add Resource</router-link>
       </div>
+    </div>
+    <div class="profile">
+      <div class="details">{{ user ? '@'+user.username : ''}}</div>
+      <div class="icons">
+        <button class="btn btn-sm btn-light" @click="handleManageProfile">Manage</button>
+      </div>
+    </div>
   </div>
 </template>
 
