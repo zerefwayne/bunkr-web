@@ -3,7 +3,7 @@
     <div class="view">
       <router-view></router-view>
     </div>
-    <template v-if="loggedIn">
+    <template v-if="isAuthenticated">
       <div class="side-nav">
         <Navbar />
       </div>
@@ -13,7 +13,7 @@
 
 <script>
 import Navbar from "@/components/Navbar.vue";
-import { mapState } from "vuex";
+import { mapGetters } from "vuex";
 import store from "./store";
 import { FETCH_COURSES } from "./store/course/actions.type";
 
@@ -22,11 +22,11 @@ export default {
     Navbar
   },
   computed: {
-    ...mapState({ loggedIn: state => state.auth.isAuthenticated })
+    ...mapGetters(["isAuthenticated"])
   },
   methods: {
     initaliseApp() {
-      if (this.loggedIn) {
+      if (this.isAuthenticated) {
         Promise.all([store.dispatch(FETCH_COURSES)]).then(data => {
           console.log("success", data[0]);
         });
@@ -34,15 +34,10 @@ export default {
     }
   },
   mounted() {
-    this.initaliseApp();
-  },
-  watch: {
-    loggedIn: val => {
-      if (val) {
-        this.initaliseApp();
-      }
+    if (this.isAuthenticated) {
+      this.initaliseApp();
     }
-  }
+  },
 };
 </script>
 
