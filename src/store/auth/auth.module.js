@@ -53,7 +53,7 @@ const actions = {
         axios
           .get("auth/validate/")
           .then(({ data }) => {
-            context.commit(SET_AUTH, data.user);
+            context.commit(SET_AUTH, data);
             resolve(data);
           })
           .catch(({ response }) => {
@@ -88,7 +88,7 @@ const mutations = {
 };
 
 const getters = {
-  currentUser(state) {
+  user(state) {
     return state.user;
   },
   isAuthenticated(state) {

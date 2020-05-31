@@ -4,6 +4,7 @@ import router from "../router";
 import axios from "axios";
 
 import auth from "./auth/auth.module";
+import course from "./course/course.module";
 
 Vue.use(Vuex);
 
@@ -81,5 +82,6 @@ export default new Vuex.Store({
   },
   modules: {
     auth,
+    course
   },
 });

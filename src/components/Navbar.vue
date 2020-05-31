@@ -32,23 +32,15 @@
 </template>
 
 <script>
-import { mapState, mapMutations } from "vuex";
+import { mapGetters } from "vuex";
 export default {
   data() {
     return {};
   },
   computed: {
-    ...mapState({
-      user: state => state.auth.user,
-      loggedIn: state => state.auth.isAuthenticated,
-      courses: state => state.courses
-    })
-  },
-  mounted() {
-    console.log(this.user, this.loggedIn, this.courses);
+    ...mapGetters(["isAuthenticated", "user", "courses"])
   },
   methods: {
-    ...mapMutations({ handleLogout: "AUTH_LOGOUT" }),
     handleLogin() {
       this.$router.push("/login");
     },

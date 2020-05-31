@@ -38,19 +38,18 @@
 </template>
 
 <script>
-import { mapState, mapActions } from "vuex";
+import { mapGetters } from "vuex";
+import { FETCH_COURSE } from "../store/course/actions.type";
+
 export default {
   data() {
     return {
-      courseSlug: null
+      courseSlug: null,
+      isLoaded: false
     };
   },
   computed: {
-    ...mapState({
-      courses: "courses",
-      course: "activeCourse",
-      isLoaded: "isCourseLoaded"
-    })
+    ...mapGetters({ courses: "courses", course: "activeCourse" })
   },
   watch: {
     "$route.params.slug": function(slug) {
@@ -58,26 +57,37 @@ export default {
         this.courseSlug = slug;
         this.loadCourse();
       }
+    },
+    courses: function() {
+      this.loadCourse();
     }
   },
   methods: {
-    ...mapActions({
-      fetchCourse: "FETCH_COURSE"
-    }),
-
     loadCourse() {
-      let course = this.courses.find(course => {
-        return course.slug === this.courseSlug;
-      });
+      if (this.courses) {
+        let course = this.courses.find(course => {
+          return course.slug === this.courseSlug;
+        });
 
-      this.fetchCourse(course.code);
+        this.isLoaded = false;
+
+        if (course) {
+          this.$store
+            .dispatch(FETCH_COURSE, course.code)
+            .then(data => {
+              console.log(data);
+              this.isLoaded = true;
+            })
+            .catch(err => {
+              console.error(err);
+              this.isLoaded = false;
+            });
+        }
+      }
     }
   },
-  beforeMount() {
-    this.courseSlug = this.$route.params.slug;
-  },
   mounted() {
-    console.log(this.courses, this.activeCourse);
+    this.courseSlug = this.$route.params.slug;
     this.loadCourse();
   }
 };

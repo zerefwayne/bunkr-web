@@ -14,12 +14,34 @@
 <script>
 import Navbar from "@/components/Navbar.vue";
 import { mapState } from "vuex";
+import store from "./store";
+import { FETCH_COURSES } from "./store/course/actions.type";
+
 export default {
   components: {
     Navbar
   },
   computed: {
-    ...mapState({"loggedIn": state => state.auth.isAuthenticated})
+    ...mapState({ loggedIn: state => state.auth.isAuthenticated })
+  },
+  methods: {
+    initaliseApp() {
+      if (this.loggedIn) {
+        Promise.all([store.dispatch(FETCH_COURSES)]).then(data => {
+          console.log("success", data[0]);
+        });
+      }
+    }
+  },
+  mounted() {
+    this.initaliseApp();
+  },
+  watch: {
+    loggedIn: val => {
+      if (val) {
+        this.initaliseApp();
+      }
+    }
   }
 };
 </script>

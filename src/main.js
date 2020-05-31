@@ -4,6 +4,8 @@ import "./registerServiceWorker";
 import router from "./router";
 import store from "./store";
 
+import jwtService from "./shared/jwt.service";
+
 import axios from "axios";
 import VueAxios from "vue-axios";
 
@@ -25,13 +27,18 @@ axios.defaults.headers = {
 };
 
 router.beforeEach((to, from, next) =>
+{
+  axios.defaults.headers["Authorization"] = `${jwtService.getToken()}`;
+
   Promise.all([store.dispatch(VALIDATE)])
     .then(() => {
       next();
     })
     .catch(() => {
+      console.log("Session expired.")
       next("/login");
     })
+  }
 );
 
 new Vue({
