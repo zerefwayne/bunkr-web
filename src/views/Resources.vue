@@ -1,27 +1,22 @@
 <template>
   <div>
     <h3>Resources</h3>
-    <template v-if="isCourseLoaded">
-      <ul class="list-group">
-        <li class="list-group-item" v-for="resource in activeCourse.resources" :key="resource.id">
-          {{ resource.content }}
-        </li>
-      </ul>
-    </template>
+    <ul class="list-group" v-if="activeCourse">
+        <li
+          class="list-group-item"
+          v-for="resource in activeCourse.resources"
+          :key="resource.id"
+        >{{ resource.content }}</li>
+    </ul>
   </div>
 </template>
 
 <script>
-import {mapState} from "vuex";
+import { mapGetters } from "vuex";
 export default {
-  methods: {
-
-  },
+  methods: {},
   computed: {
-    ...mapState(["activeCourse", "isCourseLoaded"])
-  },
-  mounted() {
-    
+    ...mapGetters(["activeCourse"])
   },
 };
 </script>
