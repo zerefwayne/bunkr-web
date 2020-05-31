@@ -1,6 +1,6 @@
 import jwtService from "@/shared/jwt.service";
 
-import { LOGIN, LOGOUT, SIGNUP } from "./actions.type";
+import { LOGIN, LOGOUT, SIGNUP, VALIDATE } from "./actions.type";
 
 import { SET_AUTH, PURGE_AUTH, SET_ERROR } from "./mutations.type";
 
@@ -46,6 +46,25 @@ const actions = {
         });
     });
   },
+  [VALIDATE](context) {
+    if (jwtService.getToken()) {
+      axios.defaults.headers["Authorization"] = `${jwtService.getToken()}`;
+      return new Promise((resolve, reject) => {
+        axios
+          .get("auth/validate/")
+          .then(({ data }) => {
+            context.commit(SET_AUTH, data.user);
+            resolve(data);
+          })
+          .catch(({ response }) => {
+            context.commit(PURGE_AUTH);
+            reject(response);
+          });
+      });
+    } else {
+      context.commit(PURGE_AUTH);
+    }
+  },
 };
 
 const mutations = {
@@ -57,7 +76,7 @@ const mutations = {
     state.user = user;
     state.errors = {};
     if (token) {
-      jwtService.saveToken(state.user.token);
+      jwtService.saveToken(`Bearer ${token}`);
     }
   },
   [PURGE_AUTH](state) {

@@ -7,12 +7,12 @@ import store from "./store";
 import axios from "axios";
 import VueAxios from "vue-axios";
 
-import { getItem } from "./utils";
-
 import "bootstrap";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./styles/global.scss";
+
+import { VALIDATE } from "./store/auth/actions.type";
 
 Vue.config.productionTip = false;
 
@@ -24,12 +24,15 @@ axios.defaults.headers = {
   "Content-Type": "application/json;charset=UTF-8",
 };
 
-let accessToken = getItem("AUTH_TOKEN");
-
-if (accessToken) {
-  axios.defaults.headers["Authorization"] = accessToken;
-  store.dispatch("INIT_APP");
-}
+router.beforeEach((to, from, next) =>
+  Promise.all([store.dispatch(VALIDATE)])
+    .then(() => {
+      next();
+    })
+    .catch(() => {
+      next("/login");
+    })
+);
 
 new Vue({
   router,
