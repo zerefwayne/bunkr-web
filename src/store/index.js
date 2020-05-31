@@ -11,6 +11,7 @@ export default new Vuex.Store({
   state: {
     loggedIn: false,
     user: null,
+    courses: null
   },
   getters: {
     isLoggedIn(state) {
@@ -21,6 +22,7 @@ export default new Vuex.Store({
     AUTH_LOGOUT(state) {
       state.loggedIn = false;
       state.user = null;
+      state.courses = null;
       removeItem("AUTH_TOKEN");
       axios.defaults.headers["Authorization"] = null;
       console.log("successfully logged out!");
@@ -31,6 +33,7 @@ export default new Vuex.Store({
     INIT_APP(state, payload) {
       state.loggedIn = true;
       state.user = payload.user;
+      state.courses = payload.courses;
 
       if (router.currentRoute.name == "login") {
         router.push("/");

@@ -33,15 +33,12 @@
 
 <script>
 import { mapState, mapMutations } from "vuex";
-import { mockCourses } from "@/mock-data";
 export default {
   data() {
-    return {
-      courses: mockCourses
-    };
+    return {};
   },
   computed: {
-    ...mapState(["user", "loggedIn"])
+    ...mapState(["user", "loggedIn", "courses"])
   },
   mounted() {},
   methods: {
