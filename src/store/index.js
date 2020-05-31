@@ -11,7 +11,9 @@ export default new Vuex.Store({
   state: {
     loggedIn: false,
     user: null,
-    courses: null
+    courses: null,
+    activeCourse: null,
+    isCourseLoaded: false,
   },
   getters: {
     isLoggedIn(state) {
@@ -40,6 +42,9 @@ export default new Vuex.Store({
       }
 
       console.log("app initalised");
+    },
+    SET_ACTIVE_COURSE(state, payload) {
+      state.activeCourse = payload.course;
     },
   },
   actions: {
@@ -82,6 +87,22 @@ export default new Vuex.Store({
         .catch(() => {
           console.error("session expired. please login again.");
           commit("AUTH_LOGOUT");
+        });
+    },
+    FETCH_COURSE: async ({ commit, state }, code) => {
+    
+      state.isCourseLoaded = false;
+
+      axios
+        .get("/course/", { params: { id: code } })
+        .then(({ data }) => {
+          console.log("Fetched course", data.course);
+          state.isCourseLoaded = true;
+          commit("SET_ACTIVE_COURSE", data);
+        })
+        .catch((err) => {
+          state.isCourseLoaded = false;
+          console.error(err.response);
         });
     },
   },
