@@ -90,7 +90,6 @@ export default new Vuex.Store({
         });
     },
     FETCH_COURSE: async ({ commit, state }, code) => {
-    
       state.isCourseLoaded = false;
 
       axios
@@ -103,6 +102,8 @@ export default new Vuex.Store({
         .catch((err) => {
           state.isCourseLoaded = false;
           console.error(err.response);
+          alert("Failed to load course");
+          router.push("/");
         });
     },
   },

@@ -4,36 +4,36 @@
       <h1>{{ course ? course.name : ''}}</h1>
       <h3 class="text-secondary" style="text-transform: uppercase;">{{ course ? course.code : '' }}</h3>
     </div>
-      <div class="course-nav">
-        <ul class="nav">
-          <li class="nav-item">
-            <router-link
-              class="nav-link"
-              active-class="active"
-              :to="`/course/${courseSlug}/resources`"
-            >Resources</router-link>
-          </li>
-          <li class="nav-item">
-            <router-link
-              class="nav-link"
-              active-class="active"
-              :to="`/course/${courseSlug}/discuss`"
-            >Discussion</router-link>
-          </li>
-          <li class="nav-item">
-            <router-link
-              class="nav-link"
-              active-class="active"
-              :to="`/course/${courseSlug}/about`"
-            >About</router-link>
-          </li>
-        </ul>
-      </div>
-      <div class="content">
-        <keep-alive>
-          <router-view></router-view>
-        </keep-alive>
-      </div>
+    <div class="course-nav">
+      <ul class="nav">
+        <li class="nav-item">
+          <router-link
+            class="nav-link"
+            active-class="active"
+            :to="`/course/${courseSlug}/resources`"
+          >Resources</router-link>
+        </li>
+        <li class="nav-item">
+          <router-link
+            class="nav-link"
+            active-class="active"
+            :to="`/course/${courseSlug}/discuss`"
+          >Discussion</router-link>
+        </li>
+        <li class="nav-item">
+          <router-link
+            class="nav-link"
+            active-class="active"
+            :to="`/course/${courseSlug}/about`"
+          >About</router-link>
+        </li>
+      </ul>
+    </div>
+    <div class="content">
+      <keep-alive>
+        <router-view :key="$route.fullPath"></router-view>
+      </keep-alive>
+    </div>
   </div>
 </template>
 
