@@ -34,7 +34,8 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
+import { LOGIN } from "../store/auth/actions.type";
+import { mapState } from "vuex";
 export default {
   data() {
     return {
@@ -44,10 +45,12 @@ export default {
       }
     };
   },
+  computed: {
+    ...mapState({
+      errors: state => state.auth.error
+    })
+  },
   methods: {
-    ...mapActions({
-      AUTH_LOGIN: "AUTH_LOGIN"
-    }),
     handleLogin() {
       let username = this.loginForm.username;
       let password = this.loginForm.password;
@@ -58,7 +61,10 @@ export default {
       };
 
       if (username && password) {
-        this.AUTH_LOGIN(body);
+        this.$store.dispatch(LOGIN, body).then(data => {
+          console.log(data);
+          this.$router.push("/");
+        });
       }
     }
   }

@@ -19,7 +19,7 @@ export default {
     Navbar
   },
   computed: {
-    ...mapState(["loggedIn"])
+    ...mapState({"loggedIn": state => state.auth.isAuthenticated})
   }
 };
 </script>

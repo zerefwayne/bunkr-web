@@ -6,14 +6,22 @@
 </template>
 
 <script>
-import { mapState, mapMutations } from "vuex";
+import { mapState } from "vuex";
+import { LOGOUT } from "../store/auth/actions.type";
 export default {
   computed: {
-    ...mapState(["user", "loggedIn"])
+    ...mapState({
+      user: state => state.auth.user,
+      loggedIn: state => state.auth.isAuthenticated
+    })
   },
   mounted() {},
   methods: {
-    ...mapMutations({ handleLogout: "AUTH_LOGOUT" }),
+    handleLogout() {
+      this.$store.dispatch(LOGOUT).then(() => {
+        this.$router.push("/login");
+      });
+    }
   }
 };
 </script>

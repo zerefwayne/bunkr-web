@@ -1,4 +1,4 @@
-import jwtService from "../../shared/jwt.service";
+import jwtService from "@/shared/jwt.service";
 
 import { LOGIN, LOGOUT, SIGNUP } from "./actions.type";
 
@@ -18,7 +18,7 @@ const actions = {
 
     return new Promise((resolve) => {
       axios
-        .post("users/login", payload)
+        .post("/auth/login", payload)
         .then(({ data }) => {
           context.commit(SET_AUTH, { user: data.user, token: data.token });
           resolve(data);
@@ -58,14 +58,14 @@ const mutations = {
     state.user = user;
     state.errors = {};
     if (token) {
-      JwtService.saveToken(state.user.token);
+      jwtService.saveToken(state.user.token);
     }
   },
   [PURGE_AUTH](state) {
     state.isAuthenticated = false;
     state.user = {};
     state.errors = {};
-    JwtService.destroyToken();
+    jwtService.destroyToken();
   },
 };
 

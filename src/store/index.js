@@ -3,14 +3,13 @@ import Vuex from "vuex";
 import router from "../router";
 import axios from "axios";
 
-import { setItem, removeItem } from "../utils";
+import auth from "./auth/auth.module";
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
     loggedIn: false,
-    user: null,
     courses: null,
     activeCourse: null,
     isCourseLoaded: false,
@@ -21,17 +20,6 @@ export default new Vuex.Store({
     },
   },
   mutations: {
-    AUTH_LOGOUT(state) {
-      state.loggedIn = false;
-      state.user = null;
-      state.courses = null;
-      removeItem("AUTH_TOKEN");
-      axios.defaults.headers["Authorization"] = null;
-      console.log("successfully logged out!");
-      if (router.currentRoute.name != "login") {
-        router.push("/login");
-      }
-    },
     INIT_APP(state, payload) {
       state.loggedIn = true;
       state.user = payload.user;
@@ -48,22 +36,6 @@ export default new Vuex.Store({
     },
   },
   actions: {
-    AUTH_LOGIN({ dispatch }, payload) {
-      let json = JSON.stringify(payload);
-
-      axios
-        .post("auth/login", json)
-        .then(({ data }) => {
-          console.log(data);
-          setItem("AUTH_TOKEN", data.token);
-          axios.defaults.headers["Authorization"] = data.token;
-          console.log("Set item token, now dispatching init app");
-          dispatch("INIT_APP");
-        })
-        .catch((err) => {
-          console.log(err.response);
-        });
-    },
     AUTH_SIGNUP: async (_, payload) => {
       let json = JSON.stringify(payload);
 
@@ -107,5 +79,7 @@ export default new Vuex.Store({
         });
     },
   },
-  modules: {},
+  modules: {
+    auth,
+  },
 });

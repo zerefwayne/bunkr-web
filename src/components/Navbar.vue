@@ -38,9 +38,15 @@ export default {
     return {};
   },
   computed: {
-    ...mapState(["user", "loggedIn", "courses"])
+    ...mapState({
+      user: state => state.auth.user,
+      loggedIn: state => state.auth.isAuthenticated,
+      courses: state => state.courses
+    })
   },
-  mounted() {},
+  mounted() {
+    console.log(this.user, this.loggedIn, this.courses);
+  },
   methods: {
     ...mapMutations({ handleLogout: "AUTH_LOGOUT" }),
     handleLogin() {
