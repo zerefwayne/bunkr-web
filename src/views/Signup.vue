@@ -74,7 +74,7 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
+import { SIGNUP } from "../store/auth/actions.type";
 export default {
   data() {
     return {
@@ -89,7 +89,6 @@ export default {
     };
   },
   methods: {
-    ...mapActions(["AUTH_SIGNUP"]),
     handleLogin() {
       let username = this.loginForm.username;
       let password = this.loginForm.password;
@@ -105,7 +104,10 @@ export default {
       };
 
       if (password === passwordConfirmation) {
-        this.AUTH_SIGNUP(body);
+        this.$store.dispatch(SIGNUP, body).then(data => {
+          console.log("Signed up successfully!", data);
+          this.$router.push("/login");
+        });
       } else {
         alert("Password confirmation failed.");
       }

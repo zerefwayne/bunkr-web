@@ -36,9 +36,8 @@ const actions = {
 
     return new Promise((resolve, reject) => {
       axios
-        .post("users", payload)
+        .post("/auth/signup", payload)
         .then(({ data }) => {
-          console.log("Signup sucessful", data);
           resolve(data);
         })
         .catch(({ response }) => {
