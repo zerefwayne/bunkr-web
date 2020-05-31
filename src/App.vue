@@ -27,9 +27,7 @@ export default {
   methods: {
     initaliseApp() {
       if (this.isAuthenticated) {
-        Promise.all([store.dispatch(FETCH_COURSES)]).then(data => {
-          console.log("success", data[0]);
-        });
+        Promise.all([store.dispatch(FETCH_COURSES)])
       }
     }
   },

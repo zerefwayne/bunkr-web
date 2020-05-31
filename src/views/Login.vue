@@ -61,8 +61,8 @@ export default {
       };
 
       if (username && password) {
-        this.$store.dispatch(LOGIN, body).then(data => {
-          console.log(data);
+        this.$store.dispatch(LOGIN, body).then(() => {
+          // console.log(data);
           this.$router.push("/");
         });
       }

@@ -39,8 +39,8 @@ export default {
 
       axios
         .post("/resource/create", payload)
-        .then(({ data }) => {
-          console.log(data);
+        .then(() => {
+          // console.log(data);
           this.resourceForm.content = null;
         })
         .catch(err => {

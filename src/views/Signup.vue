@@ -104,8 +104,8 @@ export default {
       };
 
       if (password === passwordConfirmation) {
-        this.$store.dispatch(SIGNUP, body).then(data => {
-          console.log("Signed up successfully!", data);
+        this.$store.dispatch(SIGNUP, body).then(() => {
+          // console.log("Signed up successfully!", data);
           this.$router.push("/login");
         });
       } else {

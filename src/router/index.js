@@ -96,8 +96,6 @@ const router = new VueRouter({
 
 router.beforeEach((to, from, next) => {
 
-  console.log(store.state.auth.isAuthenticated);
-
   if (to.matched.some((record) => record.meta.guest)) {
     if (to.matched.some((record) => record.meta.unauthorized)) {
       if (store.state.auth.isAuthenticated) {
