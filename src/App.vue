@@ -14,8 +14,6 @@
 <script>
 import Navbar from "@/components/Navbar.vue";
 import { mapGetters } from "vuex";
-import store from "./store";
-import { FETCH_COURSES } from "./store/course/actions.type";
 
 export default {
   components: {
@@ -23,19 +21,7 @@ export default {
   },
   computed: {
     ...mapGetters(["isAuthenticated"])
-  },
-  methods: {
-    initaliseApp() {
-      if (this.isAuthenticated) {
-        Promise.all([store.dispatch(FETCH_COURSES)])
-      }
-    }
-  },
-  mounted() {
-    if (this.isAuthenticated) {
-      this.initaliseApp();
-    }
-  },
+  }
 };
 </script>
 

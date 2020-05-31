@@ -23,7 +23,7 @@
       </div>
     </div>
     <div class="profile">
-      <div class="details">{{ user ? '@'+user.username : ''}}</div>
+      <div class="details">{{ user.username ? '@'+user.username : ''}}</div>
       <div class="icons">
         <button class="btn btn-sm btn-light" @click="handleManageProfile">Manage</button>
       </div>

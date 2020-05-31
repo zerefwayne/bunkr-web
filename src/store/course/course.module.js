@@ -31,6 +31,7 @@ const actions = {
     });
   },
   [FETCH_COURSE](context, code) {
+    
     return new Promise((resolve, reject) => {
       axios
         .get("/course/", { params: { code } })

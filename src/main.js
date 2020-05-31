@@ -15,6 +15,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "./styles/global.scss";
 
 import { VALIDATE } from "./store/auth/actions.type";
+import { FETCH_COURSES } from "./store/course/actions.type";
 
 Vue.config.productionTip = false;
 
@@ -26,8 +27,18 @@ axios.defaults.headers = {
   "Content-Type": "application/json;charset=UTF-8",
 };
 
-router.beforeEach((to, from, next) =>
-{
+if (jwtService.getToken()) {
+  axios.defaults.headers["Authorization"] = `${jwtService.getToken()}`;
+
+
+  Promise.all([store.dispatch(FETCH_COURSES)])
+    .then((data) => console.log(data))
+    .catch((err) => {
+      console.error(err);
+    });
+}
+
+router.beforeEach((to, from, next) => {
   axios.defaults.headers["Authorization"] = `${jwtService.getToken()}`;
 
   Promise.all([store.dispatch(VALIDATE)])
@@ -35,11 +46,10 @@ router.beforeEach((to, from, next) =>
       next();
     })
     .catch(() => {
-      console.log("Session expired.")
+      console.log("Session expired.");
       next("/login");
-    })
-  }
-);
+    });
+});
 
 new Vue({
   router,

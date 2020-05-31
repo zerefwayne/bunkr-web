@@ -5,6 +5,8 @@ import { LOGIN, LOGOUT, SIGNUP, VALIDATE } from "./actions.type";
 import { SET_AUTH, PURGE_AUTH, SET_ERROR } from "./mutations.type";
 
 import axios from "axios";
+import { FETCH_COURSES } from "../course/actions.type";
+import store from "@/store";
 
 const state = {
   user: {},
@@ -16,15 +18,23 @@ const actions = {
   [LOGIN](context, credentials) {
     let payload = JSON.stringify(credentials);
 
-    return new Promise((resolve) => {
+    return new Promise((resolve, reject) => {
       axios
         .post("/auth/login", payload)
         .then(({ data }) => {
           context.commit(SET_AUTH, { user: data.user, token: data.token });
-          resolve(data);
+
+          axios.defaults.headers["Authorization"] = `${jwtService.getToken()}`;
+
+          Promise.all([store.dispatch(FETCH_COURSES)])
+            .then(() => resolve(data))
+            .catch((err) => {
+              reject(err);
+            });
         })
         .catch(({ response }) => {
           context.commit(SET_ERROR, response.data);
+          reject(response.data);
         });
     });
   },
