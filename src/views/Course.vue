@@ -65,6 +65,7 @@ export default {
   methods: {
     loadCourse() {
       if (this.courses) {
+        
         let course = this.courses.find(course => {
           return course.slug === this.courseSlug;
         });
@@ -88,7 +89,7 @@ export default {
   mounted() {
     this.courseSlug = this.$route.params.slug;
     this.loadCourse();
-  }
+  },
 };
 </script>
 

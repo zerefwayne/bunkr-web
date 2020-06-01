@@ -5,8 +5,9 @@ import { LOGIN, LOGOUT, SIGNUP, VALIDATE } from "./actions.type";
 import { SET_AUTH, PURGE_AUTH, SET_ERROR } from "./mutations.type";
 
 import axios from "axios";
-import { FETCH_COURSES } from "../course/actions.type";
+import { FETCH_COURSES} from "../course/actions.type";
 import store from "@/store";
+import { RESET_COURSE_STATE } from "../course/mutations.type";
 
 const state = {
   user: {},
@@ -40,6 +41,7 @@ const actions = {
   },
   [LOGOUT](context) {
     context.commit(PURGE_AUTH);
+    context.commit(RESET_COURSE_STATE);
   },
   [SIGNUP](context, credentials) {
     let payload = JSON.stringify(credentials);
@@ -73,6 +75,7 @@ const actions = {
       });
     } else {
       context.commit(PURGE_AUTH);
+      context.commit(RESET_COURSE_STATE);
     }
   },
 };

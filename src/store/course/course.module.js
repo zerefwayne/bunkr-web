@@ -10,6 +10,7 @@ import {
   SET_COURSES,
   SET_ACTIVE_COURSE,
   SET_SUBSCRIBED_COURSES,
+  RESET_COURSE_STATE,
 } from "./mutations.type";
 
 import axios from "axios";
@@ -29,6 +30,11 @@ const mutations = {
   [SET_ACTIVE_COURSE](state, { course }) {
     state.course = course;
   },
+  [RESET_COURSE_STATE](state) {
+    state.course = null;
+    state.courses = [];
+    state.subscribedCourses = [];
+  },
 };
 const actions = {
   [FETCH_COURSES](context) {
@@ -37,7 +43,9 @@ const actions = {
         .get("/user/course/all")
         .then(({ data }) => {
           console.log("fetched courses", data);
-          context.commit(SET_SUBSCRIBED_COURSES, data);
+          if (data.courses) {
+            context.commit(SET_SUBSCRIBED_COURSES, data);
+          }
           resolve(data);
         })
         .catch(({ response }) => {
@@ -51,16 +59,15 @@ const actions = {
         .get("/user/course/add", {
           params: { courseCode: selectedCourse },
         })
-        .then((data) => {
-          resolve(data);
-
+        .then(() => {
           context
             .dispatch(FETCH_COURSES)
             .then((data2) => {
               console.log("refreshed subscribed courses", data2);
+              resolve(data2);
             })
             .catch((err2) => {
-              console.log(err2);
+              reject(err2);
             });
         })
         .catch((err) => {

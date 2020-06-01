@@ -2,34 +2,37 @@
   <div>
     <h3>Profile</h3>
     <button class="btn btn-sm btn-danger" @click="handleLogout">Logout</button>
-    <div class="profile-courses">
-      <h4>Add Course</h4>
-      <form @submit.prevent="handleAddCourse">
-        <div class="form-group">
-          <label for="exampleFormControlSelect1">Course</label>
-          <select class="form-control" id="exampleFormControlSelect1" v-model="selectedCourse">
-            <option
-              v-for="course in courses"
-              :key="course.code"
-              :value="course.code"
-            >{{ `${course.name} - ${course.code}` }}</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <button class="btn btn-success" type="submit">Add Course</button>
-        </div>
-      </form>
-    </div>
-    <div>
-      <h4>Subscribed Courses</h4>
-      <ul class="list-group">
-        <li
-          class="list-group-item"
-          v-for="course in subscribedCourses"
-          :key="course.code"
-        >{{ course.code }}</li>
-      </ul>
-    </div>
+    <template v-if="loaded">
+      <div class="profile-courses">
+        <h4>Add Course</h4>
+        <form @submit.prevent="handleAddCourse">
+          <div class="form-group">
+            <label for="exampleFormControlSelect1">Course</label>
+            <select class="form-control" id="exampleFormControlSelect1" v-model="selectedCourse">
+              <option
+                v-for="course in unsubscribedCourses"
+                :key="course.code"
+                :value="course.code"
+              >{{ `${course.name} - ${course.code}` }}</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <button class="btn btn-success" type="submit">Add Course</button>
+          </div>
+        </form>
+      </div>
+      <div>
+        <h4>Subscribed Courses</h4>
+        <ul class="list-group">
+          <li
+            class="list-group-item"
+            v-for="course in subscribedCourses"
+            :key="course.code"
+          >{{ course.code }}</li>
+        </ul>
+      </div>
+    </template>
+    <template v-else>Loading</template>
   </div>
 </template>
 
@@ -39,13 +42,17 @@ import { LOGOUT } from "../store/auth/actions.type";
 import {
   FETCH_ALL_COURSES,
   SUBSCRIBE_COURSE,
+  FETCH_COURSES
 } from "../store/course/actions.type";
 export default {
   data() {
     return {
-      selectedCourse: null
+      selectedCourse: null,
+      unsubscribedCourses: [],
+      loaded: false
     };
   },
+
   computed: {
     ...mapGetters({
       user: "user",
@@ -56,12 +63,19 @@ export default {
   },
   mounted() {
     let store = this.$store;
-    Promise.all([store.dispatch(FETCH_ALL_COURSES)])
+    Promise.all([
+      store.dispatch(FETCH_ALL_COURSES),
+      store.dispatch(FETCH_COURSES)
+    ])
       .then(data => {
+        this.loaded = true;
         this.selectedCourse = this.courses[0].code;
-        console.log(data);
+        this.setUnsubscribedCourses();
+        console.log(this.subscribedCourses, this.courses);
+        console.log("le aaye samaan", data);
       })
       .catch(err => {
+        this.loaded = false;
         console.error(err);
       });
   },
@@ -76,10 +90,33 @@ export default {
         .dispatch(SUBSCRIBE_COURSE, this.selectedCourse)
         .then(data => {
           console.log(data);
+          this.setUnsubscribedCourses();
         })
         .catch(err => {
           console.error(err);
         });
+    },
+    setUnsubscribedCourses() {
+      this.unsubscribedCourses = this.courses.filter(course => {
+        if (this.subscribedCourses) {
+          let found = this.subscribedCourses.find(sub => {
+            return sub.code === course.code;
+          });
+          if (found) {
+            return false;
+          } else {
+            return true;
+          }
+        } else {
+          return false;
+        }
+      });
+
+      console.log(
+        this.courses,
+        this.unsubscribedCourses,
+        this.subscribedCourses
+      );
     }
   }
 };
