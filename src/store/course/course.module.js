@@ -1,4 +1,4 @@
-import { FETCH_COURSES, FETCH_COURSE } from "./actions.type";
+import { FETCH_COURSES, FETCH_COURSE, FETCH_ALL_COURSES } from "./actions.type";
 
 import { SET_COURSES, SET_ACTIVE_COURSE } from "./mutations.type";
 
@@ -18,6 +18,19 @@ const mutations = {
 };
 const actions = {
   [FETCH_COURSES](context) {
+    return new Promise((resolve, reject) => {
+      axios
+        .get("/course/all")
+        .then(({ data }) => {
+          context.commit(SET_COURSES, data);
+          resolve(data);
+        })
+        .catch(({ response }) => {
+          reject(response);
+        });
+    });
+  },
+  [FETCH_ALL_COURSES](context) {
     return new Promise((resolve, reject) => {
       axios
         .get("/course/all")
