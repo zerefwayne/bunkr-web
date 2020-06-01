@@ -1,4 +1,9 @@
-import { FETCH_COURSES, FETCH_COURSE, FETCH_ALL_COURSES } from "./actions.type";
+import {
+  FETCH_COURSES,
+  FETCH_COURSE,
+  FETCH_ALL_COURSES,
+  CREATE_COURSE,
+} from "./actions.type";
 
 import { SET_COURSES, SET_ACTIVE_COURSE } from "./mutations.type";
 
@@ -12,9 +17,9 @@ const mutations = {
   [SET_COURSES](state, { courses }) {
     state.courses = courses;
   },
-  [SET_ACTIVE_COURSE](state, {course}) {
+  [SET_ACTIVE_COURSE](state, { course }) {
     state.course = course;
-  }
+  },
 };
 const actions = {
   [FETCH_COURSES](context) {
@@ -44,12 +49,25 @@ const actions = {
     });
   },
   [FETCH_COURSE](context, code) {
-    
     return new Promise((resolve, reject) => {
       axios
         .get("/course/", { params: { code } })
         .then(({ data }) => {
           context.commit(SET_ACTIVE_COURSE, data);
+          resolve(data);
+        })
+        .catch(({ response }) => {
+          reject(response);
+        });
+    });
+  },
+  [CREATE_COURSE](context, details) {
+    let payload = JSON.stringify(details);
+
+    return new Promise((resolve, reject) => {
+      axios
+        .post("/course/new", payload)
+        .then(({ data }) => {
           resolve(data);
         })
         .catch(({ response }) => {
@@ -64,7 +82,7 @@ const getters = {
   },
   activeCourse(state) {
     return state.course;
-  }
+  },
 };
 
 export default {

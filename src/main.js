@@ -23,13 +23,10 @@ Vue.use(VueAxios, axios);
 
 axios.defaults.baseURL = "http://localhost:5000/api";
 
-axios.defaults.headers = {
-  "Content-Type": "application/json;charset=UTF-8",
-};
+axios.defaults.headers["Content-Type"] = "application/json;charset=UTF-8";
 
 if (jwtService.getToken()) {
   axios.defaults.headers["Authorization"] = `${jwtService.getToken()}`;
-
 
   Promise.all([store.dispatch(FETCH_COURSES)])
     .then((data) => console.log(data))

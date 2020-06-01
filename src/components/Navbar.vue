@@ -21,6 +21,13 @@
           class="btn btn-outline-secondary mt-3"
         >Add Resource</router-link>
       </div>
+      <div>
+        <router-link
+          :to="{name: 'course-new'}"
+          tag="button"
+          class="btn btn-outline-success mt-3"
+        >Add Course</router-link>
+      </div>
     </div>
     <div class="profile">
       <div class="details">{{ user.username ? '@'+user.username : ''}}</div>

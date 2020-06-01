@@ -8,6 +8,7 @@ import Profile from "@/views/Profile.vue";
 import Course from "@/views/Course.vue";
 import Resources from "@/views/Resources.vue";
 import AddResource from "@/views/AddResource.vue";
+import AddCourse from "@/views/AddCourse.vue";
 import Discuss from "@/views/Discuss.vue";
 import About from "@/views/About.vue";
 
@@ -59,6 +60,15 @@ const routes = [
     },
   },
   {
+    name: "course-new",
+    path: "/course/new",
+    exact: true,
+    component: AddCourse,
+    meta: {
+      authorized: true,
+    },
+  },
+  {
     path: "/course/:slug",
     component: Course,
     meta: {
@@ -95,7 +105,6 @@ const router = new VueRouter({
 });
 
 router.beforeEach((to, from, next) => {
-
   if (to.matched.some((record) => record.meta.guest)) {
     if (to.matched.some((record) => record.meta.unauthorized)) {
       if (store.state.auth.isAuthenticated) {
