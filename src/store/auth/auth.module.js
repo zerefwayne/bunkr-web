@@ -104,6 +104,9 @@ const getters = {
   isAuthenticated(state) {
     return state.isAuthenticated;
   },
+  subscribedCourses(state) {
+    return state.user.subscribedCourses;
+  },
 };
 
 export default {

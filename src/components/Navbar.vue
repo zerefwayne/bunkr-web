@@ -45,7 +45,8 @@ export default {
     return {};
   },
   computed: {
-    ...mapGetters(["isAuthenticated", "user", "courses"])
+    ...mapGetters(["isAuthenticated", "user"]),
+    ...mapGetters({courses: "getSubscribedCourses"})
   },
   methods: {
     handleLogin() {
