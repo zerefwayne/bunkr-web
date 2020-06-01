@@ -29,7 +29,6 @@ if (jwtService.getToken()) {
   axios.defaults.headers["Authorization"] = `${jwtService.getToken()}`;
 
   Promise.all([store.dispatch(FETCH_COURSES)])
-    .then((data) => console.log(data))
     .catch((err) => {
       console.error(err);
     });

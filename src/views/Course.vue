@@ -75,7 +75,6 @@ export default {
           this.$store
             .dispatch(FETCH_COURSE, course.code)
             .then(()=> {
-              // console.log(data);
               this.isLoaded = true;
             })
             .catch(err => {

@@ -6,8 +6,8 @@
         <form autocomplete="off" @submit.prevent="handleSubmit">
           <div class="form-group">
             <label for="exampleFormControlSelect1">Course</label>
-            <select class="form-control" id="exampleFormControlSelect1">
-              <option v-for="course in courses" :key="course.code">{{ `${course.name} - ${course.code}` }}</option>
+            <select class="form-control" id="exampleFormControlSelect1" v-model="resourceForm.courseCode">
+              <option v-for="course in courses" :key="course.code" :value="course.code">{{ `${course.name} - ${course.code}` }}</option>
             </select>
           </div>
           <div class="form-group">
@@ -37,7 +37,8 @@ export default {
   data() {
     return {
       resourceForm: {
-        content: null
+        content: null,
+        courseCode: null
       },
       ready: false
     };
@@ -47,16 +48,20 @@ export default {
   },
   methods: {
     handleSubmit() {
+      
       let body = {
-        content: this.resourceForm.content
+        content: this.resourceForm.content,
+        courseCode: this.resourceForm.courseCode
       };
 
       let payload = JSON.stringify(body);
 
+      console.log(payload);
+
       axios
         .post("/resource/create", payload)
-        .then(() => {
-          // console.log(data);
+        .then((data) => {
+          console.log("resource created", data);
           this.resourceForm.content = null;
         })
         .catch(err => {
