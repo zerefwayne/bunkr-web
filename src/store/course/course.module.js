@@ -4,6 +4,7 @@ import {
   FETCH_ALL_COURSES,
   CREATE_COURSE,
   SUBSCRIBE_COURSE,
+  UNSUBSCRIBE_COURSE,
 } from "./actions.type";
 
 import {
@@ -57,6 +58,28 @@ const actions = {
     return new Promise((resolve, reject) => {
       axios
         .get("/user/course/add", {
+          params: { courseCode: selectedCourse },
+        })
+        .then(() => {
+          context
+            .dispatch(FETCH_COURSES)
+            .then((data2) => {
+              console.log("refreshed subscribed courses", data2);
+              resolve(data2);
+            })
+            .catch((err2) => {
+              reject(err2);
+            });
+        })
+        .catch((err) => {
+          reject(err.response);
+        });
+    });
+  },
+  [UNSUBSCRIBE_COURSE](context, selectedCourse) {
+    return new Promise((resolve, reject) => {
+      axios
+        .get("/user/course/remove", {
           params: { courseCode: selectedCourse },
         })
         .then(() => {

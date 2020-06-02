@@ -1,52 +1,78 @@
 <template>
   <div class="app-navbar">
-    <div class="brand">CollegePortal</div>
-    <div class="content">
-      <div class="courses">
-        <div class="section-header">My Courses</div>
-        <ul class="list-group">
+    <div class="brand">
+      <img src="@/assets/branding/logo-white-full.png" />
+    </div>
+    <template v-if="isAuthenticated">
+      <div class="content">
+        <div class="courses">
+          <div class="section-header">My Courses</div>
+          <ul class="list-group">
+            <router-link
+              tag="li"
+              class="list-group-item"
+              v-for="course in courses"
+              active-class="active"
+              :key="course.code"
+              :to="`/course/${course.slug}`"
+            >{{ course.name }}</router-link>
+          </ul>
+        </div>
+        <div>
           <router-link
-            tag="li"
-            class="list-group-item"
-            v-for="course in courses"
-            :key="course.code"
-            :to="`/course/${course.slug}`"
-          >{{ course.name }}</router-link>
-        </ul>
+            :to="{name: 'resource-new'}"
+            tag="button"
+            class="btn btn-outline-secondary mt-3"
+          >Add Resource</router-link>
+        </div>
+        <div>
+          <router-link
+            :to="{name: 'course-new'}"
+            tag="button"
+            class="btn btn-outline-success mt-3"
+          >Add Course</router-link>
+        </div>
       </div>
-      <div>
-        <router-link
-          :to="{name: 'resource-new'}"
-          tag="button"
-          class="btn btn-outline-secondary mt-3"
-        >Add Resource</router-link>
+      <div class="profile">
+        <div class="details">{{ user.username ? '@'+user.username : ''}}</div>
+        <div class="icons">
+          <button class="btn btn-sm btn-light" @click="handleManageProfile">Manage</button>
+        </div>
       </div>
-      <div>
-        <router-link
-          :to="{name: 'course-new'}"
-          tag="button"
-          class="btn btn-outline-success mt-3"
-        >Add Course</router-link>
+    </template>
+
+    <template v-else>
+      <div class="mode-select">
+        <button class="btn btn-primary" @click="() => {mode = 'login';}">Login</button>
+        <button class="btn btn-primary" @click="() => {mode = 'signup';}">Signup</button>
       </div>
-    </div>
-    <div class="profile">
-      <div class="details">{{ user.username ? '@'+user.username : ''}}</div>
-      <div class="icons">
-        <button class="btn btn-sm btn-light" @click="handleManageProfile">Manage</button>
-      </div>
-    </div>
+      <template v-if="mode === 'login'">
+        <login-navbar />
+      </template>
+      <template v-if="mode === 'signup'">
+        <signup-navbar @success="handleSignupSuccess"/>
+      </template>
+    </template>
   </div>
 </template>
 
 <script>
 import { mapGetters } from "vuex";
+import LoginNavbar from "./LoginNavbar.vue";
+import SignupNavbar from "./SignUpNavbar.vue";
 export default {
   data() {
-    return {};
+    return {
+      mode: "login"
+    };
+  },
+  components: {
+    LoginNavbar,
+    SignupNavbar
   },
   computed: {
     ...mapGetters(["isAuthenticated", "user"]),
-    ...mapGetters({courses: "getSubscribedCourses"})
+    ...mapGetters({ courses: "getSubscribedCourses" })
   },
   methods: {
     handleLogin() {
@@ -54,6 +80,10 @@ export default {
     },
     handleManageProfile() {
       this.$router.push("/profile");
+    },
+    handleSignupSuccess() {
+      console.log("Kuch toh hua");
+      this.mode = 'login';
     }
   }
 };
@@ -64,17 +94,26 @@ export default {
 
 .app-navbar {
   height: 100%;
-  background-color: $darkblue;
+  background-color: #1e1e1e;
   display: flex;
   flex-direction: column;
   color: white;
 
+  .mode-select {
+    display: flex;
+    justify-content: space-evenly;
+    margin-bottom: 2rem;
+    button {
+      width: 100%;
+      margin: 0 2rem;
+    }
+  }
+
   .brand {
-    padding: 2rem;
+    padding: 3rem;
     display: flex;
     justify-content: center;
     align-items: center;
-    border-bottom: 1px solid white;
   }
 
   .content {

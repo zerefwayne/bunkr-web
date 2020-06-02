@@ -24,11 +24,13 @@
       <div>
         <h4>Subscribed Courses</h4>
         <ul class="list-group">
-          <li
-            class="list-group-item"
-            v-for="course in subscribedCourses"
-            :key="course.code"
-          >{{ course.code }}</li>
+          <li class="list-group-item" v-for="course in subscribedCourses" :key="course.code">
+            {{ course.code }}
+            <button
+              class="btn btn-sm btn-danger"
+              @click="() => {handleRemoveCourse(course.code)}"
+            >Unsubscribe</button>
+          </li>
         </ul>
       </div>
     </template>
@@ -42,6 +44,7 @@ import { LOGOUT } from "../store/auth/actions.type";
 import {
   FETCH_ALL_COURSES,
   SUBSCRIBE_COURSE,
+  UNSUBSCRIBE_COURSE,
   FETCH_COURSES
 } from "../store/course/actions.type";
 export default {
@@ -96,6 +99,18 @@ export default {
           console.error(err);
         });
     },
+    handleRemoveCourse(courseCode) {
+      console.log("Removing", courseCode);
+      this.$store
+        .dispatch(UNSUBSCRIBE_COURSE, courseCode)
+        .then(data => {
+          console.log(data);
+          this.setUnsubscribedCourses();
+        })
+        .catch(err => {
+          console.error(err);
+        });
+    },
     setUnsubscribedCourses() {
       this.unsubscribedCourses = this.courses.filter(course => {
         if (this.subscribedCourses) {
@@ -111,6 +126,10 @@ export default {
           return false;
         }
       });
+
+      if (this.unsubscribedCourses.length > 0) {
+        this.selectedCourse = this.unsubscribedCourses[0].code;
+      }
 
       console.log(
         this.courses,

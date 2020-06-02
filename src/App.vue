@@ -3,11 +3,9 @@
     <div class="view">
       <router-view></router-view>
     </div>
-    <template v-if="isAuthenticated">
-      <div class="side-nav">
-        <Navbar />
-      </div>
-    </template>
+    <div class="side-nav">
+      <Navbar />
+    </div>
   </div>
 </template>
 
@@ -37,7 +35,7 @@ export default {
   align-content: stretch;
 
   .side-nav {
-    flex: 0 0 22%;
+    flex: 0 0 23%;
   }
 
   .view {

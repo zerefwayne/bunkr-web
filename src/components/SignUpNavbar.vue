@@ -1,9 +1,8 @@
 <template>
-  <div>
-    <h3>Signup</h3>
+  <div class="app-signup-navbar">
     <div class="login-form">
       <form autocomplete="off" @submit.prevent="handleLogin">
-        <div class="form-group">
+        <div class="form-group dark-form">
           <label for="exampleInputEmail1">Username</label>
           <input
             type="text"
@@ -15,7 +14,7 @@
             required
           />
         </div>
-        <div class="form-group">
+        <div class="form-group dark-form">
           <label for="exampleInputEmail1">Name</label>
           <input
             type="text"
@@ -27,7 +26,7 @@
             required
           />
         </div>
-        <div class="form-group">
+        <div class="form-group dark-form">
           <label for="exampleInputEmail1">Email</label>
           <input
             type="email"
@@ -40,7 +39,7 @@
           />
         </div>
 
-        <div class="form-group">
+        <div class="form-group dark-form">
           <label for="exampleInputPassword1">Password</label>
           <input
             type="password"
@@ -51,7 +50,7 @@
             required
           />
         </div>
-        <div class="form-group">
+        <div class="form-group dark-form">
           <label for="exampleInputPassword1">Confirm Password</label>
           <input
             type="password"
@@ -62,14 +61,9 @@
             required
           />
         </div>
-        <button type="submit" class="btn btn-primary">Signup</button>
+        <button type="submit" class="btn btn-primary mt-2">Signup</button>
       </form>
     </div>
-    <router-link
-      :to="{name:'login'}"
-      tag="button"
-      class="btn btn-outline-success mt-3 ml-3"
-    >Login Instead</router-link>
   </div>
 </template>
 
@@ -105,8 +99,7 @@ export default {
 
       if (password === passwordConfirmation) {
         this.$store.dispatch(SIGNUP, body).then(() => {
-          // console.log("Signed up successfully!", data);
-          this.$router.push("/login");
+          this.$emit("success");
         });
       } else {
         alert("Password confirmation failed.");
@@ -115,3 +108,17 @@ export default {
   }
 };
 </script>
+
+<style lang="scss">
+.app-signup-navbar {
+  padding: 0 2rem;
+}
+
+.dark-form {
+  input.form-control {
+    background-color: #111111;
+    color: white;
+    border: none;
+  }
+}
+</style>
