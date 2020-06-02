@@ -1,5 +1,5 @@
 <template>
-  <div class="app-profile">
+  <div class="app-settings">
     <div class="page-header">
       <h1>Settings</h1>
     </div>
@@ -53,7 +53,7 @@ export default {
   color: white;
 }
 
-.app-profile {
+.app-settings {
   background-color: #111;
   display: flex;
   flex-direction: column;
