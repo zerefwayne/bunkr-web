@@ -2,16 +2,18 @@
   <div class="courses">
     <div class="section-header">My Courses</div>
     <template v-if="courses.length > 0">
+      <div class="nav-courses-list">
         <ul class="list-group">
           <router-link
             tag="li"
             class="list-group-item"
             v-for="course in courses"
-            active-class="active"
+            active-class="active-link"
             :key="course.code"
             :to="`/course/${course.slug}`"
           >{{ course.name }}</router-link>
         </ul>
+      </div>
     </template>
     <template v-else>
       <div class="empty-list">No courses subscribed.</div>
@@ -34,14 +36,30 @@ export default {
   font-size: 1.2rem;
   margin-bottom: 1rem;
   padding: 0 1rem;
+  font-weight: 400;
   text-transform: uppercase;
 }
 
 .courses {
-  .list-group-item {
-    background: none;
-    border-radius: 0;
-    cursor: pointer;
+  .nav-courses-list {
+    .list-group {
+      .list-group-item {
+        background: #111111;
+        border: none;
+        cursor: pointer;
+        border-radius: 0;
+        transition: all 0.2s ease-in-out;
+
+        &:hover {
+          background: lighten($color: #111111, $amount: 2%);
+        }
+
+        &.active-link {
+          transition: all 0.2s ease-in-out;
+          background-color: #0052cc;
+        }
+      }
+    }
   }
 }
 
