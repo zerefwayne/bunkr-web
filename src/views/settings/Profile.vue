@@ -1,6 +1,5 @@
 <template>
   <div>
-    <h3>Edit Profile</h3>
     <button class="btn btn-sm btn-danger" @click="handleLogout">Logout</button>
   </div>
 </template>

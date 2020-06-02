@@ -1,32 +1,46 @@
 <template>
-  <div>
-    <div class="profile-courses">
-      <h4>Add Course</h4>
+  <div class="app-profile-courses">
+    <div class="subscription-form">
       <form @submit.prevent="handleAddCourse">
-        <div class="form-group">
-          <label for="exampleFormControlSelect1">Course</label>
-          <select class="form-control" id="exampleFormControlSelect1" v-model="selectedCourse">
+        <div class="add-course-row">
+          <select
+            class="form-control"
+            id="exampleFormControlSelect1"
+            :disabled="unsubscribedCourses.length == 0"
+            placeholder="Select Course"
+            v-model="selectedCourse"
+          >
+            <option
+              :value="null"
+              disabled
+            >{{ unsubscribedCourses.length === 0 ? '' : "Select Course"}}</option>
             <option
               v-for="course in unsubscribedCourses"
               :key="course.code"
               :value="course.code"
             >{{ `${course.name} - ${course.code}` }}</option>
           </select>
-        </div>
-        <div class="form-group">
-          <button class="btn btn-success" type="submit">Add Course</button>
+          <button
+            class="btn btn-success ml-3"
+            type="submit"
+            :disabled="unsubscribedCourses.length == 0 || selectedCourse === null"
+          >Add Course</button>
         </div>
       </form>
     </div>
-    <div>
-      <h4>Subscribed Courses</h4>
+    <div class="subscribed-courses">
+      <h4 class="mb-3">Subscribed Courses</h4>
       <ul class="list-group">
         <li class="list-group-item" v-for="course in subscribedCourses" :key="course.code">
-          {{ course.code }}
+          <div>
+          {{ course.name }}
+          </div>
           <button
-            class="btn btn-sm btn-danger"
+            class="btn-icon"
             @click="() => {handleRemoveCourse(course.code)}"
-          >Unsubscribe</button>
+          >
+          <img src="@/assets/icons/close.svg" />
+          </button>
         </li>
       </ul>
     </div>
@@ -121,9 +135,7 @@ export default {
         }
       });
 
-      if (this.unsubscribedCourses.length > 0) {
-        this.selectedCourse = this.unsubscribedCourses[0].code;
-      }
+      this.selectedCourse = null;
 
       console.log(
         this.courses,
@@ -137,4 +149,57 @@ export default {
 
 
 <style lang="scss">
+.app-profile-courses {
+  color: white;
+
+  .subscription-form {
+    width: 50%;
+
+    .add-course-row {
+      display: flex;
+      width: 100%;
+      margin-bottom: 2rem;
+
+      select.form-control {
+        width: 50%;
+        background-color: #222;
+        outline: none;
+        border: none;
+        color: white;
+
+        &:focus {
+          outline: none;
+          border: none;
+        }
+      }
+    }
+  }
+
+  .subscribed-courses {
+
+    width: 50%;
+
+    .list-group {
+
+      .list-group-item {
+
+        background: none;
+        border: 1px dashed #444;
+        width: 75%;
+
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        margin-bottom: .5rem;
+
+      }
+
+    }
+
+
+
+  }
+
+}
 </style>

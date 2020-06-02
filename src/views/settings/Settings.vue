@@ -23,7 +23,9 @@
         </li>
       </ul>
     </div>
-    <router-view></router-view>
+    <div class="router-container">
+      <router-view></router-view>
+    </div>
   </div>
 </template>
 
@@ -57,6 +59,10 @@ export default {
   flex-direction: column;
   min-height: 100vh;
 
+  .router-container {
+    padding: 2rem;
+  }
+
   .page-nav {
     color: white;
     padding: 0 2rem;
@@ -68,13 +74,15 @@ export default {
         .nav-link {
           color: #888888;
           text-decoration: none;
-          font-size: 1.5rem;
+          font-size: 2rem;
           padding: 0;
           margin-right: 1rem;
+          transition: all 300ms ease-in-out;
         }
 
         .link-active {
           color: white;
+          transition: all 300ms ease-in-out;
         }
       }
     }
