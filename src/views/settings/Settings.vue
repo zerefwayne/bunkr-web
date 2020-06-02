@@ -71,6 +71,8 @@ export default {
     padding: 0 2rem;
 
     .nav {
+      display: flex;
+      align-items: flex-end;
       .nav-item {
         padding: 0;
         margin: 0;

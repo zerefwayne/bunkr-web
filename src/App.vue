@@ -26,7 +26,6 @@ export default {
 </script>
 
 <style lang="scss">
-
 .fade-enter-active,
 .fade-leave-active {
   transition-duration: 0.1s;
@@ -36,13 +35,41 @@ export default {
 
 .fade-enter,
 .fade-leave-active {
-  opacity: 0
+  opacity: 0;
+}
+
+.page-nav {
+  color: white;
+  padding: 0 2rem;
+
+  .nav {
+    display: flex;
+    align-items: flex-end;
+    .nav-item {
+      padding: 0;
+      margin: 0;
+      .nav-link {
+        color: #666666;
+        text-decoration: none;
+        font-size: 2rem;
+        padding: 0;
+        margin-right: 1rem;
+        transition: all 100ms ease-in-out;
+      }
+
+      .link-active {
+        color: white;
+        transition: all 100ms ease-in-out;
+      }
+    }
+  }
 }
 
 #app {
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: #111111;
 
   min-height: 100vh;
 

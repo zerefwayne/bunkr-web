@@ -6,7 +6,7 @@ import Dashboard from "@/views/Dashboard.vue";
 import Settings from "@/views/settings/Settings.vue";
 import Courses from "@/views/settings/Courses.vue";
 import Profile from "@/views/settings/Profile.vue";
-import Course from "@/views/Course.vue";
+import Course from "@/views/course/Course.vue";
 import Resources from "@/views/Resources.vue";
 import AddResource from "@/views/AddResource.vue";
 import AddCourse from "@/views/AddCourse.vue";
