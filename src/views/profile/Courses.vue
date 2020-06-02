@@ -1,52 +1,47 @@
 <template>
   <div>
-    <h3>Profile</h3>
-    <button class="btn btn-sm btn-danger" @click="handleLogout">Logout</button>
-    <template v-if="loaded">
-      <div class="profile-courses">
-        <h4>Add Course</h4>
-        <form @submit.prevent="handleAddCourse">
-          <div class="form-group">
-            <label for="exampleFormControlSelect1">Course</label>
-            <select class="form-control" id="exampleFormControlSelect1" v-model="selectedCourse">
-              <option
-                v-for="course in unsubscribedCourses"
-                :key="course.code"
-                :value="course.code"
-              >{{ `${course.name} - ${course.code}` }}</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <button class="btn btn-success" type="submit">Add Course</button>
-          </div>
-        </form>
-      </div>
-      <div>
-        <h4>Subscribed Courses</h4>
-        <ul class="list-group">
-          <li class="list-group-item" v-for="course in subscribedCourses" :key="course.code">
-            {{ course.code }}
-            <button
-              class="btn btn-sm btn-danger"
-              @click="() => {handleRemoveCourse(course.code)}"
-            >Unsubscribe</button>
-          </li>
-        </ul>
-      </div>
-    </template>
-    <template v-else>Loading</template>
+    <div class="profile-courses">
+      <h4>Add Course</h4>
+      <form @submit.prevent="handleAddCourse">
+        <div class="form-group">
+          <label for="exampleFormControlSelect1">Course</label>
+          <select class="form-control" id="exampleFormControlSelect1" v-model="selectedCourse">
+            <option
+              v-for="course in unsubscribedCourses"
+              :key="course.code"
+              :value="course.code"
+            >{{ `${course.name} - ${course.code}` }}</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <button class="btn btn-success" type="submit">Add Course</button>
+        </div>
+      </form>
+    </div>
+    <div>
+      <h4>Subscribed Courses</h4>
+      <ul class="list-group">
+        <li class="list-group-item" v-for="course in subscribedCourses" :key="course.code">
+          {{ course.code }}
+          <button
+            class="btn btn-sm btn-danger"
+            @click="() => {handleRemoveCourse(course.code)}"
+          >Unsubscribe</button>
+        </li>
+      </ul>
+    </div>
   </div>
 </template>
 
 <script>
 import { mapGetters } from "vuex";
-import { LOGOUT } from "../store/auth/actions.type";
+import { LOGOUT } from "@/store/auth/actions.type";
 import {
   FETCH_ALL_COURSES,
   SUBSCRIBE_COURSE,
   UNSUBSCRIBE_COURSE,
   FETCH_COURSES
-} from "../store/course/actions.type";
+} from "@/store/course/actions.type";
 export default {
   data() {
     return {
@@ -139,6 +134,7 @@ export default {
   }
 };
 </script>
+
 
 <style lang="scss">
 </style>

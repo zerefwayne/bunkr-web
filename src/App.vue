@@ -40,6 +40,7 @@ export default {
 
   .view {
     flex: 1;
+    min-height: 100vh;
   }
 }
 </style>

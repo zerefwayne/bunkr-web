@@ -75,7 +75,6 @@ export default {
       this.$router.push("/profile");
     },
     handleSignupSuccess() {
-      console.log("Kuch toh hua");
       this.mode = "login";
     }
   }
