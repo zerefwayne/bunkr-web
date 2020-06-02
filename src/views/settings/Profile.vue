@@ -85,6 +85,7 @@ export default {
         background-color: #222;
         border: none;
         color: #cccccc;
+        padding: 1.3rem;
       }
 
     }

@@ -1,7 +1,9 @@
 <template>
   <div id="app">
     <div class="view">
-      <router-view></router-view>
+      <transition name="fade" mode="out-in">
+        <router-view></router-view>
+      </transition>
     </div>
     <div class="side-nav">
       <Navbar />
@@ -24,8 +26,21 @@ export default {
 </script>
 
 <style lang="scss">
+
+.fade-enter-active,
+.fade-leave-active {
+  transition-duration: 0.1s;
+  transition-property: opacity;
+  transition-timing-function: ease-out;
+}
+
+.fade-enter,
+.fade-leave-active {
+  opacity: 0
+}
+
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+  font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 

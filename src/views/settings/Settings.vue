@@ -24,7 +24,9 @@
       </ul>
     </div>
     <div class="router-container">
-      <router-view></router-view>
+      <transition name="fade" mode="out-in">
+        <router-view></router-view>
+      </transition>
     </div>
   </div>
 </template>
@@ -48,6 +50,7 @@ export default {
 </script>
 
 <style lang="scss">
+
 .page-header {
   padding: 2rem;
   color: white;
@@ -72,17 +75,17 @@ export default {
         padding: 0;
         margin: 0;
         .nav-link {
-          color: #888888;
+          color: #666666;
           text-decoration: none;
           font-size: 2rem;
           padding: 0;
           margin-right: 1rem;
-          transition: all 300ms ease-in-out;
+          transition: all 100ms ease-in-out;
         }
 
         .link-active {
           color: white;
-          transition: all 300ms ease-in-out;
+          transition: all 100ms ease-in-out;
         }
       }
     }
