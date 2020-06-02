@@ -72,7 +72,7 @@ export default {
       this.$router.push("/login");
     },
     handleManageProfile() {
-      this.$router.push("/profile");
+      this.$router.push("/settings");
     },
     handleSignupSuccess() {
       this.mode = "login";

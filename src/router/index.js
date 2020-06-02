@@ -3,9 +3,9 @@ import VueRouter from "vue-router";
 
 import Welcome from "@/views/Welcome.vue";
 import Dashboard from "@/views/Dashboard.vue";
-import Profile from "@/views/profile/Profile.vue";
-import Courses from "@/views/profile/Courses.vue";
-import EditProfile from "@/views/profile/EditProfile.vue";
+import Settings from "@/views/settings/Settings.vue";
+import Courses from "@/views/settings/Courses.vue";
+import Profile from "@/views/settings/Profile.vue";
 import Course from "@/views/Course.vue";
 import Resources from "@/views/Resources.vue";
 import AddResource from "@/views/AddResource.vue";
@@ -44,16 +44,20 @@ const routes = [
     },
   },
   {
-    path: "/profile",
-    component: Profile,
+    path: "/settings",
+    component: Settings,
     meta: {
       authorized: true,
     },
     children: [
       {
-        name: "profile",
         path: "",
-        component: EditProfile,
+        redirect: {name: "profile"}
+      },
+      {
+        name: "profile",
+        path: "profile",
+        component: Profile,
       },
       {
         name: "courses",
