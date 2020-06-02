@@ -1,6 +1,5 @@
 <template>
   <div>
-    <h3>Resources</h3>
     <ul class="list-group" v-if="course">
         <li
           class="list-group-item"
