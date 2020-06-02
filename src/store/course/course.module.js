@@ -88,10 +88,10 @@ const actions = {
         });
     });
   },
-  [FETCH_COURSE](context, code) {
+  [FETCH_COURSE](context, slug) {
     return new Promise((resolve, reject) => {
       axios
-        .get("/course/", { params: { code } })
+        .get("/course/", { params: { slug } })
         .then(({ data }) => {
           context.commit(SET_ACTIVE_COURSE, data);
           resolve(data);
