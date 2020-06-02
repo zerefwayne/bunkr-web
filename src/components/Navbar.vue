@@ -5,33 +5,16 @@
     </div>
     <template v-if="isAuthenticated">
       <div class="content">
-        <div class="courses">
-          <div class="section-header">My Courses</div>
-          <ul class="list-group">
-            <router-link
-              tag="li"
-              class="list-group-item"
-              v-for="course in courses"
-              active-class="active"
-              :key="course.code"
-              :to="`/course/${course.slug}`"
-            >{{ course.name }}</router-link>
-          </ul>
-        </div>
-        <div>
-          <router-link
-            :to="{name: 'resource-new'}"
-            tag="button"
-            class="btn btn-outline-secondary mt-3"
-          >Add Resource</router-link>
-        </div>
-        <div>
-          <router-link
-            :to="{name: 'course-new'}"
-            tag="button"
-            class="btn btn-outline-success mt-3"
-          >Add Course</router-link>
-        </div>
+        <Navcard>
+          <subscribed-courses />
+        </Navcard>
+        <Navcard>
+          <router-link :to="{name: 'resource-new'}" class="plain-link">Add resource</router-link>
+        </Navcard>
+
+        <Navcard>
+          <router-link :to="{name: 'course-new'}" class="plain-link">Add Course</router-link>
+        </Navcard>
       </div>
       <div class="profile">
         <div class="details">{{ user.username ? '@'+user.username : ''}}</div>
@@ -50,7 +33,7 @@
         <login-navbar />
       </template>
       <template v-if="mode === 'signup'">
-        <signup-navbar @success="handleSignupSuccess"/>
+        <signup-navbar @success="handleSignupSuccess" />
       </template>
     </template>
   </div>
@@ -60,6 +43,9 @@
 import { mapGetters } from "vuex";
 import LoginNavbar from "./LoginNavbar.vue";
 import SignupNavbar from "./SignUpNavbar.vue";
+import Navcard from "./Navcard.vue";
+import SubscribedCourses from "./SubscribedCourses.vue";
+
 export default {
   data() {
     return {
@@ -68,11 +54,12 @@ export default {
   },
   components: {
     LoginNavbar,
-    SignupNavbar
+    SignupNavbar,
+    Navcard,
+    SubscribedCourses
   },
   computed: {
-    ...mapGetters(["isAuthenticated", "user"]),
-    ...mapGetters({ courses: "getSubscribedCourses" })
+    ...mapGetters(["isAuthenticated", "user"])
   },
   methods: {
     handleLogin() {
@@ -83,7 +70,7 @@ export default {
     },
     handleSignupSuccess() {
       console.log("Kuch toh hua");
-      this.mode = 'login';
+      this.mode = "login";
     }
   }
 };
@@ -109,6 +96,12 @@ export default {
     }
   }
 
+  .plain-link {
+    text-decoration: none;
+    color: white;
+    padding: 0 1rem;
+  }
+
   .brand {
     padding: 3rem;
     display: flex;
@@ -120,23 +113,6 @@ export default {
     flex: 1;
     display: flex;
     flex-direction: column;
-
-    .section-header {
-      padding: 1rem;
-      font-size: 1.2rem;
-    }
-
-    .courses {
-      .list-group-item {
-        background: none;
-
-        cursor: pointer;
-
-        &:hover {
-          background-color: lighten($color: $darkblue, $amount: 2%);
-        }
-      }
-    }
   }
 
   .profile {
