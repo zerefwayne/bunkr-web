@@ -16,11 +16,17 @@
           <router-link :to="{name: 'course-new'}" class="plain-link">Add Course</router-link>
         </Navcard>
       </div>
-      <div class="profile">
-        <div class="details">{{ user.username ? '@'+user.username : ''}}</div>
-        <div class="icons">
-          <button class="btn btn-sm btn-light" @click="handleManageProfile">Manage</button>
-        </div>
+      <div style="margin-bottom: 1rem;">
+        <Navcard>
+          <div class="profile">
+            <div class="details">{{ user.username ? '@'+user.username : ''}}</div>
+            <div class="icons">
+              <button class="btn-icon" @click="handleManageProfile">
+                <img src="@/assets/icons/gear-white.svg" />
+              </button>
+            </div>
+          </div>
+        </Navcard>
       </div>
     </template>
 
@@ -79,6 +85,16 @@ export default {
 <style lang="scss">
 @import "../styles/colors";
 
+.btn-icon {
+  background: none;
+  border: none;
+  outline: none;
+
+  &:focus {
+    outline: none;
+  }
+}
+
 .app-navbar {
   height: 100%;
   background-color: #1e1e1e;
@@ -116,13 +132,9 @@ export default {
   }
 
   .profile {
-    border-top: 1px solid white;
-    padding: 1rem 2rem;
-
     display: flex;
+    padding: 0 1rem;
     justify-content: space-between;
-    align-items: center;
-
     .details {
       font-weight: bold;
       font-size: 1.1rem;
