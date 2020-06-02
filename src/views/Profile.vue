@@ -72,7 +72,6 @@ export default {
     ])
       .then(data => {
         this.loaded = true;
-        this.selectedCourse = this.courses[0].code;
         this.setUnsubscribedCourses();
         console.log(this.subscribedCourses, this.courses);
         console.log("le aaye samaan", data);
@@ -85,7 +84,7 @@ export default {
   methods: {
     handleLogout() {
       this.$store.dispatch(LOGOUT).then(() => {
-        this.$router.push("/login");
+        this.$router.push("/welcome");
       });
     },
     handleAddCourse() {

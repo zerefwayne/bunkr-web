@@ -43,7 +43,7 @@ router.beforeEach((to, from, next) => {
     })
     .catch(() => {
       console.log("Session expired.");
-      next("/login");
+      next("/welcome");
     });
 });
 

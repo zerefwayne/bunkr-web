@@ -1,8 +1,7 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 
-import Login from "@/views/Login.vue";
-import Signup from "@/views/Signup.vue";
+import Welcome from "@/views/Welcome.vue";
 import Dashboard from "@/views/Dashboard.vue";
 import Profile from "@/views/Profile.vue";
 import Course from "@/views/Course.vue";
@@ -18,18 +17,9 @@ Vue.use(VueRouter);
 
 const routes = [
   {
-    name: "login",
-    path: "/login",
-    component: Login,
-    meta: {
-      guest: true,
-      unauthorized: true,
-    },
-  },
-  {
-    name: "signup",
-    path: "/signup",
-    component: Signup,
+    name: "welcome",
+    path: "/welcome",
+    component: Welcome,
     meta: {
       guest: true,
       unauthorized: true,
@@ -119,7 +109,7 @@ router.beforeEach((to, from, next) => {
     if (store.state.auth.isAuthenticated) {
       next();
     } else {
-      next("/login");
+      next("/welcome");
     }
   }
 });
