@@ -57,7 +57,7 @@
 import axios from "axios";
 import { FETCH_ALL_COURSES } from "../store/course/actions.type";
 import { mapGetters } from "vuex";
-
+import VueSimplemde from "vue-simplemde";
 import LinkPreview from "@/components/LinkPreview.vue";
 
 export default {
@@ -72,7 +72,8 @@ export default {
     };
   },
   components: {
-    LinkPreview
+    LinkPreview,
+    VueSimplemde
   },
   computed: {
     ...mapGetters(["courses"])

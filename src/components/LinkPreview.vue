@@ -28,14 +28,12 @@
 
 <script>
 import LinkPrevue from "link-prevue";
+
 export default {
   methods: {},
   props: ["url"],
   components: {
     LinkPrevue
-  },
-  mounted() {
-    console.log(this.$props.url);
   }
 };
 </script>
@@ -44,6 +42,7 @@ export default {
 @import "~simplemde/dist/simplemde.min.css";
 
 .app-link-preview {
+    color: white;
   .link-loading {
     height: 10rem;
     width: 100%;

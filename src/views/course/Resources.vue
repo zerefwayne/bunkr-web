@@ -5,15 +5,27 @@
           class="list-group-item"
           v-for="resource in course.resources"
           :key="resource.id"
-        >{{ resource.content }}</li>
+        >
+        <template v-if="resource.type === 'link'">
+          <LinkPreview :url="resource.content" />
+        </template>
+        <template v-else>
+          {{ resource.content }}
+        </template>
+        
+        </li>
     </ul>
   </div>
 </template>
 
 <script>
 import { mapGetters } from "vuex";
+import LinkPreview from '@/components/LinkPreview.vue';
 export default {
   methods: {},
+  components: {
+    LinkPreview
+  },
   computed: {
     ...mapGetters({course: "activeCourse"})
   },
