@@ -1,18 +1,6 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 
-import Welcome from "@/views/Welcome.vue";
-import Dashboard from "@/views/Dashboard.vue";
-import Settings from "@/views/settings/Settings.vue";
-import Courses from "@/views/settings/Courses.vue";
-import Profile from "@/views/settings/Profile.vue";
-import Course from "@/views/course/Course.vue";
-import Resources from "@/views/course/Resources.vue";
-import AddResource from "@/views/AddResource.vue";
-import AddCourse from "@/views/AddCourse.vue";
-import Discuss from "@/views/course/Discuss.vue";
-import About from "@/views/course/About.vue";
-
 import store from "../store";
 
 Vue.use(VueRouter);
@@ -21,7 +9,7 @@ const routes = [
   {
     name: "welcome",
     path: "/welcome",
-    component: Welcome,
+    component: () => import(/* webpackChunkName: "init" */ '../views/Welcome.vue'),
     meta: {
       guest: true,
       unauthorized: true,
@@ -30,7 +18,7 @@ const routes = [
   {
     name: "dashboard",
     path: "/",
-    component: Dashboard,
+    component: () => import(/* webpackChunkName: "init" */ '../views/Dashboard.vue'),
     meta: {
       authorized: true,
     },
@@ -38,14 +26,14 @@ const routes = [
   {
     name: "resource-new",
     path: "/resource/new",
-    component: AddResource,
+    component: () => import(/* webpackChunkName: "admin" */ '../views/AddResource.vue'),
     meta: {
       authorized: true,
     },
   },
   {
     path: "/settings",
-    component: Settings,
+    component: () => import(/* webpackChunkName: "init" */ '../views/settings/Settings.vue'),
     meta: {
       authorized: true,
     },
@@ -57,12 +45,12 @@ const routes = [
       {
         name: "profile",
         path: "profile",
-        component: Profile,
+        component: () => import(/* webpackChunkName: "init" */ '../views/settings/Profile.vue'),
       },
       {
         name: "courses",
         path: "courses",
-        component: Courses,
+        component: () => import(/* webpackChunkName: "settings-courses" */ '../views/settings/Courses.vue'),
       },
     ],
   },
@@ -70,14 +58,14 @@ const routes = [
     name: "course-new",
     path: "/course/new",
     exact: true,
-    component: AddCourse,
+    component: () => import(/* webpackChunkName: "admin" */ '../views/AddCourse.vue'),
     meta: {
       authorized: true,
     },
   },
   {
     path: "/course/:slug",
-    component: Course,
+    component: () => import(/* webpackChunkName: "course" */ '../views/course/Course.vue'),
     meta: {
       authorized: true,
     },
@@ -89,15 +77,15 @@ const routes = [
       },
       {
         path: "resources",
-        component: Resources,
+        component: () => import(/* webpackChunkName: "course" */ '../views/course/Resources.vue'),
       },
       {
         path: "discuss",
-        component: Discuss,
+        component: () => import(/* webpackChunkName: "course-discuss" */ '../views/course/Discuss.vue'),
       },
       {
         path: "about",
-        component: About,
+        component: () => import(/* webpackChunkName: "course-about" */ '../views/course/About.vue'),
       },
       {
         path: "**",

@@ -63,6 +63,11 @@ export default {
   opacity: 0;
 }
 
+.page-header {
+  padding: 2rem;
+  color: white;
+}
+
 .page-nav {
   color: white;
   padding: 0 2rem;
