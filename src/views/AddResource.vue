@@ -6,21 +6,54 @@
         <form autocomplete="off" @submit.prevent="handleSubmit">
           <div class="form-group">
             <label for="exampleFormControlSelect1">Course</label>
-            <select class="form-control" id="exampleFormControlSelect1" v-model="resourceForm.courseCode">
-              <option v-for="course in courses" :key="course.code" :value="course.code">{{ `${course.name} - ${course.code}` }}</option>
+            <select
+              class="form-control"
+              id="exampleFormControlSelect1"
+              v-model="resourceForm.courseCode"
+            >
+              <option
+                v-for="course in courses"
+                :key="course.code"
+                :value="course.code"
+              >{{ `${course.name} - ${course.code}` }}</option>
             </select>
           </div>
           <div class="form-group">
-            <label for="exampleInputEmail1">Content</label>
-            <textarea
-              class="form-control"
-              id="exampleFormControlTextarea1"
-              rows="3"
-              v-model="resourceForm.content"
-              required
-            ></textarea>
+            <label for="exampleFormControlSelect1">Type</label>
+            <select class="form-control" id="exampleFormControlSelect1" v-model="resourceForm.type">
+              <option value="link">Link</option>
+              <option value="article">Article</option>
+              <option value="file">File</option>
+            </select>
           </div>
-          <button type="submit" class="btn btn-primary">Create</button>
+          <template v-if="resourceForm.type === 'link'">
+            <div class="form-group">
+              <label for="exampleInputEmail1">Link</label>
+              <input
+                type="text"
+                class="form-control"
+                id="exampleInputEmail1"
+                aria-describedby="emailHelp"
+                placeholder="Enter link"
+                v-model="resourceForm.content"
+                required
+              />
+            </div>
+            <link-prevue :url="resourceForm.content" />
+          </template>
+          <template v-else>
+            <div class="form-group">
+              <label for="exampleInputEmail1">Content</label>
+              <textarea
+                class="form-control"
+                id="exampleFormControlTextarea1"
+                rows="3"
+                v-model="resourceForm.content"
+                required
+              ></textarea>
+            </div>
+          </template>
+          <button type="submit" class="btn btn-primary mt-3">Create</button>
         </form>
       </div>
     </template>
@@ -32,26 +65,31 @@
 import axios from "axios";
 import { FETCH_ALL_COURSES } from "../store/course/actions.type";
 import { mapGetters } from "vuex";
+import LinkPrevue from 'link-prevue';
 
 export default {
   data() {
     return {
       resourceForm: {
         content: null,
-        courseCode: null
+        courseCode: null,
+        type: "link"
       },
       ready: false
     };
+  },
+  components: {
+    LinkPrevue
   },
   computed: {
     ...mapGetters(["courses"])
   },
   methods: {
     handleSubmit() {
-      
       let body = {
         content: this.resourceForm.content,
-        courseCode: this.resourceForm.courseCode
+        courseCode: this.resourceForm.courseCode,
+        type: this.resourceForm.type
       };
 
       let payload = JSON.stringify(body);
@@ -60,7 +98,7 @@ export default {
 
       axios
         .post("/resource/create", payload)
-        .then((data) => {
+        .then(data => {
           console.log("resource created", data);
           this.resourceForm.content = null;
         })
@@ -87,5 +125,6 @@ export default {
 .form-container {
   width: 700px;
   padding: 2rem;
+  color: white;
 }
 </style>
