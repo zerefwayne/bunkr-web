@@ -23,7 +23,6 @@
             <select class="form-control" id="exampleFormControlSelect1" v-model="resourceForm.type">
               <option value="link">Link</option>
               <option value="article">Article</option>
-              <option value="file">File</option>
             </select>
           </div>
           <template v-if="resourceForm.type === 'link'">
@@ -62,15 +61,8 @@
             </link-prevue>
           </template>
           <template v-else>
-            <div class="form-group">
-              <label for="exampleInputEmail1">Content</label>
-              <textarea
-                class="form-control"
-                id="exampleFormControlTextarea1"
-                rows="3"
-                v-model="resourceForm.content"
-                required
-              ></textarea>
+            <div style="background-color: white; border-radius: 5px;">
+            <vue-simplemde v-model="resourceForm.content" ref="markdownEditor" />
             </div>
           </template>
           <button type="submit" class="btn btn-primary mt-3">Create</button>
@@ -86,6 +78,7 @@ import axios from "axios";
 import { FETCH_ALL_COURSES } from "../store/course/actions.type";
 import { mapGetters } from "vuex";
 import LinkPrevue from "link-prevue";
+import VueSimplemde from 'vue-simplemde'
 
 export default {
   data() {
@@ -99,7 +92,8 @@ export default {
     };
   },
   components: {
-    LinkPrevue
+    LinkPrevue,
+    VueSimplemde
   },
   computed: {
     ...mapGetters(["courses"])
@@ -142,6 +136,7 @@ export default {
 </script>
 
 <style lang="scss">
+@import '~simplemde/dist/simplemde.min.css';
 .link-loading {
   height: 10rem;
   width: 100%;
