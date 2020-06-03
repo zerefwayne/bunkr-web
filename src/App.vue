@@ -2,7 +2,9 @@
   <div id="app">
     <div class="view">
       <transition name="fade" mode="out-in">
-        <router-view></router-view>
+        <vuescroll :ops="ops">
+          <router-view></router-view>
+        </vuescroll>
       </transition>
     </div>
     <div class="side-nav">
@@ -12,12 +14,35 @@
 </template>
 
 <script>
+import vuescroll from "vuescroll";
 import Navbar from "@/components/Navbar.vue";
 import { mapGetters } from "vuex";
 
 export default {
+  data() {
+    return {
+      ops: {
+        vuescroll: {},
+        scrollPanel: {},
+        rail: {},
+        bar: {
+          showDelay: 500,
+          onlyShowBarOnScroll: true,
+          keepShow: false,
+          opacity: .7,
+          background: "#cccccc",
+          hoverStyle: true,
+          specifyBorderRadius: false,
+          minSize: 0,
+          size: "6px",
+          disable: false
+        }
+      }
+    };
+  },
   components: {
-    Navbar
+    Navbar,
+    vuescroll
   },
   computed: {
     ...mapGetters(["isAuthenticated"])
@@ -71,18 +96,19 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   background-color: #111111;
 
-  min-height: 100vh;
+  height: 100vh;
 
   display: flex;
   align-content: stretch;
 
   .side-nav {
     flex: 0 0 23%;
+    height: 100vh;
   }
 
   .view {
     flex: 1;
-    min-height: 100vh;
+    height: 100vh;
   }
 }
 </style>
