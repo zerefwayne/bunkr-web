@@ -39,7 +39,27 @@
                 required
               />
             </div>
-            <link-prevue :url="resourceForm.content" />
+            <link-prevue :url="resourceForm.content">
+              <template slot-scope="props">
+                <div class="link-preview-card">
+                  <div class="thumbnail-container">
+                    <img class="thumbnail" :src="props.img" :alt="props.title" />
+                  </div>
+                  <div class="content-container">
+                    <div class="link-title">{{props.title.substring(0, 50)}}...</div>
+                    <div class="link-description">{{props.description.substring(0, 100)}}...</div>
+                    <div class="link-actions">
+                      <a :href="props.url" target="_blank">
+                        <img src="@/assets/icons/preview.svg" />
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </template>
+              <template slot="loading">
+                <div class="link-loading">Loading Preview</div>
+              </template>
+            </link-prevue>
           </template>
           <template v-else>
             <div class="form-group">
@@ -65,7 +85,7 @@
 import axios from "axios";
 import { FETCH_ALL_COURSES } from "../store/course/actions.type";
 import { mapGetters } from "vuex";
-import LinkPrevue from 'link-prevue';
+import LinkPrevue from "link-prevue";
 
 export default {
   data() {
@@ -122,6 +142,53 @@ export default {
 </script>
 
 <style lang="scss">
+.link-loading {
+  height: 10rem;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  background: #222;
+  align-items: center;
+  color: #cccccc;
+}
+
+.link-preview-card {
+  display: flex;
+  height: 10rem;
+  border-radius: 5px;
+  overflow: hidden;
+  padding: 5px;
+  background: #222;
+  border: 1px solid #222;
+
+  .thumbnail-container {
+    flex: 0 0 30%;
+    border-radius: 5px;
+    overflow: hidden;
+
+    img {
+      height: 100%;
+    }
+  }
+
+  .content-container {
+    padding: 0 5px;
+    margin-left: 5px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+
+    .link-title {
+      font-size: 1.2rem;
+    }
+
+    .link-description {
+      color: #bbbbbb;
+    }
+  }
+}
+
 .form-container {
   width: 700px;
   padding: 2rem;
