@@ -1,8 +1,18 @@
 <template>
-  <div>
+  <div class="app-resource-display">
     <template v-if="loaded">
       <button class="btn btn-outline-secondary" @click="handleBack">Go Back</button>
       <h3>{{ resource.title }}</h3>
+      <p>{{ resource.created_by }}, {{ resource.created_at }}, {{ resource.type }}</p>
+      <p>{{ resource.tags }}</p>
+
+      <template v-if="resource.type === 'article'">
+        <MarkdownPreview :content="resource.content" />
+      </template>
+      <template v-else>
+        <LinkPreview :url="resource.content" />
+      </template>
+
     </template>
     <template v-else>Loading</template>
   </div>
@@ -11,8 +21,14 @@
 <script>
 import { FETCH_RESOURSE } from "../../store/course/actions.type";
 import { mapGetters } from "vuex";
+import LinkPreview from "@/components/LinkPreview.vue";
+import MarkdownPreview from "@/components/MarkdownPreview.vue";
 import store from "@/store";
 export default {
+  components: {
+    LinkPreview,
+    MarkdownPreview
+  },
   data() {
     return {
       loaded: true
@@ -53,4 +69,7 @@ export default {
 </script>
 
 <style lang="scss">
+.app-resource-display {
+  color: white;
+}
 </style>
