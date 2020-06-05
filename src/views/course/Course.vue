@@ -13,7 +13,7 @@
             :to="`/course/${courseSlug}/resources`"
           >Resources</router-link>
         </li>
-        <li class="nav-item">
+        <!-- <li class="nav-item">
           <router-link
             class="nav-link"
             active-class="link-active"
@@ -26,7 +26,7 @@
             active-class="link-active"
             :to="`/course/${courseSlug}/about`"
           >About</router-link>
-        </li>
+        </li> -->
       </ul>
     </div>
     <div class="router-container">
