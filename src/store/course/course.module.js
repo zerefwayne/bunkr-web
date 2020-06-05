@@ -1,6 +1,7 @@
 import {
   FETCH_COURSES,
   FETCH_COURSE,
+  FETCH_RESOURSE,
   FETCH_ALL_COURSES,
   CREATE_COURSE,
   SUBSCRIBE_COURSE,
@@ -11,6 +12,7 @@ import {
   SET_COURSES,
   SET_ACTIVE_COURSE,
   SET_SUBSCRIBED_COURSES,
+  SET_ACTIVE_RESOURCE,
   RESET_COURSE_STATE,
 } from "./mutations.type";
 
@@ -20,6 +22,7 @@ const state = {
   course: null,
   courses: [],
   subscribedCourses: [],
+  resource: null,
 };
 const mutations = {
   [SET_COURSES](state, { courses }) {
@@ -30,6 +33,9 @@ const mutations = {
   },
   [SET_ACTIVE_COURSE](state, { course }) {
     state.course = course;
+  },
+  [SET_ACTIVE_RESOURCE](state, { resource }) {
+    state.resource = resource;
   },
   [RESET_COURSE_STATE](state) {
     state.course = null;
@@ -124,6 +130,19 @@ const actions = {
         });
     });
   },
+  [FETCH_RESOURSE](context, id) {
+    return new Promise((resolve, reject) => {
+      axios
+        .get("/resource/", { params: { id } })
+        .then(({ data }) => {
+          context.commit(SET_ACTIVE_RESOURCE, data);
+          resolve(data);
+        })
+        .catch(({ response }) => {
+          reject(response);
+        });
+    });
+  },
   [CREATE_COURSE](context, details) {
     let payload = JSON.stringify(details);
 
@@ -148,6 +167,9 @@ const getters = {
   },
   getSubscribedCourses(state) {
     return state.subscribedCourses;
+  },
+  activeResource(state) {
+    return state.resource;
   },
 };
 

@@ -31,9 +31,7 @@
     </div>
     <div class="router-container">
       <transition name="fade" mode="out-in">
-        <keep-alive>
           <router-view :key="$route.fullPath"></router-view>
-        </keep-alive>
       </transition>
     </div>
   </div>
@@ -82,7 +80,7 @@ export default {
         console.error(err);
         this.$router.go(-1);
       });
-  }
+  },
 };
 </script>
 

@@ -76,6 +76,11 @@ const routes = [
         redirect: "resources",
       },
       {
+        path: "resource/:id",
+        name: "resource",
+        component: () => import(/* webpackChunkName: "course-resource" */ '../views/course/Resource.vue'),
+      },
+      {
         path: "resources",
         component: () => import(/* webpackChunkName: "course" */ '../views/course/Resources.vue'),
       },

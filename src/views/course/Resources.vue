@@ -1,41 +1,43 @@
 <template>
   <div>
-    <ul class="list-group" v-if="course">
-      <li class="list-group-item" v-for="resource in course.resources" :key="resource.id">
-        <template v-if="resource.type === 'link'">
-          <LinkPreview :url="resource.content" />
-        </template>
-        <template v-else-if="resource.type === 'article'">
-          <div v-html="marked(resource.content)"></div>
-        </template>
-        <template v-else>{{ resource.content }}</template>
-      </li>
-    </ul>
+    <table class="table table-dark">
+      <thead>
+        <tr>
+          <th scope="col">Title</th>
+          <th scope="col">Type</th>
+          <th scope="col">Created At</th>
+          <th scope="col">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="resource in course.resources" :key="resource.id">
+          <td>{{ resource.title }}</td>
+          <td style="text-transform: capitalize;">{{ resource.type }}</td>
+          <td style="text-transform: capitalize;">{{ resource.created_at }}</td>
+          <td>
+            <router-link
+              tag="button"
+              :to="{name: 'resource', params: {id: resource.id}}"
+              class="btn btn-icon"
+            >
+              <img src="@/assets/icons/preview.svg" />
+            </router-link>
+          </td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 </template>
 
 <script>
 import { mapGetters } from "vuex";
-import LinkPreview from "@/components/LinkPreview.vue";
-import marked from "marked";
 export default {
-  components: {
-    LinkPreview
-  },
   computed: {
     ...mapGetters({ course: "activeCourse" })
-  },
-  methods: {
-    marked: function(content) {
-      return marked(content);
-    }
   },
   mounted() {
     console.log(this.course);
   },
-  filters: {
-    marked
-  }
 };
 </script>
 
