@@ -1,11 +1,11 @@
 <template>
   <div id="app">
     <div class="view">
-      <transition name="fade" mode="out-in">
-        <vuescroll :ops="ops">
+      <vuescroll :ops="ops">
+        <transition name="fade" mode="out-in">
           <router-view></router-view>
-        </vuescroll>
-      </transition>
+        </transition>
+      </vuescroll>
     </div>
     <div class="side-nav">
       <Navbar />
@@ -29,7 +29,7 @@ export default {
           showDelay: 500,
           onlyShowBarOnScroll: true,
           keepShow: false,
-          opacity: .7,
+          opacity: 0.7,
           background: "#cccccc",
           hoverStyle: true,
           specifyBorderRadius: false,

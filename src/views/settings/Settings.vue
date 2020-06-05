@@ -50,12 +50,6 @@ export default {
 </script>
 
 <style lang="scss">
-
-.page-header {
-  padding: 2rem;
-  color: white;
-}
-
 .app-settings {
   background-color: #111;
   display: flex;

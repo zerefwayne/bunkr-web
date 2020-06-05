@@ -25,6 +25,30 @@
               <option value="article">Article</option>
             </select>
           </div>
+          <div class="form-group">
+            <label for="exampleInputEmail1">Title</label>
+              <input
+                type="text"
+                class="form-control"
+                id="exampleInputEmail1"
+                aria-describedby="emailHelp"
+                placeholder="Enter title"
+                v-model="resourceForm.title"
+                required
+              />
+          </div>
+          <div class="form-group">
+            <label for="exampleInputEmail1">Tags</label>
+              <input
+                type="text"
+                class="form-control"
+                id="exampleInputEmail1"
+                aria-describedby="emailHelp"
+                placeholder="Enter tags (seperated by comma)"
+                v-model="resourceForm.tags"
+                required
+              />
+          </div>
           <template v-if="resourceForm.type === 'link'">
             <div class="form-group">
               <label for="exampleInputEmail1">Link</label>
@@ -66,7 +90,9 @@ export default {
       resourceForm: {
         content: null,
         courseCode: null,
-        type: "link"
+        type: "link",
+        title: null,
+        tags: null,
       },
       ready: false
     };
@@ -83,7 +109,9 @@ export default {
       let body = {
         content: this.resourceForm.content,
         courseCode: this.resourceForm.courseCode,
-        type: this.resourceForm.type
+        type: this.resourceForm.type,
+        title: this.resourceForm.title,
+        tags: this.resourceForm.tags.split(',')
       };
 
       let payload = JSON.stringify(body);
