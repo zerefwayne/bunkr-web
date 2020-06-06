@@ -20,10 +20,15 @@ export default {
 };
 </script>
 
-<style lang="scss">
-@import "~simplemde/dist/simplemde.min.css";
-
+<style lang="scss" scoped>
 .app-markdown-preview {
   color: white;
+
+  .article-container {
+    padding: 2rem;
+    padding-top: 2rem;
+    border-radius: 5px;
+    border: 1px solid #cccccc;
+  }
 }
 </style>

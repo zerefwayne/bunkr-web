@@ -1,10 +1,12 @@
 <template>
   <div class="app-resource-display">
     <template v-if="loaded">
-      <button class="btn btn-outline-secondary" @click="handleBack">Go Back</button>
+      <!-- <button class="btn btn-outline-secondary" @click="handleBack">Go Back</button> -->
       <h3>{{ resource.title }}</h3>
-      <p>{{ resource.created_by }}, {{ resource.created_at }}, {{ resource.type }}</p>
-      <p>{{ resource.tags }}</p>
+      <p>Contributor: {{ `@${resource.created_by.username ? resource.created_by.username : ''}` }}, {{ resource.created_at }}</p>
+      <p class="mb-5">
+        <span class="badge badge-primary mr-1" v-for="tag in resource.tags" :key="tag">{{tag}}</span>
+      </p>
 
       <template v-if="resource.type === 'article'">
         <MarkdownPreview :content="resource.content" />
@@ -12,7 +14,6 @@
       <template v-else>
         <LinkPreview :url="resource.content" />
       </template>
-
     </template>
     <template v-else>Loading</template>
   </div>

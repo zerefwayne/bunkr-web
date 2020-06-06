@@ -34,8 +34,9 @@ const mutations = {
   [SET_ACTIVE_COURSE](state, { course }) {
     state.course = course;
   },
-  [SET_ACTIVE_RESOURCE](state, { resource }) {
+  [SET_ACTIVE_RESOURCE](state, { resource, user }) {
     state.resource = resource;
+    state.resource.created_by = user;
   },
   [RESET_COURSE_STATE](state) {
     state.course = null;
@@ -135,6 +136,7 @@ const actions = {
       axios
         .get("/resource/", { params: { id } })
         .then(({ data }) => {
+
           context.commit(SET_ACTIVE_RESOURCE, data);
           resolve(data);
         })
