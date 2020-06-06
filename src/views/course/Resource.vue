@@ -3,7 +3,7 @@
     <template v-if="loaded">
       <!-- <button class="btn btn-outline-secondary" @click="handleBack">Go Back</button> -->
       <h3>{{ resource.title }}</h3>
-      <p>Contributor: {{ `@${resource.created_by.username ? resource.created_by.username : ''}` }}, {{ resource.created_at }}</p>
+      <p>Contributor: {{ `@${resource.created_by.username ? resource.created_by.username : ''}` }}, {{ resource.created_at | moment("MMMM Do YYYY") }}</p>
       <p class="mb-5">
         <span class="badge badge-primary mr-1" v-for="tag in resource.tags" :key="tag">{{tag}}</span>
       </p>

@@ -6,15 +6,19 @@
           <tr>
             <th scope="col">Title</th>
             <th scope="col">Type</th>
-            <th scope="col">Created At</th>
+            <th scope="col">Created On</th>
             <th scope="col">Actions</th>
           </tr>
         </thead>
         <tbody>
           <tr v-for="resource in course.resources" :key="resource.id">
-            <td>{{ resource.title }}</td>
+            <router-link
+              tag="td"
+              style="text-decoration: underline; cursor: pointer;"
+              :to="{name: 'resource', params: {id: resource.id}}"
+            >{{ resource.title }}</router-link>
             <td style="text-transform: capitalize;">{{ resource.type }}</td>
-            <td style="text-transform: capitalize;">{{ resource.created_at }}</td>
+            <td style="text-transform: capitalize;">{{ resource.created_at | moment("ddd, Do MMMM YYYY") }}</td>
             <td>
               <router-link
                 tag="button"
