@@ -11,9 +11,8 @@
         <Navcard>
           <router-link :to="{name: 'resource-new'}" class="plain-link">Add resource</router-link>
         </Navcard>
-
         <Navcard>
-          <router-link :to="{name: 'course-new'}" class="plain-link">Add Course</router-link>
+          <router-link :to="{name: 'admin'}" class="plain-link">Admin</router-link>
         </Navcard>
       </div>
       <div style="margin-bottom: 1rem;">

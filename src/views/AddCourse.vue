@@ -1,7 +1,6 @@
 <template>
-  <div>
-    <h3>Add Course</h3>
-    <div class="add-course-form">
+  <div class="app-add-course">
+    <div class="app-course-form">
       <form autocomplete="off" @submit.prevent="handleAddCourse">
         <div class="form-group">
           <label for="exampleInputEmail1">Name</label>
@@ -68,7 +67,7 @@ export default {
       this.$store
         .dispatch(CREATE_COURSE, body)
         .then(() => {
-          this.$store.dispatch(FETCH_ALL_COURSES)
+          this.$store.dispatch(FETCH_ALL_COURSES);
           this.$router.push("/");
         })
         .catch(err => {
@@ -80,8 +79,11 @@ export default {
 </script>
 
 <style lang="scss">
-.add-course-form {
-  margin-top: 2rem;
+
+.app-add-course {
+}
+
+.app-course-form {
   width: 30%;
   padding: 2rem;
   background-color: #eeeeee;
