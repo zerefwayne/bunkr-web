@@ -72,5 +72,6 @@ export default {
 <style lang="scss">
 .app-resource-display {
   color: white;
+  padding: 2rem;
 }
 </style>

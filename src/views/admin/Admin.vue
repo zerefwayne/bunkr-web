@@ -12,8 +12,16 @@
             :to="{name: 'new-course'}"
           >Add Course</router-link>
         </li>
+        <li class="nav-item">
+          <router-link
+            class="nav-link"
+            active-class="link-active"
+            :to="{name: 'pending-resources'}"
+          >Pending Resources</router-link>
+        </li>
       </ul>
     </div>
+        
     <div class="router-container">
       <transition name="fade" mode="out-in">
         <router-view :key="$route.fullPath"></router-view>

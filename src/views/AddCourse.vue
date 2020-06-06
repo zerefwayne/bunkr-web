@@ -1,6 +1,6 @@
 <template>
   <div class="app-add-course">
-    <div class="app-course-form">
+    <div class="app-course-form dark-form">
       <form autocomplete="off" @submit.prevent="handleAddCourse">
         <div class="form-group">
           <label for="exampleInputEmail1">Name</label>
@@ -38,7 +38,7 @@
             required
           />
         </div>
-        <button type="submit" class="btn btn-primary">Create</button>
+        <button type="submit" class="btn btn-primary mt-2">Create</button>
       </form>
     </div>
   </div>
@@ -86,7 +86,13 @@ export default {
 .app-course-form {
   width: 30%;
   padding: 2rem;
-  background-color: #eeeeee;
+  // background-color: #eeeeee;
+  color: white;
   border-radius: 5px;
+
+  input.form-control {
+    background-color: #222;
+  }
+
 }
 </style>

@@ -3,9 +3,11 @@ import {
   FETCH_COURSE,
   FETCH_RESOURSE,
   FETCH_ALL_COURSES,
+  FETCH_PENDING_RESOURCES,
   CREATE_COURSE,
   SUBSCRIBE_COURSE,
   UNSUBSCRIBE_COURSE,
+  APPROVE_RESOURCE,
 } from "./actions.type";
 
 import {
@@ -14,6 +16,7 @@ import {
   SET_SUBSCRIBED_COURSES,
   SET_ACTIVE_RESOURCE,
   RESET_COURSE_STATE,
+  SET_PENDING_RESOURCES,
 } from "./mutations.type";
 
 import axios from "axios";
@@ -23,6 +26,7 @@ const state = {
   courses: [],
   subscribedCourses: [],
   resource: null,
+  pendingResources: [],
 };
 const mutations = {
   [SET_COURSES](state, { courses }) {
@@ -43,8 +47,47 @@ const mutations = {
     state.courses = [];
     state.subscribedCourses = [];
   },
+  [SET_PENDING_RESOURCES](state, { resources }) {
+    if(resources !== null) {
+      state.pendingResources = resources;
+    } else {
+      state.pendingResources = [];
+    }
+  },
 };
 const actions = {
+  [APPROVE_RESOURCE](context, resource) {
+    let payload = JSON.stringify(resource);
+
+    return new Promise((resolve, reject) => {
+      axios
+        .post("/resource/approve", payload)
+        .then(({ data }) => {
+          context.dispatch(FETCH_PENDING_RESOURCES);
+          resolve(data);
+        })
+        .catch(({ response }) => {
+          reject(response);
+        });
+    });
+  },
+  [FETCH_PENDING_RESOURCES](context) {
+    return new Promise((resolve, reject) => {
+      axios
+        .get("/resource/pending")
+        .then(({ data }) => {
+          console.log("fetched pending resources", data);
+          if (data.resources) {
+            context.commit(SET_PENDING_RESOURCES, data);
+          }
+          resolve(data);
+        })
+        .catch((err) => {
+          console.error(err.response);
+          reject(err);
+        });
+    });
+  },
   [FETCH_COURSES](context) {
     return new Promise((resolve, reject) => {
       axios
@@ -136,7 +179,6 @@ const actions = {
       axios
         .get("/resource/", { params: { id } })
         .then(({ data }) => {
-
           context.commit(SET_ACTIVE_RESOURCE, data);
           resolve(data);
         })
@@ -172,6 +214,9 @@ const getters = {
   },
   activeResource(state) {
     return state.resource;
+  },
+  pendingResources(state) {
+    return state.pendingResources;
   },
 };
 

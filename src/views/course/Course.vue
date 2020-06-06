@@ -84,15 +84,11 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .app-course {
   background-color: #111;
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-
-  .router-container {
-    padding: 2rem;
-  }
 }
 </style>

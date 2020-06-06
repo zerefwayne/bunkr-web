@@ -51,6 +51,20 @@ export default {
 </script>
 
 <style lang="scss">
+.table-view {
+  table.table {
+    tbody {
+      td {
+        padding: 0.6rem;
+
+        .btn-icon {
+          padding: 0;
+        }
+      }
+    }
+  }
+}
+
 .fade-enter-active,
 .fade-leave-active {
   transition-duration: 0.1s;

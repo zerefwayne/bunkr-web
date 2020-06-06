@@ -81,8 +81,22 @@ const routes = [
         path: "course/new",
         name: "new-course",
         component: () =>
+          import(/* webpackChunkName: "admin" */ "../views/AddCourse.vue"),
+      },
+      {
+        path: "requests",
+        name: "pending-resources",
+        component: () =>
           import(
-            /* webpackChunkName: "admin-course" */ "../views/AddCourse.vue"
+            /* webpackChunkName: "admin-pending" */ "../views/admin/Pending.vue"
+          ),
+      },
+      {
+        path: "preview/:id",
+        name: "preview",
+        component: () =>
+          import(
+            /* webpackChunkName: "course-resource" */ "../views/course/Resource.vue"
           ),
       },
     ],
