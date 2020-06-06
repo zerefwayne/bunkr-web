@@ -59,10 +59,16 @@ export default {
       };
 
       if (username && password) {
-        this.$store.dispatch(LOGIN, body).then(() => {
-          // console.log(data);
-          this.$router.push("/");
-        });
+        this.$store
+          .dispatch(LOGIN, body)
+          .then(() => {
+            // console.log(data);
+            this.$router.push("/");
+          })
+          .catch(err => {
+            this.$toasted.error(err.error);
+            console.log(err.error);
+          });
       }
     }
   }

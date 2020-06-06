@@ -8,6 +8,7 @@ import jwtService from "./shared/jwt.service";
 
 import axios from "axios";
 import VueAxios from "vue-axios";
+import Toasted from "vue-toasted";
 
 import "bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -20,6 +21,12 @@ Vue.config.productionTip = false;
 
 Vue.use(VueAxios, axios);
 Vue.use(require("vue-moment"));
+Vue.use(Toasted, {
+  position: "bottom-center",
+  duration: 3000,
+  keepOnHover: true,
+  theme: 'bubble'
+});
 
 axios.defaults.baseURL = "http://localhost:5000/api";
 
