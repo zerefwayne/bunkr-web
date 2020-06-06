@@ -48,7 +48,7 @@ const mutations = {
     state.subscribedCourses = [];
   },
   [SET_PENDING_RESOURCES](state, { resources }) {
-    if(resources !== null) {
+    if (resources) {
       state.pendingResources = resources;
     } else {
       state.pendingResources = [];
@@ -77,9 +77,7 @@ const actions = {
         .get("/resource/pending")
         .then(({ data }) => {
           console.log("fetched pending resources", data);
-          if (data.resources) {
-            context.commit(SET_PENDING_RESOURCES, data);
-          }
+          context.commit(SET_PENDING_RESOURCES, data);
           resolve(data);
         })
         .catch((err) => {

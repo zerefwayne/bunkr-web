@@ -17,11 +17,11 @@
             class="nav-link"
             active-class="link-active"
             :to="{name: 'pending-resources'}"
-          >Pending Resources</router-link>
+          >Pending Resources {{ pendingResources.length > 0 ? `(${pendingResources.length})` : '' }}</router-link>
         </li>
       </ul>
     </div>
-        
+
     <div class="router-container">
       <transition name="fade" mode="out-in">
         <router-view :key="$route.fullPath"></router-view>
@@ -31,8 +31,16 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
+import { FETCH_PENDING_RESOURCES } from "@/store/course/actions.type";
 export default {
-  methods: {}
+  methods: {},
+  computed: {
+    ...mapGetters(["pendingResources"])
+  },
+  mounted() {
+    this.$store.dispatch(FETCH_PENDING_RESOURCES);
+  }
 };
 </script>
 
