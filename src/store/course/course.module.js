@@ -76,7 +76,7 @@ const actions = {
       axios
         .get("/resource/pending")
         .then(({ data }) => {
-          console.log("fetched pending resources", data);
+          // console.log("fetched pending resources", data);
           context.commit(SET_PENDING_RESOURCES, data);
           resolve(data);
         })
@@ -91,7 +91,7 @@ const actions = {
       axios
         .get("/user/course/all")
         .then(({ data }) => {
-          console.log("fetched courses", data);
+          // console.log("fetched courses", data);
           if (data.courses) {
             context.commit(SET_SUBSCRIBED_COURSES, data);
           }
@@ -112,7 +112,7 @@ const actions = {
           context
             .dispatch(FETCH_COURSES)
             .then((data2) => {
-              console.log("refreshed subscribed courses", data2);
+              // console.log("refreshed subscribed courses", data2);
               resolve(data2);
             })
             .catch((err2) => {
@@ -134,7 +134,7 @@ const actions = {
           context
             .dispatch(FETCH_COURSES)
             .then((data2) => {
-              console.log("refreshed subscribed courses", data2);
+              // console.log("refreshed subscribed courses", data2);
               resolve(data2);
             })
             .catch((err2) => {
