@@ -21,6 +21,14 @@
             href="#"
           >Courses</router-link>
         </li>
+        <li class="nav-item">
+          <router-link
+            :to="{name: 'contributions'}"
+            class="nav-link"
+            active-class="link-active"
+            href="#"
+          >Contributions</router-link>
+        </li>
       </ul>
     </div>
     <div class="router-container">
@@ -33,6 +41,7 @@
 
 <script>
 import { mapGetters } from "vuex";
+import { FETCH_USER_RESOURCES } from "../../store/auth/actions.type";
 
 export default {
   data() {
@@ -45,7 +54,17 @@ export default {
       isAuthenticated: "isAuthenticated"
     })
   },
-  methods: {}
+  methods: {},
+  mounted() {
+    this.$store
+      .dispatch(FETCH_USER_RESOURCES)
+      .then(data => {
+        console.log("Saare le aaya user ke courses", data);
+      })
+      .catch(err => {
+        this.$toasted.error(JSON.stringify(err));
+      });
+  }
 };
 </script>
 

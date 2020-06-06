@@ -1,21 +1,47 @@
 import jwtService from "@/shared/jwt.service";
 
-import { LOGIN, LOGOUT, SIGNUP, VALIDATE } from "./actions.type";
+import {
+  LOGIN,
+  LOGOUT,
+  SIGNUP,
+  VALIDATE,
+  FETCH_USER_RESOURCES,
+} from "./actions.type";
 
-import { SET_AUTH, PURGE_AUTH, SET_ERROR } from "./mutations.type";
+import {
+  SET_AUTH,
+  PURGE_AUTH,
+  SET_ERROR,
+  SET_USER_RESOURCES,
+} from "./mutations.type";
 
 import axios from "axios";
-import { FETCH_COURSES} from "../course/actions.type";
+import { FETCH_COURSES } from "../course/actions.type";
 import store from "@/store";
 import { RESET_COURSE_STATE } from "../course/mutations.type";
 
 const state = {
   user: {},
   error: {},
+  userResources: [],
   isAuthenticated: !!jwtService.getToken(),
 };
 
 const actions = {
+  [FETCH_USER_RESOURCES](context) {
+    return new Promise((resolve, reject) => {
+      axios
+        .get("/resource/user")
+        .then(({ data }) => {
+          console.log("Fetched user resources");
+          context.commit(SET_USER_RESOURCES, data);
+          resolve(data);
+        })
+        .catch(({ response }) => {
+          reject(response);
+        });
+    });
+  },
   [LOGIN](context, credentials) {
     let payload = JSON.stringify(credentials);
 
@@ -81,6 +107,13 @@ const actions = {
 };
 
 const mutations = {
+  [SET_USER_RESOURCES](state, { resources }) {
+    if (resources) {
+      state.userResources = resources;
+    } else {
+      state.userResources = [];
+    }
+  },
   [SET_ERROR](state, error) {
     state.errors = error;
   },
@@ -110,6 +143,9 @@ const getters = {
   subscribedCourses(state) {
     return state.user.subscribedCourses;
   },
+  userResources(state) {
+    return state.userResources;
+  }
 };
 
 export default {

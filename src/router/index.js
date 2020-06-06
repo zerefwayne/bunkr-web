@@ -62,6 +62,14 @@ const routes = [
             /* webpackChunkName: "settings-courses" */ "../views/settings/Courses.vue"
           ),
       },
+      {
+        name: "contributions",
+        path: "contributions",
+        component: () =>
+          import(
+            /* webpackChunkName: "settings-contibutions" */ "../views/settings/Contributions.vue"
+          ),
+      },
     ],
   },
   {
