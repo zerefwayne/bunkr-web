@@ -61,12 +61,13 @@ export default {
       if (username && password) {
         this.$store
           .dispatch(LOGIN, body)
-          .then(() => {
+          .then((data) => {
             // console.log(data);
+            this.$toasted.success(`Successfully signed in as ${data.user.username}`);
             this.$router.push("/");
           })
           .catch(err => {
-            this.$toasted.error(err.error);
+            this.$toasted.error(`Error: ${JSON.stringify(err.error)}`);
             console.log(err.error);
           });
       }

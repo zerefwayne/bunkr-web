@@ -27,27 +27,27 @@
           </div>
           <div class="form-group">
             <label for="exampleInputEmail1">Title</label>
-              <input
-                type="text"
-                class="form-control"
-                id="exampleInputEmail1"
-                aria-describedby="emailHelp"
-                placeholder="Enter title"
-                v-model="resourceForm.title"
-                required
-              />
+            <input
+              type="text"
+              class="form-control"
+              id="exampleInputEmail1"
+              aria-describedby="emailHelp"
+              placeholder="Enter title"
+              v-model="resourceForm.title"
+              required
+            />
           </div>
           <div class="form-group">
             <label for="exampleInputEmail1">Tags</label>
-              <input
-                type="text"
-                class="form-control"
-                id="exampleInputEmail1"
-                aria-describedby="emailHelp"
-                placeholder="Enter tags (seperated by comma)"
-                v-model="resourceForm.tags"
-                required
-              />
+            <input
+              type="text"
+              class="form-control"
+              id="exampleInputEmail1"
+              aria-describedby="emailHelp"
+              placeholder="Enter tags (seperated by comma)"
+              v-model="resourceForm.tags"
+              required
+            />
           </div>
           <template v-if="resourceForm.type === 'link'">
             <div class="form-group">
@@ -92,7 +92,7 @@ export default {
         courseCode: null,
         type: "link",
         title: null,
-        tags: null,
+        tags: null
       },
       ready: false
     };
@@ -105,13 +105,22 @@ export default {
     ...mapGetters(["courses"])
   },
   methods: {
+    resetForm() {
+      this.resourceForm = {
+        content: null,
+        courseCode: null,
+        type: "link",
+        title: null,
+        tags: null
+      };
+    },
     handleSubmit() {
       let body = {
         content: this.resourceForm.content,
         courseCode: this.resourceForm.courseCode,
         type: this.resourceForm.type,
         title: this.resourceForm.title,
-        tags: this.resourceForm.tags.split(',')
+        tags: this.resourceForm.tags.split(",")
       };
 
       let payload = JSON.stringify(body);
@@ -123,8 +132,13 @@ export default {
         .then(data => {
           console.log("resource created", data);
           this.resourceForm.content = null;
+          this.$toasted.success(
+            `Successfully created resource! Status: Approval pending.`
+          );
+          this.resetForm();
         })
         .catch(err => {
+          this.$toasted.error(`Error: ${JSON.stringify(err)}`);
           console.error(err.response);
         });
     }

@@ -99,10 +99,13 @@ export default {
 
       if (password === passwordConfirmation) {
         this.$store.dispatch(SIGNUP, body).then(() => {
+          this.$toasted.success(`Successfully created account. Please login to continue.`);
           this.$emit("success");
+        }).catch((err) => {
+          this.$toasted.error(`Error: ${JSON.stringify(err.data)}`);
         });
       } else {
-        alert("Password confirmation failed.");
+        this.$toasted.error(`Passwords don't match.`);
       }
     }
   }
