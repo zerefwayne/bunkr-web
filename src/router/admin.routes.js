@@ -27,14 +27,6 @@ const routes = [
             /* webpackChunkName: "admin-pending" */ "../views/admin/Pending.vue"
           ),
       },
-      {
-        path: "preview/:id",
-        name: "preview",
-        component: () =>
-          import(
-            /* webpackChunkName: "course-resource" */ "../views/course/Resource.vue"
-          ),
-      },
     ],
   },
 ];

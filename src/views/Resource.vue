@@ -1,7 +1,11 @@
 <template>
   <div class="app-resource-display">
     <template v-if="loaded">
-      <!-- <button class="btn btn-outline-secondary" @click="handleBack">Go Back</button> -->
+      <div class="mb-2">
+        <div class="go-back" @click="handleBack">
+          <img src="@/assets/icons/left.svg"> Back
+        </div>
+      </div>
       <h3>{{ resource.title }}</h3>
       <p>Contributor: {{ `@${resource.created_by.username ? resource.created_by.username : ''}` }}, {{ resource.created_at | moment("MMMM Do YYYY") }}</p>
       <p class="mb-5">
@@ -20,7 +24,7 @@
 </template>
 
 <script>
-import { FETCH_RESOURSE } from "../../store/resource/actions.type";
+import { FETCH_RESOURSE } from "@/store/resource/actions.type";
 import { mapGetters } from "vuex";
 import LinkPreview from "@/components/LinkPreview.vue";
 import MarkdownPreview from "@/components/MarkdownPreview.vue";
@@ -49,13 +53,9 @@ export default {
 
     if (to.params.id) {
       let resourceID = to.params.id;
-
-      // console.log("Han sab sahi hai manga raha ruko");
-
       store
         .dispatch(FETCH_RESOURSE, resourceID)
-        .then( () => {
-          // console.log("Fetched resource", data);
+        .then(() => {
           next();
         })
         .catch(err => {
@@ -63,7 +63,7 @@ export default {
           next("/");
         });
     } else {
-      next("/");
+      next(false);
     }
   }
 };
@@ -74,4 +74,14 @@ export default {
   color: white;
   padding: 2rem;
 }
+
+.go-back {
+  display: flex;
+  align-items: center;
+  font-size: 1.4rem;
+  cursor: pointer;
+  margin-bottom: 2rem;
+  color: #bbbbbb;
+}
+
 </style>

@@ -27,6 +27,15 @@ const routes = [
       authorized: true,
     },
   },
+  {
+    name: "resource",
+    path: "/resource/:id",
+    component: () =>
+      import(/* webpackChunkName: "resource" */ "../views/Resource.vue"),
+    meta: {
+      guest: true,
+    },
+  },
 ];
 
 export default routes;

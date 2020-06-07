@@ -17,7 +17,7 @@
             <router-link
               tag="td"
               style="text-decoration: underline; cursor: pointer;"
-              :to="{name: 'preview', params: {id: resource.id}}"
+              :to="{name: 'resource', params: {id: resource.id}}"
             >{{ resource.title }}</router-link>
             <td style="text-transform: capitalize;">{{ resource.type }}</td>
             <td
@@ -26,7 +26,7 @@
             <td>
               <router-link
                 tag="button"
-                :to="{name: 'preview', params: {id: resource.id}}"
+                :to="{name: 'resource', params: {id: resource.id}}"
                 class="btn btn-icon mr-2"
               >
                 <img src="@/assets/icons/preview.svg" />
