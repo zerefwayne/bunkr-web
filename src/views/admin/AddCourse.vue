@@ -45,8 +45,8 @@
 </template>
 
 <script>
-import { CREATE_COURSE, FETCH_ALL_COURSES } from "../store/course/actions.type";
-import slugify from 'slugify';
+import { CREATE_COURSE, FETCH_ALL_COURSES } from "@/store/course/actions.type";
+import slugify from "slugify";
 export default {
   data() {
     return {
@@ -63,6 +63,13 @@ export default {
     }
   },
   methods: {
+    resetForm() {
+      this.courseForm = {
+        slug: null,
+        name: null,
+        code: null
+      };
+    },
     handleAddCourse() {
       let body = {
         slug: this.courseForm.slug,
@@ -73,10 +80,13 @@ export default {
       this.$store
         .dispatch(CREATE_COURSE, body)
         .then(() => {
+          this.$toasted.success(`Successfully created course: ${body.name}`);
+          this.resetForm();
           this.$store.dispatch(FETCH_ALL_COURSES);
-          this.$router.push("/");
+          this.$router.push({ name: "courses" });
         })
         .catch(err => {
+          this.$toasted.error(`Error: ${JSON.stringify(err)}`);
           console.error(err);
         });
     }
@@ -95,6 +105,5 @@ export default {
   input.form-control {
     background-color: #222;
   }
-
 }
 </style>

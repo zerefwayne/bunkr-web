@@ -17,7 +17,7 @@ const routes = [
         path: "course/new",
         name: "new-course",
         component: () =>
-          import(/* webpackChunkName: "admin" */ "../views/AddCourse.vue"),
+          import(/* webpackChunkName: "admin" */ "../views/admin/AddCourse.vue"),
       },
       {
         path: "requests",
