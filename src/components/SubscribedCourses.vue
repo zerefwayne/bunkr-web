@@ -1,6 +1,13 @@
 <template>
   <div class="courses">
-    <div class="section-header">My Courses</div>
+    <div class="section-header">
+      <div class="title">My Courses</div>
+      <div class="actions">
+        <router-link class="btn-icon" tag="button" :to="{name: 'courses'}">
+          <img src="@/assets/icons/edit.svg" />
+        </router-link>
+      </div>
+    </div>
     <template v-if="courses.length > 0">
       <div class="nav-courses-list">
         <ul class="list-group">
@@ -38,6 +45,11 @@ export default {
   padding: 0 1rem;
   font-weight: 400;
   text-transform: uppercase;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
 }
 
 .courses {

@@ -22,7 +22,7 @@
           <div class="profile">
             <div class="details">
               {{ user.username ? '@'+user.username : ''}}
-              <span class="badge badge-primary ml-1" v-if="isAdmin">Admin</span>
+              <span class="badge badge-warning ml-1" v-if="isAdmin">Admin</span>
             </div>
             <div class="icons">
               <button class="btn-icon" @click="handleManageProfile">
