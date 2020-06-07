@@ -3,161 +3,21 @@ import VueRouter from "vue-router";
 
 import store from "../store";
 
+import adminRoutes from "./admin.routes";
+import courseRoutes from "./course.routes";
+import baseRoutes from "./base.routes";
+import settingsRoutes from "./settings.routes";
+
 Vue.use(VueRouter);
 
-const routes = [
-  {
-    name: "welcome",
-    path: "/welcome",
-    component: () =>
-      import(/* webpackChunkName: "init" */ "../views/Welcome.vue"),
-    meta: {
-      guest: true,
-      unauthorized: true,
-    },
-  },
-  {
-    name: "dashboard",
-    path: "/",
-    component: () =>
-      import(/* webpackChunkName: "init" */ "../views/Dashboard.vue"),
-    meta: {
-      authorized: true,
-    },
-  },
-  {
-    name: "resource-new",
-    path: "/resource/new",
-    component: () =>
-      import(/* webpackChunkName: "admin" */ "../views/AddResource.vue"),
-    meta: {
-      authorized: true,
-    },
-  },
-  {
-    path: "/settings",
-    component: () =>
-      import(/* webpackChunkName: "init" */ "../views/settings/Settings.vue"),
-    meta: {
-      authorized: true,
-    },
-    children: [
-      {
-        path: "",
-        redirect: { name: "profile" },
-      },
-      {
-        name: "profile",
-        path: "profile",
-        component: () =>
-          import(
-            /* webpackChunkName: "init" */ "../views/settings/Profile.vue"
-          ),
-      },
-      {
-        name: "courses",
-        path: "courses",
-        component: () =>
-          import(
-            /* webpackChunkName: "settings-courses" */ "../views/settings/Courses.vue"
-          ),
-      },
-      {
-        name: "contributions",
-        path: "contributions",
-        component: () =>
-          import(
-            /* webpackChunkName: "settings-contibutions" */ "../views/settings/Contributions.vue"
-          ),
-      },
-    ],
-  },
-  {
-    path: "/admin",
-    component: () =>
-      import(/* webpackChunkName: "admin" */ "../views/admin/Admin.vue"),
-    meta: {
-      authorized: true,
-    },
-    children: [
-      {
-        path: "",
-        name: "admin",
-        redirect: { name: "new-course" },
-      },
-      {
-        path: "course/new",
-        name: "new-course",
-        component: () =>
-          import(/* webpackChunkName: "admin" */ "../views/AddCourse.vue"),
-      },
-      {
-        path: "requests",
-        name: "pending-resources",
-        component: () =>
-          import(
-            /* webpackChunkName: "admin-pending" */ "../views/admin/Pending.vue"
-          ),
-      },
-      {
-        path: "preview/:id",
-        name: "preview",
-        component: () =>
-          import(
-            /* webpackChunkName: "course-resource" */ "../views/course/Resource.vue"
-          ),
-      },
-    ],
-  },
-  {
-    path: "/course/:slug",
-    component: () =>
-      import(/* webpackChunkName: "course" */ "../views/course/Course.vue"),
-    meta: {
-      authorized: true,
-    },
-    children: [
-      {
-        path: "",
-        name: "course",
-        redirect: "resources",
-      },
-      {
-        path: "resource/:id",
-        name: "resource",
-        component: () =>
-          import(
-            /* webpackChunkName: "course-resource" */ "../views/course/Resource.vue"
-          ),
-      },
-      {
-        path: "resources",
-        component: () =>
-          import(
-            /* webpackChunkName: "course" */ "../views/course/Resources.vue"
-          ),
-      },
-      {
-        path: "discuss",
-        component: () =>
-          import(
-            /* webpackChunkName: "course-discuss" */ "../views/course/Discuss.vue"
-          ),
-      },
-      {
-        path: "about",
-        component: () =>
-          import(
-            /* webpackChunkName: "course-about" */ "../views/course/About.vue"
-          ),
-      },
-      {
-        path: "**",
-        redirect: "resources",
-      },
-    ],
-  },
+let routes = [
+  ...baseRoutes,
+  ...adminRoutes,
+  ...courseRoutes,
+  ...settingsRoutes,
 ];
+
+console.log(routes);
 
 const router = new VueRouter({
   routes,
