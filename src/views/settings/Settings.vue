@@ -41,7 +41,7 @@
 
 <script>
 import { mapGetters } from "vuex";
-import { FETCH_USER_RESOURCES } from "../../store/auth/actions.type";
+import { FETCH_USER_RESOURCES } from "../../store/resource/actions.type";
 
 export default {
   data() {
@@ -56,14 +56,9 @@ export default {
   },
   methods: {},
   mounted() {
-    this.$store
-      .dispatch(FETCH_USER_RESOURCES)
-      .then(data => {
-        console.log("Saare le aaya user ke courses", data);
-      })
-      .catch(err => {
-        this.$toasted.error(JSON.stringify(err));
-      });
+    this.$store.dispatch(FETCH_USER_RESOURCES).catch(err => {
+      this.$toasted.error(JSON.stringify(err));
+    });
   }
 };
 </script>

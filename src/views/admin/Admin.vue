@@ -32,7 +32,8 @@
 
 <script>
 import { mapGetters } from "vuex";
-import { FETCH_PENDING_RESOURCES } from "@/store/course/actions.type";
+import { FETCH_PENDING_RESOURCES } from "../../store/resource/actions.type";
+
 export default {
   methods: {},
   computed: {

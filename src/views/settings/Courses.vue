@@ -79,11 +79,11 @@ export default {
       store.dispatch(FETCH_ALL_COURSES),
       store.dispatch(FETCH_COURSES)
     ])
-      .then(data => {
+      .then( () => {
         this.loaded = true;
         this.setUnsubscribedCourses();
         console.log(this.subscribedCourses, this.courses);
-        console.log("le aaye samaan", data);
+        // console.log("le aaye samaan", data);
       })
       .catch(err => {
         this.loaded = false;

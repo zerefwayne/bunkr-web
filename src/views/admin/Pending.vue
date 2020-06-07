@@ -42,7 +42,7 @@
 
 <script>
 import { mapGetters } from "vuex";
-import { APPROVE_RESOURCE } from "../../store/course/actions.type";
+import { APPROVE_RESOURCE } from "../../store/resource/actions.type";
 
 export default {
   data() {
