@@ -33,9 +33,9 @@
             class="form-control"
             id="exampleInputEmail1"
             aria-describedby="emailHelp"
-            placeholder="Enter slug"
-            v-model="courseForm.slug"
-            required
+            placeholder="Slug will be automatically generated"
+            :value="courseForm.slug"
+            disabled
           />
         </div>
         <button type="submit" class="btn btn-primary mt-2">Create</button>
@@ -46,6 +46,7 @@
 
 <script>
 import { CREATE_COURSE, FETCH_ALL_COURSES } from "../store/course/actions.type";
+import slugify from 'slugify';
 export default {
   data() {
     return {
@@ -55,6 +56,11 @@ export default {
         code: null
       }
     };
+  },
+  watch: {
+    "courseForm.name": function(val) {
+      this.courseForm.slug = slugify(val).toLowerCase();
+    }
   },
   methods: {
     handleAddCourse() {
