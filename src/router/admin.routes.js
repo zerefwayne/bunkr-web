@@ -5,6 +5,7 @@ const routes = [
       import(/* webpackChunkName: "admin" */ "../views/admin/Admin.vue"),
     meta: {
       authorized: true,
+      admin: true,
     },
     children: [
       {

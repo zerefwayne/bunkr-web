@@ -11,14 +11,19 @@
         <Navcard>
           <router-link :to="{name: 'resource-new'}" class="plain-link">Add resource</router-link>
         </Navcard>
-        <Navcard>
-          <router-link :to="{name: 'admin'}" class="plain-link">Admin</router-link>
-        </Navcard>
+        <template v-if="isAdmin">
+          <Navcard>
+            <router-link :to="{name: 'admin'}" class="plain-link">Admin</router-link>
+          </Navcard>
+        </template>
       </div>
       <div style="margin-bottom: 1rem;">
         <Navcard>
           <div class="profile">
-            <div class="details">{{ user.username ? '@'+user.username : ''}}</div>
+            <div class="details">
+              {{ user.username ? '@'+user.username : ''}}
+              <span class="badge badge-primary ml-1" v-if="isAdmin">Admin</span>
+            </div>
             <div class="icons">
               <button class="btn-icon" @click="handleManageProfile">
                 <img src="@/assets/icons/gear-white.svg" />
@@ -64,7 +69,7 @@ export default {
     SubscribedCourses
   },
   computed: {
-    ...mapGetters(["isAuthenticated", "user"])
+    ...mapGetters(["isAuthenticated", "user", "isAdmin"])
   },
   methods: {
     handleLogin() {

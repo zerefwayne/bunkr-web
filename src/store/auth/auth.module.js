@@ -122,6 +122,9 @@ const getters = {
   subscribedCourses(state) {
     return state.user.subscribedCourses;
   },
+  isAdmin(state) {
+    return state.user.isAdmin ? state.user.isAdmin : false
+  }
 };
 
 export default {

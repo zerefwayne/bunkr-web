@@ -17,8 +17,6 @@ let routes = [
   ...settingsRoutes,
 ];
 
-console.log(routes);
-
 const router = new VueRouter({
   routes,
 });
@@ -36,6 +34,16 @@ router.beforeEach((to, from, next) => {
     next();
   } else if (to.matched.some((record) => record.meta.authorized)) {
     if (store.state.auth.isAuthenticated) {
+      if (to.matched.some((record) => record.meta.admin)) {
+        if (store.getters.isAdmin) {
+          next();
+          return;
+        } else {
+          alert("Not allowed!");
+          next("/");
+        }
+      }
+
       next();
     } else {
       next("/welcome");
