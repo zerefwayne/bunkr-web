@@ -1,12 +1,12 @@
 <template>
-  <div class="courses">
+  <div class="courses" @mouseover="hover = true" @mouseleave="hover = false">
     <div class="section-header">
       <div class="title">My Courses</div>
-      <div class="actions">
-        <router-link class="btn-icon" tag="button" :to="{name: 'courses'}">
-          <img src="@/assets/icons/edit.svg" />
-        </router-link>
-      </div>
+        <div class="actions" :class="hover ? 'show-actions' : 'hide-actions'">
+          <router-link class="btn-icon" tag="button" :to="{name: 'courses'}">
+            <img src="@/assets/icons/edit.svg" />
+          </router-link>
+        </div>
     </div>
     <template v-if="courses.length > 0">
       <div class="nav-courses-list">
@@ -31,6 +31,11 @@
 <script>
 import { mapGetters } from "vuex";
 export default {
+  data() {
+    return {
+      hover: false
+    };
+  },
   computed: {
     ...mapGetters({ courses: "getSubscribedCourses" })
   },
@@ -50,6 +55,15 @@ export default {
   justify-content: space-between;
   align-items: center;
 
+  .hide-actions {
+    opacity: 0;
+    transition: all 200ms ease-in-out;
+  }
+
+  .show-actions {
+    opacity: 1;
+    transition: all 200ms ease-in-out;
+  }
 }
 
 .courses {

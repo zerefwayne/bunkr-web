@@ -85,10 +85,6 @@ export default {
 </script>
 
 <style lang="scss">
-
-.app-add-course {
-}
-
 .app-course-form {
   width: 30%;
   padding: 2rem;
