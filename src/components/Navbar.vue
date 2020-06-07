@@ -18,19 +18,21 @@
         </template>
       </div>
       <div style="margin-bottom: 1rem;">
-        <Navcard>
-          <div class="profile">
+        <div @mouseover="hover = true" @mouseleave="hover = false">
+        <Navcard >
+          <div class="profile" >
             <div class="details">
               {{ user.username ? '@'+user.username : ''}}
               <span class="badge badge-warning ml-1" v-if="isAdmin">Admin</span>
             </div>
-            <div class="icons">
+            <div class="icons" :class="hover ? 'show-actions' : 'hide-actions'">
               <button class="btn-icon" @click="handleManageProfile">
                 <img src="@/assets/icons/gear-white.svg" />
               </button>
             </div>
           </div>
         </Navcard>
+        </div>
       </div>
     </template>
 
@@ -59,7 +61,8 @@ import SubscribedCourses from "./SubscribedCourses.vue";
 export default {
   data() {
     return {
-      mode: "login"
+      mode: "login",
+      hover: false
     };
   },
   components: {
