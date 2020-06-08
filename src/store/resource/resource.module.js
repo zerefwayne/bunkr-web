@@ -3,6 +3,7 @@ import {
   FETCH_PENDING_RESOURCES,
   FETCH_RESOURSE,
   APPROVE_RESOURCE,
+  UPDATE_RESOURCE,
 } from "./actions.type";
 
 import {
@@ -112,6 +113,23 @@ const actions = {
         })
         .catch(({ response }) => {
           reject(response);
+        });
+    });
+  },
+  [UPDATE_RESOURCE](context, resource) {
+    let payload = JSON.stringify(resource);
+
+    return new Promise((resolve, reject) => {
+      axios
+        .post("/resource/update", payload)
+        .then(({data}) => {
+          console.log("resource update", data);
+          resolve(data);
+          context.dispatch(FETCH_RESOURSE, resource.id);
+        })
+        .catch((err) => {
+          console.error(err.response);
+          reject(err.response);
         });
     });
   },

@@ -99,7 +99,10 @@ import { FETCH_ALL_COURSES } from "../store/course/actions.type";
 import { mapGetters } from "vuex";
 import VueSimplemde from "vue-simplemde";
 import LinkPreview from "@/components/LinkPreview.vue";
-import { FETCH_RESOURSE } from "../store/resource/actions.type";
+import {
+  FETCH_RESOURSE,
+  UPDATE_RESOURCE
+} from "../store/resource/actions.type";
 
 export default {
   data() {
@@ -118,6 +121,38 @@ export default {
   components: {
     LinkPreview,
     VueSimplemde
+  },
+  watch: {
+    "$route.name": function(val) {
+      if (val === "resource-new") {
+        this.isEditMode = false;
+        this.ready = false;
+
+        Promise.all([store.dispatch(FETCH_ALL_COURSES)])
+          .then(() => {
+            this.ready = true;
+          })
+          .catch(() => {
+            this.ready = false;
+          });
+      } else if (val === "resource-edit") {
+        this.isEditMode = true;
+        this.ready = false;
+
+        let resourceID = this.$route.params.id;
+
+        this.$store
+          .dispatch(FETCH_RESOURSE, resourceID)
+          .then(() => {
+            this.ready = true;
+          })
+          .catch(err => {
+            console.error(err);
+            this.ready = false;
+            this.$router.go(-1);
+          });
+      }
+    }
   },
   computed: {
     ...mapGetters(["courses"]),
@@ -159,6 +194,26 @@ export default {
         .catch(err => {
           this.$toasted.error(`Error: ${JSON.stringify(err)}`);
           console.error(err.response);
+        });
+    },
+    handleUpdate() {
+      let body = this.resource;
+
+      body.content = this.resourceForm.content;
+      body.type = this.resourceForm.type;
+      body.title = this.resourceForm.title;
+      body.created_by = this.resource.created_by.id;
+
+      console.log(body, this.resource);
+
+      this.$store
+        .dispatch(UPDATE_RESOURCE, body)
+        .then(data => {
+          this.$toasted.success(`Successfully updated resource!`);
+          console.log("success", data);
+        })
+        .catch(err => {
+          console.error(err);
         });
     }
   },
