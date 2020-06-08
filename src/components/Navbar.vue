@@ -8,30 +8,45 @@
         <Navcard>
           <subscribed-courses />
         </Navcard>
-        <Navcard>
-          <router-link :to="{name: 'resource-new'}" class="plain-link">Add resource</router-link>
-        </Navcard>
-        <template v-if="isAdmin">
+        <router-link
+          :to="{name: 'resource-new'}"
+          class="navcard-link"
+          active-class="navcard-link-active"
+        >
           <Navcard>
-            <router-link :to="{name: 'admin'}" class="plain-link">Admin</router-link>
+            <div class="plain-link">Add resource</div>
           </Navcard>
+        </router-link>
+        <template v-if="isAdmin">
+          <router-link
+            :to="{name: 'admin'}"
+            class="navcard-link"
+            active-class="navcard-link-active"
+          >
+            <Navcard>
+              <div class="plain-link">Admin</div>
+            </Navcard>
+          </router-link>
         </template>
       </div>
       <div style="margin-bottom: 1rem;">
         <div @mouseover="hover = true" @mouseleave="hover = false">
-        <Navcard >
-          <div class="profile" >
-            <div class="details">
-              {{ user.username ? '@'+user.username : ''}}
-              <span class="badge badge-warning ml-1" v-if="isAdmin">Admin</span>
+          <Navcard>
+            <div class="profile">
+              <div class="details">
+                {{ user.username ? '@'+user.username : ''}}
+                <span
+                  class="badge badge-warning ml-1"
+                  v-if="isAdmin"
+                >Admin</span>
+              </div>
+              <div class="icons" :class="hover ? 'show-actions' : 'hide-actions'">
+                <button class="btn-icon" @click="handleManageProfile">
+                  <img src="@/assets/icons/gear-white.svg" />
+                </button>
+              </div>
             </div>
-            <div class="icons" :class="hover ? 'show-actions' : 'hide-actions'">
-              <button class="btn-icon" @click="handleManageProfile">
-                <img src="@/assets/icons/gear-white.svg" />
-              </button>
-            </div>
-          </div>
-        </Navcard>
+          </Navcard>
         </div>
       </div>
     </template>
@@ -90,6 +105,29 @@ export default {
 
 <style lang="scss">
 @import "../styles/colors";
+
+.navcard-link {
+  .app-nav-card {
+    text-decoration: none;
+  }
+  &:hover {
+    .app-nav-card {
+      background-color: #222;
+      transition: all 100ms ease-in-out;
+    }
+  }
+}
+.navcard-link-active {
+  .app-nav-card {
+    background-color: #0052cc;
+    transition: all 200ms ease-in-out;
+  }
+  &:hover {
+    .app-nav-card {
+      background-color: #0052cc;
+    }
+  }
+}
 
 .btn-icon {
   background: none;
