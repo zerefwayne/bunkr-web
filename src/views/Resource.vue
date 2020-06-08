@@ -3,10 +3,19 @@
     <template v-if="loaded">
       <div class="mb-2">
         <div class="go-back" @click="handleBack">
-          <img src="@/assets/icons/left.svg"> Back
+          <img src="@/assets/icons/left.svg" /> Back
         </div>
       </div>
-      <h3>{{ resource.title }}</h3>
+      <div class="resource-header">
+        <h3>{{ resource.title }}</h3>
+        <router-link
+          tag="button"
+          :to="{name: 'resource-edit', params: {id: resource.id, isEditMode: true}}"
+          class="ml-3 btn-icon"
+        >
+          <img src="@/assets/icons/edit.svg" />
+        </router-link>
+      </div>
       <p>Contributor: {{ `@${resource.created_by.username ? resource.created_by.username : ''}` }}, {{ resource.created_at | moment("MMMM Do YYYY") }}</p>
       <p class="mb-5">
         <span class="badge badge-primary mr-1" v-for="tag in resource.tags" :key="tag">{{tag}}</span>
@@ -75,6 +84,13 @@ export default {
   padding: 2rem;
 }
 
+.resource-header {
+
+  display: flex;
+  align-items: center;
+
+}
+
 .go-back {
   display: flex;
   align-items: center;
@@ -83,5 +99,4 @@ export default {
   margin-bottom: 2rem;
   color: #bbbbbb;
 }
-
 </style>

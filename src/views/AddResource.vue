@@ -1,23 +1,33 @@
 <template>
-  <div>
-    <h3>Add Resource</h3>
+  <div class="app-add-resource">
+    <div class="page-header">
+      <template v-if="isEditMode">
+        <h1>Edit Resource</h1>
+        <h4>{{ resource.title }}</h4>
+      </template>
+      <template v-else>
+        <h1>Add Resource</h1>
+      </template>
+    </div>
     <template v-if="ready">
       <div class="form-container">
-        <form autocomplete="off" @submit.prevent="handleSubmit">
-          <div class="form-group">
-            <label for="exampleFormControlSelect1">Course</label>
-            <select
-              class="form-control"
-              id="exampleFormControlSelect1"
-              v-model="resourceForm.courseCode"
-            >
-              <option
-                v-for="course in courses"
-                :key="course.code"
-                :value="course.code"
-              >{{ `${course.name} - ${course.code}` }}</option>
-            </select>
-          </div>
+        <form autocomplete="off">
+          <template v-if="!isEditMode">
+            <div class="form-group">
+              <label for="exampleFormControlSelect1">Course</label>
+              <select
+                class="form-control"
+                id="exampleFormControlSelect1"
+                v-model="resourceForm.courseCode"
+              >
+                <option
+                  v-for="course in courses"
+                  :key="course.code"
+                  :value="course.code"
+                >{{ `${course.name} - ${course.code}` }}</option>
+              </select>
+            </div>
+          </template>
           <div class="form-group">
             <label for="exampleFormControlSelect1">Type</label>
             <select class="form-control" id="exampleFormControlSelect1" v-model="resourceForm.type">
@@ -69,7 +79,12 @@
               <vue-simplemde v-model="resourceForm.content" ref="markdownEditor" />
             </div>
           </template>
-          <button type="submit" class="btn btn-primary mt-3">Create</button>
+          <template v-if="!isEditMode">
+            <button type="submit" @click.prevent="handleSubmit" class="btn btn-primary mt-3">Create</button>
+          </template>
+          <template v-else>
+            <button type="submit" @click.prevent="handleUpdate" class="btn btn-warning mt-3">Update</button>
+          </template>
         </form>
       </div>
     </template>
@@ -79,10 +94,12 @@
 
 <script>
 import axios from "axios";
+import store from "@/store";
 import { FETCH_ALL_COURSES } from "../store/course/actions.type";
 import { mapGetters } from "vuex";
 import VueSimplemde from "vue-simplemde";
 import LinkPreview from "@/components/LinkPreview.vue";
+import { FETCH_RESOURSE } from "../store/resource/actions.type";
 
 export default {
   data() {
@@ -94,6 +111,7 @@ export default {
         title: null,
         tags: null
       },
+      isEditMode: false,
       ready: false
     };
   },
@@ -102,7 +120,8 @@ export default {
     VueSimplemde
   },
   computed: {
-    ...mapGetters(["courses"])
+    ...mapGetters(["courses"]),
+    ...mapGetters({ resource: "activeResource" })
   },
   methods: {
     resetForm() {
@@ -143,24 +162,59 @@ export default {
         });
     }
   },
+  beforeRouteEnter(to, from, next) {
+    if (to.name === "resource-edit") {
+      if (to.params.id) {
+        let resourceID = to.params.id;
+        store
+          .dispatch(FETCH_RESOURSE, resourceID)
+          .then(() => {
+            next();
+          })
+          .catch(err => {
+            console.error(err);
+            next("/");
+          });
+      } else {
+        next(false);
+      }
+    } else {
+      next();
+    }
+  },
   mounted() {
     let store = this.$store;
 
-    Promise.all([store.dispatch(FETCH_ALL_COURSES)])
-      .then(() => {
-        this.ready = true;
-      })
-      .catch(() => {
-        this.ready = false;
-      });
+    if (this.$route.params.isEditMode || this.$route.name === "resource-edit") {
+      this.isEditMode = true;
+      this.ready = true;
+      this.resourceForm.type = this.resource.type;
+      this.resourceForm.title = this.resource.title;
+      this.resourceForm.tags = this.resource.tags;
+      this.resourceForm.content = this.resource.content;
+    }
+
+    if (!this.isEditMode) {
+      Promise.all([store.dispatch(FETCH_ALL_COURSES)])
+        .then(() => {
+          this.ready = true;
+        })
+        .catch(() => {
+          this.ready = false;
+        });
+    }
   }
 };
 </script>
 
 <style lang="scss">
+.app-add-course {
+  color: white;
+}
+
 .form-container {
   width: 700px;
-  padding: 2rem;
+  padding: 0 2rem;
   color: white;
 }
 </style>

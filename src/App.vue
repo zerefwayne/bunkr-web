@@ -53,12 +53,12 @@ export default {
 <style lang="scss">
 .hide-actions {
   opacity: 0;
-  transition: all 100ms ease-in-out;
+  transition: all 200ms ease-in-out;
 }
 
 .show-actions {
   opacity: 1;
-  transition: all 100ms ease-in-out;
+  transition: all 200ms ease-in-out;
 }
 
 .table-view {

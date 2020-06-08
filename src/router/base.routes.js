@@ -36,6 +36,15 @@ const routes = [
       guest: true,
     },
   },
+  {
+    name: "resource-edit",
+    path: "/resource/:id/edit",
+    component: () =>
+      import(/* webpackChunkName: "admin" */ "../views/AddResource.vue"),
+    meta: {
+      authorized: true,
+    },
+  },
 ];
 
 export default routes;
