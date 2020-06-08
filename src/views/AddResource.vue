@@ -213,6 +213,7 @@ export default {
           console.log("success", data);
         })
         .catch(err => {
+          this.$toasted.error(JSON.stringify(err));
           console.error(err);
         });
     }
