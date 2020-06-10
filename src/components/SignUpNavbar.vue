@@ -61,7 +61,11 @@
             required
           />
         </div>
-        <button type="submit" class="btn btn-primary mt-2">Signup</button>
+        <button type="submit" class="btn btn-primary mt-2">
+          <div class="spinner-border spinner-border-sm" v-if="loading.signup" role="status" aria-hidden="true"></div>
+          
+          Signup
+        </button>
       </form>
     </div>
   </div>
@@ -79,11 +83,17 @@ export default {
         passwordConfirmation: null,
         name: null,
         valid: false
+      },
+      loading: {
+        signup: false
       }
     };
   },
   methods: {
     handleLogin() {
+
+      this.loading.signup = true;
+
       let username = this.loginForm.username;
       let password = this.loginForm.password;
       let email = this.loginForm.email;
@@ -99,12 +109,15 @@ export default {
 
       if (password === passwordConfirmation) {
         this.$store.dispatch(SIGNUP, body).then(() => {
+          this.loading.signup = false;
           this.$toasted.success(`Successfully created account. Please login to continue.`);
           this.$emit("success");
         }).catch((err) => {
+          this.loading.signup = false;
           this.$toasted.error(`Error: ${JSON.stringify(err.data)}`);
         });
       } else {
+        this.loading = false;
         this.$toasted.error(`Passwords don't match.`);
       }
     }

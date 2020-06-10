@@ -25,7 +25,10 @@
             required
           />
         </div>
-        <button type="submit" class="btn btn-primary">Continue</button>
+        <button type="submit" class="btn btn-primary btn-loader">
+          <div class="spinner-border spinner-border-sm" v-if="loading.login" role="status" aria-hidden="true"></div>
+          Continue
+        </button>
       </form>
     </div>
   </div>
@@ -40,6 +43,9 @@ export default {
       loginForm: {
         username: null,
         password: null
+      },
+      loading: {
+        login: false
       }
     };
   },
@@ -50,6 +56,9 @@ export default {
   },
   methods: {
     handleLogin() {
+
+      this.loading.login = true;
+
       let username = this.loginForm.username;
       let password = this.loginForm.password;
 
@@ -61,12 +70,20 @@ export default {
       if (username && password) {
         this.$store
           .dispatch(LOGIN, body)
-          .then((data) => {
+          .then(data => {
             // console.log(data);
-            this.$toasted.success(`Successfully signed in as ${data.user.username}`);
+
+            this.loading.login = false;
+
+            this.$toasted.success(
+              `Successfully signed in as ${data.user.username}`
+            );
             this.$router.push("/");
           })
           .catch(err => {
+
+            this.loading.login = false;
+
             this.$toasted.error(`Error: ${JSON.stringify(err.error)}`);
             console.log(err.error);
           });
@@ -77,6 +94,13 @@ export default {
 </script>
 
 <style lang="scss">
+
+.btn-loader {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .app-login-navbar {
   padding: 0 2rem;
 }
