@@ -4,7 +4,9 @@ import {
   FETCH_RESOURSE,
   APPROVE_RESOURCE,
   UPDATE_RESOURCE,
-  DELETE_RESOURCE
+  DELETE_RESOURCE,
+  UPVOTE_RESOURCE,
+  DOWNVOTE_RESOURCE,
 } from "./actions.type";
 
 import {
@@ -123,7 +125,7 @@ const actions = {
     return new Promise((resolve, reject) => {
       axios
         .post("/resource/update", payload)
-        .then(({data}) => {
+        .then(({ data }) => {
           console.log("resource update", data);
           resolve(data);
           context.dispatch(FETCH_RESOURSE, resource.id);
@@ -140,8 +142,41 @@ const actions = {
     return new Promise((resolve, reject) => {
       axios
         .post("/resource/delete", payload)
-        .then(({data}) => {
+        .then(({ data }) => {
           console.log("resource deleted", data);
+          resolve(data);
+        })
+        .catch((err) => {
+          console.error(err.response);
+          reject(err.response);
+        });
+    });
+  },
+  [UPVOTE_RESOURCE](context, resourceID) {
+    return new Promise((resolve, reject) => {
+      axios
+        .post("/resource/add-vote", JSON.stringify({}), {
+          params: { resourceID },
+        })
+        .then(({ data }) => {
+          console.log("resource upvoted", data);
+          resolve(data);
+          context.dispatch();
+        })
+        .catch((err) => {
+          console.error(err.response);
+          reject(err.response);
+        });
+    });
+  },
+  [DOWNVOTE_RESOURCE](context, resourceID) {
+    return new Promise((resolve, reject) => {
+      axios
+        .post("/resource/update-vote", JSON.stringify({}), {
+          params: { resourceID },
+        })
+        .then(({ data }) => {
+          console.log("resource downvoted", data);
           resolve(data);
         })
         .catch((err) => {

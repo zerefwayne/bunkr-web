@@ -22,14 +22,25 @@
               <td
                 style="text-transform: capitalize;"
               >{{ resource.created_at | moment("ddd, Do MMMM YYYY") }}</td>
-              <td>
+              <td style="display: flex; align-items: center;">
                 <router-link
                   tag="button"
                   :to="{name: 'resource', params: {id: resource.id}}"
-                  class="btn btn-icon"
+                  class="btn btn-icon mr-2"
                 >
                   <img src="@/assets/icons/preview.svg" />
                 </router-link>
+                <button
+                  v-if="hasUpvoted(resource.upvotes)"
+                  class="btn-icon"
+                  @click="() => {downvoteResource(resource.id)}"
+                >
+                  <img src="@/assets/icons/downvote.svg" />
+                </button>
+                <button class="btn-icon" v-else @click="() => {upvoteResource(resource.id)}">
+                  <img src="@/assets/icons/upvote.svg" />
+                </button>
+                <span class="ml-1" style="color: white; font-weight: bold;">{{ resource.upvotes.length }}</span>
               </td>
             </tr>
           </tbody>
@@ -41,10 +52,46 @@
 
 <script>
 import { mapGetters } from "vuex";
+import {
+  UPVOTE_RESOURCE,
+  DOWNVOTE_RESOURCE
+} from "../../store/resource/actions.type";
+import { FETCH_COURSE } from '../../store/course/actions.type';
 export default {
   computed: {
-    ...mapGetters({ course: "activeCourse" })
+    ...mapGetters({ user: "user", course: "activeCourse" })
   },
+  methods: {
+    hasUpvoted(upvotes) {
+      return upvotes.includes(this.user.id);
+    },
+    upvoteResource(resourceID) {
+      this.$store
+        .dispatch(UPVOTE_RESOURCE, resourceID)
+        .then(() => {
+          this.$toasted.success("Successfully upvoted!");
+          this.$store.dispatch(FETCH_COURSE, this.course.slug);
+        })
+        .catch(err => {
+          this.$toasted.error(
+            `Error upvoting resource: ${JSON.stringify(err)}`
+          );
+        });
+    },
+    downvoteResource(resourceID) {
+      this.$store
+        .dispatch(DOWNVOTE_RESOURCE, resourceID)
+        .then(() => {
+          this.$toasted.success("Successfully downvoted!");
+          this.$store.dispatch(FETCH_COURSE, this.course.slug);
+        })
+        .catch(err => {
+          this.$toasted.error(
+            `Error downvoting resource: ${JSON.stringify(err)}`
+          );
+        });
+    }
+  }
 };
 </script>
 

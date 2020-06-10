@@ -58,7 +58,8 @@ export default {
         this.isLoaded = false;
         this.$store
           .dispatch(FETCH_COURSE, this.courseSlug)
-          .then(() => {
+          .then((data) => {
+            console.log("Fetched course", data);
             this.isLoaded = true;
           })
           .catch(err => {
@@ -73,7 +74,8 @@ export default {
     this.courseSlug = this.$route.params.slug;
     this.$store
       .dispatch(FETCH_COURSE, this.courseSlug)
-      .then(() => {
+      .then((data) => {
+        console.log("Fetched course", data);
         this.isLoaded = true;
       })
       .catch(err => {
