@@ -28,7 +28,7 @@ Vue.use(Toasted, {
   theme: "bubble",
 });
 
-axios.defaults.baseURL = process.env.VUE_APP_BACKEND_URL || "http://localhost:5000/api";
+axios.defaults.baseURL = "http://localhost:5000/api";
 
 axios.defaults.headers["Content-Type"] = "application/json;charset=UTF-8";
 

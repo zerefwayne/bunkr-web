@@ -84,6 +84,11 @@
           </template>
           <template v-else>
             <button type="submit" @click.prevent="handleUpdate" class="btn btn-warning mt-3">Update</button>
+            <button
+              type="submit"
+              @click.prevent="handleDelete"
+              class="btn btn-danger mt-3 ml-2"
+            >Delete</button>
           </template>
         </form>
       </div>
@@ -101,7 +106,8 @@ import VueSimplemde from "vue-simplemde";
 import LinkPreview from "@/components/LinkPreview.vue";
 import {
   FETCH_RESOURSE,
-  UPDATE_RESOURCE
+  UPDATE_RESOURCE,
+  DELETE_RESOURCE
 } from "../store/resource/actions.type";
 
 export default {
@@ -215,6 +221,20 @@ export default {
         .catch(err => {
           this.$toasted.error(JSON.stringify(err));
           console.error(err);
+        });
+    },
+    handleDelete() {
+      let body = {
+        resourceID: this.resource.id
+      };
+      this.$store
+        .dispatch(DELETE_RESOURCE, body)
+        .then(() => {
+          this.$toasted.success("Successfully deleted!");
+          this.$router.push("/");
+        })
+        .catch(err => {
+          this.$toasted.error("Phat gaya" + JSON.stringify(err));
         });
     }
   },
