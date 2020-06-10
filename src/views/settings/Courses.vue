@@ -24,7 +24,14 @@
             class="btn btn-success ml-3"
             type="submit"
             :disabled="unsubscribedCourses.length == 0 || selectedCourse === null"
-          >Add Course</button>
+          >
+            <div
+              class="spinner-border spinner-border-sm mr-2"
+              v-if="loading.addCourse"
+              role="status"
+              aria-hidden="true"
+            ></div>Add Course
+          </button>
         </div>
       </form>
     </div>
@@ -32,14 +39,9 @@
       <h4 class="mb-3">Subscribed Courses</h4>
       <ul class="list-group">
         <li class="list-group-item" v-for="course in subscribedCourses" :key="course.code">
-          <div>
-          {{ course.name }}
-          </div>
-          <button
-            class="btn-icon"
-            @click="() => {handleRemoveCourse(course.code)}"
-          >
-          <img src="@/assets/icons/close.svg" />
+          <div>{{ course.name }}</div>
+          <button class="btn-icon" @click="() => {handleRemoveCourse(course.code)}">
+            <img src="@/assets/icons/close.svg" />
           </button>
         </li>
       </ul>
@@ -61,7 +63,10 @@ export default {
     return {
       selectedCourse: null,
       unsubscribedCourses: [],
-      loaded: false
+      loaded: false,
+      loading: {
+        addCourse: false
+      }
     };
   },
 
@@ -79,7 +84,7 @@ export default {
       store.dispatch(FETCH_ALL_COURSES),
       store.dispatch(FETCH_COURSES)
     ])
-      .then( () => {
+      .then(() => {
         this.loaded = true;
         this.setUnsubscribedCourses();
         console.log(this.subscribedCourses, this.courses);
@@ -97,13 +102,20 @@ export default {
       });
     },
     handleAddCourse() {
+      this.loading.addCourse = true;
       this.$store
         .dispatch(SUBSCRIBE_COURSE, this.selectedCourse)
         .then(data => {
+          this.loading.addCourse = false;
           console.log(data);
+          this.$toasted.success(
+            `Successfully subscribed to: ${this.selectedCourse}!`
+          );
           this.setUnsubscribedCourses();
         })
         .catch(err => {
+          this.$toasted.error(`Error: ${JSON.stringify(err)}!`);
+          this.loading.addCourse = false;
           console.error(err);
         });
     },
@@ -112,10 +124,14 @@ export default {
       this.$store
         .dispatch(UNSUBSCRIBE_COURSE, courseCode)
         .then(data => {
+          this.$toasted.success(
+            `Successfully unsubscribed from: ${courseCode}!`
+          );
           console.log(data);
           this.setUnsubscribedCourses();
         })
         .catch(err => {
+          this.$toasted.error(`Error: ${JSON.stringify(err)}!`);
           console.error(err);
         });
     },
@@ -176,13 +192,10 @@ export default {
   }
 
   .subscribed-courses {
-
     width: 50%;
 
     .list-group {
-
       .list-group-item {
-
         background: none;
         border: 1px dashed #444;
         width: 75%;
@@ -191,15 +204,9 @@ export default {
         justify-content: space-between;
         align-items: center;
 
-        margin-bottom: .5rem;
-
+        margin-bottom: 0.5rem;
       }
-
     }
-
-
-
   }
-
 }
 </style>

@@ -63,7 +63,6 @@
         </div>
         <button type="submit" class="btn btn-primary mt-2">
           <div class="spinner-border spinner-border-sm" v-if="loading.signup" role="status" aria-hidden="true"></div>
-          
           Signup
         </button>
       </form>

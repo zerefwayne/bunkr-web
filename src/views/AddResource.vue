@@ -80,15 +80,32 @@
             </div>
           </template>
           <template v-if="!isEditMode">
-            <button type="submit" @click.prevent="handleSubmit" class="btn btn-primary mt-3">Create</button>
+            <button type="submit" @click.prevent="handleSubmit" class="btn btn-primary mt-3">
+              <div
+                class="spinner-border spinner-border-sm mr-2"
+                v-if="loading.submit"
+                role="status"
+                aria-hidden="true"
+              ></div>Create
+            </button>
           </template>
           <template v-else>
-            <button type="submit" @click.prevent="handleUpdate" class="btn btn-warning mt-3">Update</button>
-            <button
-              type="submit"
-              @click.prevent="handleDelete"
-              class="btn btn-danger mt-3 ml-2"
-            >Delete</button>
+            <button type="submit" @click.prevent="handleUpdate" class="btn btn-warning mt-3">
+              <div
+                class="spinner-border spinner-border-sm mr-2"
+                v-if="loading.update"
+                role="status"
+                aria-hidden="true"
+              ></div>Update
+            </button>
+            <button type="submit" @click.prevent="handleDelete" class="btn btn-danger mt-3 ml-2">
+              <div
+                class="spinner-border spinner-border-sm mr-2"
+                v-if="loading.delete"
+                role="status"
+                aria-hidden="true"
+              ></div>Delete
+            </button>
           </template>
         </form>
       </div>
@@ -121,7 +138,12 @@ export default {
         tags: null
       },
       isEditMode: false,
-      ready: false
+      ready: false,
+      loading: {
+        submit: false,
+        update: false,
+        delete: false
+      }
     };
   },
   components: {
@@ -175,6 +197,7 @@ export default {
       };
     },
     handleSubmit() {
+      this.loading.submit = true;
       let body = {
         content: this.resourceForm.content,
         courseCode: this.resourceForm.courseCode,
@@ -200,9 +223,13 @@ export default {
         .catch(err => {
           this.$toasted.error(`Error: ${JSON.stringify(err)}`);
           console.error(err.response);
+        })
+        .finally(() => {
+          this.loading.submit = false;
         });
     },
     handleUpdate() {
+      this.loading.update = true;
       let body = this.resource;
 
       body.content = this.resourceForm.content;
@@ -221,9 +248,13 @@ export default {
         .catch(err => {
           this.$toasted.error(JSON.stringify(err));
           console.error(err);
+        })
+        .finally(() => {
+          this.loading.update = false;
         });
     },
     handleDelete() {
+      this.loading.delete = true;
       let body = {
         resourceID: this.resource.id
       };
@@ -235,6 +266,9 @@ export default {
         })
         .catch(err => {
           this.$toasted.error("Phat gaya" + JSON.stringify(err));
+        })
+        .finally(() => {
+          this.loading.delete = false;
         });
     }
   },
