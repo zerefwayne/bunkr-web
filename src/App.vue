@@ -90,6 +90,12 @@ export default {
 .page-header {
   padding: 2rem;
   color: white;
+
+  .content {
+    background-color: black;
+    border-radius: 7px;
+    padding: 2rem;
+  }
 }
 
 .page-nav {
@@ -102,16 +108,20 @@ export default {
     .nav-item {
       padding: 0;
       margin: 0;
+
       .nav-link {
-        color: #666666;
+        background-color: #333333;
+        color: white;
         text-decoration: none;
-        font-size: 2rem;
-        padding: 0;
+        font-size: 1.4rem;
+        padding: .4rem 1.7rem;
+        border-radius: 6px;
         margin-right: 1rem;
         transition: all 100ms ease-in-out;
       }
 
       .link-active {
+        background-color: #0052CC;
         color: white;
         transition: all 100ms ease-in-out;
       }

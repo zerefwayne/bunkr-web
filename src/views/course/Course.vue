@@ -1,8 +1,13 @@
 <template>
   <div class="app-course">
     <div class="page-header">
-      <h1>{{ course ? course.name : ''}}</h1>
-      <h3 class="text-secondary" style="text-transform: uppercase;">{{ course ? course.code : '' }}</h3>
+      <div class="content">
+        <h1>{{ course ? course.name : ''}}</h1>
+        <h3
+          class="text-secondary"
+          style="text-transform: uppercase;"
+        >{{ course ? course.code : '' }}</h3>
+      </div>
     </div>
     <div class="page-nav">
       <ul class="nav">
@@ -13,7 +18,7 @@
             :to="`/course/${courseSlug}/resources`"
           >Resources</router-link>
         </li>
-        <!-- <li class="nav-item">
+        <li class="nav-item">
           <router-link
             class="nav-link"
             active-class="link-active"
@@ -26,12 +31,12 @@
             active-class="link-active"
             :to="`/course/${courseSlug}/about`"
           >About</router-link>
-        </li> -->
+        </li>
       </ul>
     </div>
     <div class="router-container">
       <transition name="fade" mode="out-in">
-          <router-view :key="$route.fullPath"></router-view>
+        <router-view :key="$route.fullPath"></router-view>
       </transition>
     </div>
   </div>
@@ -58,7 +63,7 @@ export default {
         this.isLoaded = false;
         this.$store
           .dispatch(FETCH_COURSE, this.courseSlug)
-          .then((data) => {
+          .then(data => {
             console.log("Fetched course", data);
             this.isLoaded = true;
           })
@@ -74,7 +79,7 @@ export default {
     this.courseSlug = this.$route.params.slug;
     this.$store
       .dispatch(FETCH_COURSE, this.courseSlug)
-      .then((data) => {
+      .then(data => {
         console.log("Fetched course", data);
         this.isLoaded = true;
       })
@@ -82,7 +87,7 @@ export default {
         console.error(err);
         this.$router.go(-1);
       });
-  },
+  }
 };
 </script>
 
