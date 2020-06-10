@@ -160,6 +160,11 @@ export default {
       } else {
         this.sortBy = by;
         this.sortAsc = true;
+
+        if(this.sortBy === CONSTANTS.LIKES) {
+          this.sortAsc = false;
+        }
+
       }
       this.sortResources();
     },
