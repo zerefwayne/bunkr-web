@@ -164,8 +164,8 @@ const actions = {
           context.dispatch();
         })
         .catch((err) => {
-          console.error(err.response);
-          reject(err.response);
+          console.error(err);
+          reject(err);
         });
     });
   },

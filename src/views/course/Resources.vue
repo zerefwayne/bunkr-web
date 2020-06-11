@@ -158,7 +158,10 @@ export default {
   },
   methods: {
     hasBookmarked(bookmarks, resourceID) {
-      return bookmarks.includes(resourceID);
+      if (bookmarks) {
+        return bookmarks.includes(resourceID);
+      }
+      return false;
     },
     sortResources() {
       this.resources = this.resources.sort((a, b) => {

@@ -20,7 +20,9 @@ const mutations = {
     state.bookmarks = state.bookmarks.concat(resourceID);
   },
   [SET_BOOKMARKS](state, { bookmarks }) {
-    state.bookmarks = bookmarks;
+    if (bookmarks) {
+      state.bookmarks = bookmarks;
+    }
   },
   [SET_REMOVE_BOOKMARK](state, resourceID) {
     state.bookmarks = state.bookmarks.filter((id) => {
