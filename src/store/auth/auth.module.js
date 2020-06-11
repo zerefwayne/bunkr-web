@@ -1,32 +1,23 @@
 import jwtService from "@/shared/jwt.service";
 
-import {
-  LOGIN,
-  LOGOUT,
-  SIGNUP,
-  VALIDATE,
-} from "./actions.type";
+import { LOGIN, LOGOUT, SIGNUP, VALIDATE } from "./actions.type";
 
-import {
-  SET_AUTH,
-  PURGE_AUTH,
-  SET_ERROR,
-} from "./mutations.type";
+import { SET_AUTH, PURGE_AUTH, SET_ERROR } from "./mutations.type";
 
 import axios from "axios";
 import { FETCH_COURSES } from "../course/actions.type";
 import store from "@/store";
 import { RESET_COURSE_STATE } from "../course/mutations.type";
+import { UPDATE_BOOKMARKS } from "../bookmarks/actions.type";
 
 const state = {
   user: {},
   error: {},
-  
+
   isAuthenticated: !!jwtService.getToken(),
 };
 
 const actions = {
-  
   [LOGIN](context, credentials) {
     let payload = JSON.stringify(credentials);
 
@@ -38,7 +29,10 @@ const actions = {
 
           axios.defaults.headers["Authorization"] = `${jwtService.getToken()}`;
 
-          Promise.all([store.dispatch(FETCH_COURSES)])
+          Promise.all([
+            store.dispatch(FETCH_COURSES),
+            store.dispatch(UPDATE_BOOKMARKS),
+          ])
             .then(() => resolve(data))
             .catch((err) => {
               reject(err);
@@ -92,7 +86,6 @@ const actions = {
 };
 
 const mutations = {
-  
   [SET_ERROR](state, error) {
     state.errors = error;
   },
@@ -123,8 +116,8 @@ const getters = {
     return state.user.subscribedCourses;
   },
   isAdmin(state) {
-    return state.user.isAdmin ? state.user.isAdmin : false
-  }
+    return state.user.isAdmin ? state.user.isAdmin : false;
+  },
 };
 
 export default {

@@ -17,6 +17,7 @@ import "./styles/global.scss";
 
 import { FETCH_COURSES } from "./store/course/actions.type";
 import { VALIDATE } from "./store/auth/actions.type";
+import { UPDATE_BOOKMARKS } from "./store/bookmarks/actions.type";
 
 Vue.config.productionTip = false;
 
@@ -56,7 +57,7 @@ axios.interceptors.response.use((x) => {
 if (jwtService.getToken()) {
   axios.defaults.headers["Authorization"] = `${jwtService.getToken()}`;
 
-  Promise.all([store.dispatch(VALIDATE), store.dispatch(FETCH_COURSES)]).catch(
+  Promise.all([store.dispatch(VALIDATE), store.dispatch(FETCH_COURSES), store.dispatch(UPDATE_BOOKMARKS)]).catch(
     (err) => {
       console.error(err);
       router.push("/welcome");

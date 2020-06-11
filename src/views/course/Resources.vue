@@ -39,8 +39,16 @@
                   </span>
                 </template>
               </th>
-              <th scope="col" style="width:10%">
+              <th scope="col" style="width:10%" @click="() => {updateSort(constants.SAVED)}">
                 <span class="mr-1">Save</span>
+                <template v-if="sortBy === constants.SAVED">
+                  <span v-if="sortAsc">
+                    <img src="@/assets/icons/up.svg" />
+                  </span>
+                  <span v-else>
+                    <img src="@/assets/icons/down.svg" />
+                  </span>
+                </template>
               </th>
             </tr>
           </thead>
@@ -79,7 +87,16 @@
                 >{{ resource.upvotes.length }}</span>
               </td>
               <td>
-                <img src="@/assets/icons/edit.svg" />
+                <button
+                  v-if="hasBookmarked(bookmarks, resource.id)"
+                  class="btn-icon"
+                  @click="() => {removeBookmark(resource.id)}"
+                >
+                  <img src="@/assets/icons/unbookmark.svg" />
+                </button>
+                <button class="btn-icon" v-else @click="() => {addBookmark(resource.id)}">
+                  <img src="@/assets/icons/bookmark.svg" />
+                </button>
               </td>
             </tr>
           </tbody>
@@ -97,11 +114,16 @@ import {
   DOWNVOTE_RESOURCE
 } from "../../store/resource/actions.type";
 import { FETCH_COURSE } from "../../store/course/actions.type";
+import {
+  ADD_BOOKMARK,
+  REMOVE_BOOKMARK
+} from "../../store/bookmarks/actions.type";
 
 let CONSTANTS = {
   TITLE: "title",
   UPDATED_ON: "created_at",
-  LIKES: "upvotes"
+  LIKES: "upvotes",
+  SAVED: "saved"
 };
 
 export default {
@@ -128,9 +150,16 @@ export default {
     }
   },
   computed: {
-    ...mapGetters({ user: "user", course: "activeCourse" })
+    ...mapGetters({
+      user: "user",
+      course: "activeCourse",
+      bookmarks: "bookmarks"
+    })
   },
   methods: {
+    hasBookmarked(bookmarks, resourceID) {
+      return bookmarks.includes(resourceID);
+    },
     sortResources() {
       this.resources = this.resources.sort((a, b) => {
         if (this.sortBy === CONSTANTS.TITLE) {
@@ -151,6 +180,24 @@ export default {
           } else {
             return a.upvotes.length < b.upvotes.length ? 1 : -1;
           }
+        } else if (this.sortBy === CONSTANTS.SAVED) {
+          if (
+            this.hasBookmarked(this.bookmarks, a.id) &&
+            this.hasBookmarked(this.bookmarks, b.id)
+          ) {
+            return a.title.toLowerCase() > b.title.toLowerCase() ? 1 : -1;
+          }
+          if (this.sortAsc) {
+            return this.hasBookmarked(this.bookmarks, a.id) &&
+              !this.hasBookmarked(this.bookmarks, b.id)
+              ? 1
+              : -1;
+          } else {
+            return !this.hasBookmarked(this.bookmarks, a.id) &&
+              this.hasBookmarked(this.bookmarks, b.id)
+              ? 1
+              : -1;
+          }
         }
       });
     },
@@ -161,15 +208,38 @@ export default {
         this.sortBy = by;
         this.sortAsc = true;
 
-        if(this.sortBy === CONSTANTS.LIKES) {
+        if (this.sortBy === CONSTANTS.LIKES) {
           this.sortAsc = false;
         }
-
       }
       this.sortResources();
     },
     hasUpvoted(upvotes) {
       return upvotes.includes(this.user.id);
+    },
+    addBookmark(resourceID) {
+      this.$store
+        .dispatch(ADD_BOOKMARK, resourceID)
+        .then(() => {
+          this.$toasted.success("Successfully bookmarked!");
+        })
+        .catch(err => {
+          this.$toasted.error(
+            `Error bookmarking resource: ${JSON.stringify(err)}`
+          );
+        });
+    },
+    removeBookmark(resourceID) {
+      this.$store
+        .dispatch(REMOVE_BOOKMARK, resourceID)
+        .then(() => {
+          this.$toasted.success("Successfully unbookmarked!");
+        })
+        .catch(err => {
+          this.$toasted.error(
+            `Error unbookmarking resource: ${JSON.stringify(err)}`
+          );
+        });
     },
     upvoteResource(resourceID) {
       this.$store
