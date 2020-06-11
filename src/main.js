@@ -9,6 +9,7 @@ import jwtService from "./shared/jwt.service";
 import axios from "axios";
 import VueAxios from "vue-axios";
 import Toasted from "vue-toasted";
+import VueAnalytics from "vue-analytics";
 
 import "bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
