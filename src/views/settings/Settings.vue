@@ -1,7 +1,9 @@
 <template>
   <div class="app-settings">
     <div class="page-header">
-      <h1>Settings</h1>
+      <div class="content">
+        <h1>Settings</h1>
+      </div>
     </div>
     <div class="page-nav">
       <ul class="nav">
@@ -72,33 +74,6 @@ export default {
 
   .router-container {
     padding: 2rem;
-  }
-
-  .page-nav {
-    color: white;
-    padding: 0 2rem;
-
-    .nav {
-      display: flex;
-      align-items: flex-end;
-      .nav-item {
-        padding: 0;
-        margin: 0;
-        .nav-link {
-          color: #666666;
-          text-decoration: none;
-          font-size: 2rem;
-          padding: 0;
-          margin-right: 1rem;
-          transition: all 100ms ease-in-out;
-        }
-
-        .link-active {
-          color: white;
-          transition: all 100ms ease-in-out;
-        }
-      }
-    }
   }
 }
 </style>

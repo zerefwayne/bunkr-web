@@ -1,7 +1,9 @@
 <template>
   <div class="app-course">
     <div class="page-header">
-      <h1>Admin Dashboard</h1>
+      <div class="content">
+        <h1>Admin Dashboard</h1>
+      </div>
     </div>
     <div class="page-nav">
       <ul class="nav">

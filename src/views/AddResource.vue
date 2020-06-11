@@ -1,13 +1,15 @@
 <template>
   <div class="app-add-resource">
     <div class="page-header">
-      <template v-if="isEditMode">
-        <h1>Edit Resource</h1>
-        <h4>{{ resource.title }}</h4>
-      </template>
-      <template v-else>
-        <h1>Add Resource</h1>
-      </template>
+      <div class="content">
+        <template v-if="isEditMode">
+          <h1>Edit Resource</h1>
+          <h4>{{ resource.title }}</h4>
+        </template>
+        <template v-else>
+          <h1>Add Resource</h1>
+        </template>
+      </div>
     </div>
     <template v-if="ready">
       <div class="form-container">
