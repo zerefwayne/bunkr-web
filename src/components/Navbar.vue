@@ -1,8 +1,8 @@
 <template>
   <div class="app-navbar">
-    <div class="brand">
+    <router-link tag="div" class="brand" to="/" style="cursor: pointer;">
       <img src="@/assets/branding/logo-white-full.png" />
-    </div>
+    </router-link>
     <template v-if="isAuthenticated">
       <div class="content">
         <Navcard>
