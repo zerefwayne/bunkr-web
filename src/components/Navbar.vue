@@ -42,7 +42,7 @@
               </div>
               <div class="icons">
                 <button class="btn-icon" @click="handleManageProfile">
-                  <img src="@/assets/icons/gear-white.svg" />
+                  <i class="material-icons">settings</i>
                 </button>
               </div>
             </div>

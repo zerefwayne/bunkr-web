@@ -29,10 +29,13 @@
                 :to="{name: 'resource', params: {id: resource.id}}"
                 class="btn btn-icon mr-2"
               >
-                <img src="@/assets/icons/preview.svg" />
+                <i class="material-icons large" style="color: white;">visibility</i>
               </router-link>
             </td>
-            <td>{{ resource.is_approved ? 'YES' : 'NO' }}</td>
+            <td>
+              <i class="material-icons large" v-if="resource.is_approved" style="color: #36B37E;">verified</i>
+              <i class="material-icons large" v-else style="color:#FFAB00;">timer</i>
+            </td>
           </tr>
         </tbody>
       </table>

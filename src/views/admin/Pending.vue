@@ -22,16 +22,18 @@
               style="text-transform: capitalize;"
             >{{ resource.created_at | moment("ddd, Do MMMM YYYY") }}</td>
             <td>
-              <router-link
-                tag="button"
-                :to="{name: 'resource', params: {id: resource.id}}"
-                class="btn btn-icon mr-2"
-              >
-                <img src="@/assets/icons/preview.svg" />
-              </router-link>
-              <button class="btn btn-icon" @click="() => handleApproveResource(resource.id)">
-                <img src="@/assets/icons/preview.svg" />
-              </button>
+              <div style="display:flex; align-items: center;">
+                <router-link
+                  tag="button"
+                  :to="{name: 'resource', params: {id: resource.id}}"
+                  class="btn-icon mr-2"
+                >
+                  <i class="material-icons large" style="color: white;">visibility</i>
+                </router-link>
+                <button class="btn-icon" @click="() => handleApproveResource(resource.id)">
+                  <i class="material-icons large" style="color: white;">done</i>
+                </button>
+              </div>
             </td>
           </tr>
         </tbody>

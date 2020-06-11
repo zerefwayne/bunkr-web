@@ -13,7 +13,7 @@
             class="nav-link"
             exact-active-class="link-active"
             href="#"
-          >Profile</router-link>
+          ><i class="material-icons" style="margin-right: .5rem;">person</i>Profile</router-link>
         </li>
         <li class="nav-item">
           <router-link
@@ -21,7 +21,7 @@
             class="nav-link"
             active-class="link-active"
             href="#"
-          >Courses</router-link>
+          ><i class="material-icons">widgets</i>Courses</router-link>
         </li>
         <li class="nav-item">
           <router-link
@@ -29,7 +29,7 @@
             class="nav-link"
             active-class="link-active"
             href="#"
-          >Contributions</router-link>
+          ><i class="material-icons">stars</i>Contributions</router-link>
         </li>
       </ul>
     </div>

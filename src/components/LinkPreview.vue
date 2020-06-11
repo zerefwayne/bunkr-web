@@ -12,7 +12,7 @@
               <div class="link-description">{{props.description.substring(0, 100)}}...</div>
               <div class="link-actions">
                 <a :href="props.url" target="_blank">
-                  <img src="@/assets/icons/preview.svg" />
+                  <i class="material-icons large" style="color: white;">visibility</i>
                 </a>
               </div>
             </div>

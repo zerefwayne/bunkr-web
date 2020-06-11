@@ -3,7 +3,7 @@
     <template v-if="loaded">
       <div class="mb-2">
         <div class="go-back" @click="handleBack">
-          <img src="@/assets/icons/left.svg" /> Back
+          <i class="material-icons large mr-2">arrow_back</i> Back
         </div>
       </div>
       <div class="resource-header">
@@ -13,7 +13,7 @@
           :to="{name: 'resource-edit', params: {id: resource.id, isEditMode: true}}"
           class="ml-3 btn-icon"
         >
-          <img src="@/assets/icons/edit.svg" />
+          <i class="material-icons large">edit</i>
         </router-link>
       </div>
       <p>Contributor: {{ `@${resource.created_by.username ? resource.created_by.username : ''}` }}, {{ resource.created_at | moment("MMMM Do YYYY") }}</p>
