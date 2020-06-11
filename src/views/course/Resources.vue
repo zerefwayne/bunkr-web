@@ -56,7 +56,7 @@
             <tr scope="row" v-for="resource in resources" :key="resource.id">
               <router-link
                 tag="td"
-                style="text-decoration: underline; cursor: pointer;"
+                style="cursor: pointer;"
                 :to="{name: 'resource', params: {id: resource.id}}"
               >{{ resource.title }}</router-link>
               <td
@@ -64,13 +64,6 @@
                 style="text-transform: capitalize;"
               >{{ resource.created_at | moment("Do MMMM YYYY") }}</td>
               <td scope="row" style="display: flex; align-items: center;">
-                <!-- <router-link
-                  tag="button"
-                  :to="{name: 'resource', params: {id: resource.id}}"
-                  class="btn btn-icon mr-2"
-                >
-                  <img src="@/assets/icons/preview.svg" />
-                </router-link>-->
                 <button
                   v-if="hasUpvoted(resource.upvotes)"
                   class="btn-icon"
