@@ -30,7 +30,7 @@
         </template>
       </div>
       <div style="margin-bottom: 1rem;">
-        <div @mouseover="hover = true" @mouseleave="hover = false">
+        <div>
           <Navcard>
             <div class="profile">
               <div class="details">
@@ -40,7 +40,7 @@
                   v-if="isAdmin"
                 >Admin</span>
               </div>
-              <div class="icons" :class="hover ? 'show-actions' : 'hide-actions'">
+              <div class="icons">
                 <button class="btn-icon" @click="handleManageProfile">
                   <img src="@/assets/icons/gear-white.svg" />
                 </button>
@@ -53,8 +53,14 @@
 
     <template v-else>
       <div class="mode-select">
-        <button class="btn btn-primary" @click="() => {mode = 'login';}">Login</button>
-        <button class="btn btn-primary" @click="() => {mode = 'signup';}">Signup</button>
+        <button
+          :class="mode == 'login' ? `btn btn-primary` : `btn btn-dark`"
+          @click="() => {mode = 'login';}"
+        >Login</button>
+        <button
+          :class="mode == 'signup' ? `btn btn-primary` : `btn btn-dark`"
+          @click="() => {mode = 'signup';}"
+        >Signup</button>
       </div>
       <template v-if="mode === 'login'">
         <login-navbar />
@@ -76,7 +82,7 @@ import SubscribedCourses from "./SubscribedCourses.vue";
 export default {
   data() {
     return {
-      mode: "login",
+      mode: "signup",
       hover: false
     };
   },
