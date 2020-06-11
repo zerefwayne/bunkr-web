@@ -18,13 +18,13 @@
             :to="`/course/${courseSlug}/resources`"
           ><i class="material-icons">topic</i> Resources</router-link>
         </li>
-        <li class="nav-item">
+        <!-- <li class="nav-item">
           <router-link
             class="nav-link"
             active-class="link-active"
             :to="`/course/${courseSlug}/discuss`"
           ><i class="material-icons">forum</i> Discussion</router-link>
-        </li>
+        </li> -->
         <li class="nav-item">
           <router-link
             class="nav-link"

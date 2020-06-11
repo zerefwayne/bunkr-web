@@ -119,7 +119,7 @@
 <script>
 import axios from "axios";
 import store from "@/store";
-import { FETCH_ALL_COURSES } from "../store/course/actions.type";
+import { FETCH_ALL_COURSES } from "@/store/course/actions.type";
 import { mapGetters } from "vuex";
 import VueSimplemde from "vue-simplemde";
 import LinkPreview from "@/components/LinkPreview.vue";
@@ -127,7 +127,7 @@ import {
   FETCH_RESOURSE,
   UPDATE_RESOURCE,
   DELETE_RESOURCE
-} from "../store/resource/actions.type";
+} from "@/store/resource/actions.type";
 
 export default {
   data() {

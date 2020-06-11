@@ -22,7 +22,7 @@ const routes = [
     name: "resource-new",
     path: "/resource/new",
     component: () =>
-      import(/* webpackChunkName: "admin" */ "../views/AddResource.vue"),
+      import(/* webpackChunkName: "admin" */ "../views/resource/AddResource.vue"),
     meta: {
       authorized: true,
     },
@@ -31,7 +31,7 @@ const routes = [
     name: "resource",
     path: "/resource/:id",
     component: () =>
-      import(/* webpackChunkName: "resource" */ "../views/Resource.vue"),
+      import(/* webpackChunkName: "resource" */ "../views/resource/Resource.vue"),
     meta: {
       guest: true,
     },
@@ -40,7 +40,7 @@ const routes = [
     name: "resource-edit",
     path: "/resource/:id/edit",
     component: () =>
-      import(/* webpackChunkName: "admin" */ "../views/AddResource.vue"),
+      import(/* webpackChunkName: "admin" */ "../views/resource/AddResource.vue"),
     meta: {
       authorized: true,
     },
