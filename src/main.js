@@ -27,6 +27,10 @@ Vue.use(Toasted, {
   keepOnHover: true,
   theme: "bubble",
 });
+Vue.use(VueAnalytics, {
+  id: "UA-134821817-2",
+  router,
+});
 
 axios.defaults.baseURL = "http://localhost:5000/api";
 
