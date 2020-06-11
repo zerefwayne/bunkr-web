@@ -4,7 +4,7 @@
       <div class="title">My Courses</div>
         <div class="actions" :class="hover ? 'show-actions' : 'hide-actions'">
           <router-link class="btn-icon" tag="button" :to="{name: 'courses'}">
-            <img src="@/assets/icons/edit.svg" />
+            <i class="material-icons large">edit</i>
           </router-link>
         </div>
     </div>

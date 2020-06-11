@@ -67,8 +67,17 @@ export default {
       td {
         padding: 0.6rem;
 
+
         .btn-icon {
           padding: 0;
+          display: flex;
+          align-items: center;
+
+          i {
+            color: white;
+            font-size: 1.5rem;
+          }
+
         }
       }
     }
@@ -114,10 +123,17 @@ export default {
         color: white;
         text-decoration: none;
         font-size: 1.4rem;
-        padding: .4rem 1.7rem;
+        padding: .4rem 1.4rem;
         border-radius: 6px;
         margin-right: 1rem;
         transition: all 100ms ease-in-out;
+        display: flex;
+        align-items: center;
+
+        i {
+          margin-right: .8rem;
+        }
+
       }
 
       .link-active {

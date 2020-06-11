@@ -16,21 +16,21 @@
             class="nav-link"
             active-class="link-active"
             :to="`/course/${courseSlug}/resources`"
-          >Resources</router-link>
+          ><i class="material-icons">topic</i> Resources</router-link>
         </li>
         <li class="nav-item">
           <router-link
             class="nav-link"
             active-class="link-active"
             :to="`/course/${courseSlug}/discuss`"
-          >Discussion</router-link>
+          ><i class="material-icons">forum</i> Discussion</router-link>
         </li>
         <li class="nav-item">
           <router-link
             class="nav-link"
             active-class="link-active"
             :to="`/course/${courseSlug}/about`"
-          >About</router-link>
+          ><i class="material-icons">info</i> About</router-link>
         </li>
       </ul>
     </div>

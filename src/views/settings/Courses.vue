@@ -41,7 +41,7 @@
         <li class="list-group-item" v-for="course in subscribedCourses" :key="course.code">
           <div>{{ course.name }}</div>
           <button class="btn-icon" @click="() => {handleRemoveCourse(course.code)}">
-            <img src="@/assets/icons/close.svg" />
+            <i class="material-icons" style="color:#FF5630;">close</i>
           </button>
         </li>
       </ul>

@@ -139,6 +139,14 @@ export default {
   background: none;
   border: none;
   outline: none;
+  height: fit-content;
+
+  display: flex;
+  align-items: center;
+
+  i {
+    color: white;
+  }
 
   &:focus {
     outline: none;

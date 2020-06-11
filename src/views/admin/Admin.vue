@@ -12,14 +12,14 @@
             class="nav-link"
             active-class="link-active"
             :to="{name: 'new-course'}"
-          >Add Course</router-link>
+          ><i class="material-icons">add_circle</i>Add Course</router-link>
         </li>
         <li class="nav-item">
           <router-link
             class="nav-link"
             active-class="link-active"
             :to="{name: 'pending-resources'}"
-          >Pending Resources {{ pendingResources.length > 0 ? `(${pendingResources.length})` : '' }}</router-link>
+          ><i class="material-icons">track_changes</i>Pending Resources {{ pendingResources.length > 0 ? `(${pendingResources.length})` : '' }}</router-link>
         </li>
       </ul>
     </div>

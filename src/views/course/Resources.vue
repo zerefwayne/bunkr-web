@@ -7,48 +7,40 @@
           <thead>
             <tr>
               <th scope="col" style="width:65%;" @click="() => {updateSort(constants.TITLE)}">
-                <span class="mr-1">Title</span>
-                <template v-if="sortBy === constants.TITLE">
-                  <span v-if="sortAsc">
-                    <img src="@/assets/icons/up.svg" />
-                  </span>
-                  <span v-else>
-                    <img src="@/assets/icons/down.svg" />
-                  </span>
-                </template>
+                <div class="title">
+                  <span class="mr-1">Title</span>
+                  <template v-if="sortBy === constants.TITLE">
+                    <i class="material-icons" v-if="sortAsc">arrow_upward</i>
+                    <i class="material-icons" v-else>arrow_downward</i>
+                  </template>
+                </div>
               </th>
               <th scope="col" style="width:15%" @click="() => {updateSort(constants.UPDATED_ON)}">
-                <span class="mr-1">Updated On</span>
-                <template v-if="sortBy === constants.UPDATED_ON">
-                  <span v-if="sortAsc">
-                    <img src="@/assets/icons/up.svg" />
-                  </span>
-                  <span v-else>
-                    <img src="@/assets/icons/down.svg" />
-                  </span>
-                </template>
+                <div class="title">
+                  <span class="mr-1">Updated On</span>
+                  <template v-if="sortBy === constants.UPDATED_ON">
+                    <i class="material-icons" v-if="sortAsc">arrow_upward</i>
+                    <i class="material-icons" v-else>arrow_downward</i>
+                  </template>
+                </div>
               </th>
               <th scope="col" style="width:10%" @click="() => {updateSort(constants.LIKES)}">
-                <span class="mr-1">Likes</span>
-                <template v-if="sortBy === constants.LIKES">
-                  <span v-if="sortAsc">
-                    <img src="@/assets/icons/up.svg" />
-                  </span>
-                  <span v-else>
-                    <img src="@/assets/icons/down.svg" />
-                  </span>
-                </template>
+                <div class="title">
+                  <span class="mr-1">Likes</span>
+                  <template v-if="sortBy === constants.LIKES">
+                    <i class="material-icons" v-if="sortAsc">arrow_upward</i>
+                    <i class="material-icons" v-else>arrow_downward</i>
+                  </template>
+                </div>
               </th>
               <th scope="col" style="width:10%" @click="() => {updateSort(constants.SAVED)}">
-                <span class="mr-1">Save</span>
-                <template v-if="sortBy === constants.SAVED">
-                  <span v-if="sortAsc">
-                    <img src="@/assets/icons/up.svg" />
-                  </span>
-                  <span v-else>
-                    <img src="@/assets/icons/down.svg" />
-                  </span>
-                </template>
+                <div class="title">
+                  <span class="mr-1">Save</span>
+                  <template v-if="sortBy === constants.SAVED">
+                    <i class="material-icons" v-if="sortAsc">arrow_upward</i>
+                    <i class="material-icons" v-else>arrow_downward</i>
+                  </template>
+                </div>
               </th>
             </tr>
           </thead>
@@ -56,9 +48,22 @@
             <tr scope="row" v-for="resource in resources" :key="resource.id">
               <router-link
                 tag="td"
-                style="cursor: pointer;"
+                style="cursor: pointer; display: flex; align-items: center"
                 :to="{name: 'resource', params: {id: resource.id}}"
-              >{{ resource.title }}</router-link>
+              >
+                <i
+                  class="material-icons mr-3"
+                  v-if="resource.type === 'link'"
+                  style="color: #00B8D9;"
+                >insert_link</i>
+
+                <i
+                  class="material-icons mr-3"
+                  v-if="resource.type === 'article'"
+                  style="color: #FFAB00;"
+                >notes</i>
+                {{ resource.title }}
+              </router-link>
               <td
                 scope="row"
                 style="text-transform: capitalize;"
@@ -69,10 +74,10 @@
                   class="btn-icon"
                   @click="() => {downvoteResource(resource.id)}"
                 >
-                  <img src="@/assets/icons/downvote.svg" />
+                  <i class="material-icons">thumb_up</i>
                 </button>
                 <button class="btn-icon" v-else @click="() => {upvoteResource(resource.id)}">
-                  <img src="@/assets/icons/upvote.svg" />
+                  <i class="material-icons" style="color: #555;">thumb_up</i>
                 </button>
                 <span
                   class="ml-2"
@@ -85,10 +90,10 @@
                   class="btn-icon"
                   @click="() => {removeBookmark(resource.id)}"
                 >
-                  <img src="@/assets/icons/unbookmark.svg" />
+                  <i class="material-icons">turned_in</i>
                 </button>
                 <button class="btn-icon" v-else @click="() => {addBookmark(resource.id)}">
-                  <img src="@/assets/icons/bookmark.svg" />
+                  <i class="material-icons" style="color: #555;">turned_in</i>
                 </button>
               </td>
             </tr>
@@ -277,6 +282,11 @@ export default {
 
       th {
         font-weight: normal;
+
+        .title {
+          display: flex;
+          align-items: center;
+        }
 
         &:hover {
           background-color: lighten($color: #222222, $amount: 1%);
