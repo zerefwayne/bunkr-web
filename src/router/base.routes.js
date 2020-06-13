@@ -10,6 +10,19 @@ const routes = [
     },
   },
   {
+    name: "accountVerify",
+    path: "/auth/verify",
+    component: () =>
+      import(/* webpackChunkName: "init" */ "../views/Verify.vue"),
+    beforeEnter: (to, from, next) => {
+      console.log(to);
+      next();
+    },
+    meta: {
+      guest: true
+    }
+  },
+  {
     name: "dashboard",
     path: "/",
     component: () =>

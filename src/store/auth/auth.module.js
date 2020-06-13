@@ -118,6 +118,9 @@ const getters = {
   isAdmin(state) {
     return state.user.isAdmin ? state.user.isAdmin : false;
   },
+  isVerified(state) {
+    return state.user.isVerified ? state.user.isVerified : false;
+  }
 };
 
 export default {

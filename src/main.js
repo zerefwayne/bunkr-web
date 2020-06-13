@@ -6,6 +6,8 @@ import store from "./store";
 
 import jwtService from "./shared/jwt.service";
 
+// AIzaSyC6sIfMfHDDf6Jb2EIAApGBC2qUGZSdgt4
+
 import axios from "axios";
 import VueAxios from "vue-axios";
 import Toasted from "vue-toasted";
