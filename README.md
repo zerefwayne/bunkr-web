@@ -1,4 +1,4 @@
-# college-portal-client
+![Bunkr Banner](https://github.com/zerefwayne/bunkr-web/blob/master/banner.png)
 
 ## Project setup
 ```
